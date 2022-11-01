@@ -1,0 +1,33 @@
+{
+    "name": "MenuActions",
+    "maps": [
+        {
+            "name": "MenuesAction",
+            "id": "127b75f9-47c4-422c-b778-f05fa45555dc",
+            "actions": [
+                {
+                    "name": "OpenParent",
+                    "type": "Button",
+                    "id": "7db452bf-df5b-4cee-87bf-f199c3f7f682",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f375f8f4-9d71-4eef-9536-f16b0b6590b7",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenParent",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

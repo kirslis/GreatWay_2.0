@@ -1,0 +1,80 @@
+{
+    "name": "RedactorButtonActions",
+    "maps": [
+        {
+            "name": "Reduct",
+            "id": "6188b003-3f17-47ce-b084-812bbfaab260",
+            "actions": [
+                {
+                    "name": "AbortReduct",
+                    "type": "Button",
+                    "id": "275b5680-d548-4577-89f5-f60ac7519a0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ReductMap",
+                    "type": "Button",
+                    "id": "d6d581ab-eed6-47ef-a4ab-239ca9f694fc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f047087d-8419-4524-b55d-6f9bc90812c1",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbortReduct",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f633108a-c87d-4098-bc4e-22cf8cc79e72",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "AbortReduct",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8282cbe1-83e0-4fa3-9fc6-12af2d885c61",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "New control scheme",
+                    "action": "ReductMap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "New control scheme",
+            "bindingGroup": "New control scheme",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
