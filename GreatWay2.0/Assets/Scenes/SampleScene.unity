@@ -812,15 +812,6 @@ MonoBehaviour:
   - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
   - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
   - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
-  - {fileID: 4778018461700988732, guid: 697b75211021361428a76868469c29e1, type: 3}
   _arrow: {fileID: 6109888300816001502, guid: 3b8eadf4a3c8a594fb00c3a38840f21b, type: 3}
 --- !u!1 &206172234
 GameObject:
@@ -1666,7 +1657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae566ca7b8c07ee42b70272e63eab780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
+  Speed: 2
   ScrollSpeed: 0.5
 --- !u!20 &519420031
 Camera:
@@ -1678,7 +1669,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.2269491, g: 0.5187468, b: 0.6415094, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5026,7 +5017,7 @@ PrefabInstance:
     - target: {fileID: 3168362332189637792, guid: 3cde6900665b9e54a8377f2ca54f2dc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1424608041}
     - target: {fileID: 3168362332189637792, guid: 3cde6900665b9e54a8377f2ca54f2dc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -5037,7 +5028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3168362332189637792, guid: 3cde6900665b9e54a8377f2ca54f2dc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: RedactorTileButton, Assembly-CSharp
+      value: BasicReductorButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3168362332189637792, guid: 3cde6900665b9e54a8377f2ca54f2dc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
