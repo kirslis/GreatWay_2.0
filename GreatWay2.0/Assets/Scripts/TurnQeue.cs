@@ -13,9 +13,10 @@ public class TurnQeue : MonoBehaviour
     private float IconsSize = 50;
     private int ImagesCount;
     private bool IsFightStarted = false;
-
-    int IStart = 0;
-    int VisibleCount = 0;
+    private bool IsNeedToResize;
+    private int IStart = 0;
+    private int IEnd = 0;
+    private int VisibleCount = 0;
 
     private void Awake()
     {
@@ -27,6 +28,18 @@ public class TurnQeue : MonoBehaviour
         Rect = GetComponent<RectTransform>();
 
         Rect.sizeDelta = new Vector2(0, Rect.sizeDelta.y);
+    }
+
+    private void MoveIStartleft()
+    {
+        IStart++;
+        if (IStart >= Icons.Count)
+            IStart = 0;
+        IEnd++;
+        if(IEnd >= Icons.Count)
+            IEnd = 0;
+
+        Debug.Log(IStart + " " + IEnd);
     }
 
     public void SetQeue(List<Antity> Antities)
@@ -49,7 +62,8 @@ public class TurnQeue : MonoBehaviour
                 for (int j = ImagesCount - 1; j > i; j--)
                 {
                     Icons[j] = Icons[j - 1];
-                    IStart = IStart == j - 1 ? j : IStart;
+                    if (IStart == j - 1)
+                        MoveIStartleft();
                 }
                 Icons[i] = Instantiate(Antities[i].GetComponent<CharacterStats>().icon, transform);
                 Icons[i].transform.position = new Vector3(0, 100, 0);
@@ -77,53 +91,41 @@ public class TurnQeue : MonoBehaviour
         return false;
     }
 
-    //public void AddIcon(TurnIcon Icon)
-    //{
-    //    TurnIcon icon = Instantiate(Icon, transform);
-    //    Icons.Add(icon);
+    private int GetIVisible(int index)
+    {
+        if (index >= IStart && (index <= IEnd || IStart > IEnd))
+            return index - IStart;
 
-    //    int i = Icons.Count - 1;
-    //    while (i > 0 && Icons[i - 1].init < Icons[i].init)
-    //    {
-    //        TurnIcon t = Icons[i - 1];
-    //        Icons[i - 1] = Icons[i];
-    //        Icons[i] = t;
-    //        i--;
-    //    }
+        if (index <= IEnd && IEnd < IStart)
+            return VisibleCount - IEnd + index - 1;
 
-    //    Resize();
-    //}
+        return -1;
+    }
 
     private void UpdateVisual()
     {
-        Debug.Log(ImagesCount);
-        int IVisible = 0;
-        for (int i = 0; i < ImagesCount; i++)
+        Debug.Log(Icons.Count + " " + VisibleCount + " " + IStart + " " + IEnd);
+
+        for (int i = 0; i < Icons.Count; i++)
         {
-            if (i >= IStart && i < IStart + VisibleCount || IStart + VisibleCount > Icons.Count && i < VisibleCount - (Icons.Count - VisibleCount))
+            int index = GetIVisible(i);
+
+            if (index != -1)
             {
-                if (!Icons[i].isVisible)
-                    AddAnim(Icons[i], Poses[IVisible]);
-
+                if (Icons[i].isVisible == true)
+                    MoveToPosAnim(Icons[i], Poses[index]);
                 else
-                    MoveToPosAnim(Icons[i], Poses[IVisible]);
-
-                IVisible++;
+                    AddAnim(Icons[i], Poses[index]);
             }
-
-            else if ((i == ImagesCount - 1 || i == IStart + VisibleCount) && Icons[i].isVisible)
+            else if (Icons[i].isVisible == true)
                 DeleteAnim(Icons[i]);
         }
     }
 
     public void NextTurn()
     {
-        //TurnIcon T = Icons[0];
-        //Icons.Remove(T);
-        //Icons.Add(T);
-        IStart += 1;
-        if (IStart >= Icons.Count)
-            IStart = 0;
+        MoveIStartleft();
+
         UpdateVisual();
     }
 
@@ -159,34 +161,49 @@ public class TurnQeue : MonoBehaviour
     private void Resize()
     {
         VisibleCount = ImagesCount < 10 ? ImagesCount : 10;
+        IEnd = IStart + VisibleCount - 1;
+        if(IEnd >= Icons.Count)
+            IEnd -= Icons.Count;
+        IsNeedToResize = true;
+        ResizeAnim();
+    }
 
-        StopCoroutine(ResizeCourutine());
-        StartCoroutine(ResizeCourutine());
+    private void OnEnable()
+    {
+        if (IsNeedToResize)
+            ResizeAnim();
+    }
+
+    private void ResizeAnim()
+    {
+        if (gameObject.activeInHierarchy)
+        {
+            StopCoroutine(ResizeCourutine());
+            StartCoroutine(ResizeCourutine());
+        }
     }
 
     private void changePoses()
     {
-        Debug.Log("VISIBLE_COUNT - " + VisibleCount);
-        Debug.Log(Rect.sizeDelta.x);
         for (int i = 0; i < VisibleCount; i++)
         {
             Poses[i] = new Vector2(-Rect.sizeDelta.x / 2 + IconsSize / 2 + Space + i * (IconsSize + Space), 0);
-            Debug.Log(i + " " + (-Rect.sizeDelta.x / 2 + IconsSize / 2 + Space + i * (IconsSize + Space)));
         }
     }
 
     IEnumerator ResizeCourutine()
     {
-        float resizeSpeed = 1f;
+        float resizeSpeed = 500f;
         float newSizeX = VisibleCount * (Icons[0].GetComponent<RectTransform>().sizeDelta.x + Space) + Space;
         while (Rect.sizeDelta.x != newSizeX)
         {
-            Rect.sizeDelta = Vector2.MoveTowards(Rect.sizeDelta, new Vector2(newSizeX, Rect.sizeDelta.y), resizeSpeed);
+            Rect.sizeDelta = Vector2.MoveTowards(Rect.sizeDelta, new Vector2(newSizeX, Rect.sizeDelta.y), resizeSpeed * Time.deltaTime);
             yield return null;
         }
 
         changePoses();
         UpdateVisual();
+        IsNeedToResize = false;
     }
 
     public void DeleteCreatures()

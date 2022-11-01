@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterStats : MonoBehaviour
 {
     [SerializeField] TurnIcon _icon;
     [SerializeField] PseudoThrowViewer _pseudoThrowViewer;
     [SerializeField] int[] AddictionalStats = new int[6];
+    [SerializeField] Sprite _image;
 
     private List<int> Stats = new List<int>();
     private List<int> StatMods = new List<int>();
@@ -15,6 +17,7 @@ public class CharacterStats : MonoBehaviour
     private int Init = -1;
     private TurnIcon Icon;
 
+    public Sprite image { get { return _image; } }
     public TurnIcon icon { get { return Icon; } }
     public int init { get { return Init; } }
 
@@ -66,8 +69,10 @@ public class CharacterStats : MonoBehaviour
 
     public void RollInit()
     {
+        Debug.Log(name);
+
         int mod;
-        StatsDictionry.TryGetValue("des", out mod);
+        StatsDictionry.TryGetValue("dex", out mod);
         int Value = Random.Range(1, 20);
 
         _pseudoThrowViewer.gameObject.SetActive(true);

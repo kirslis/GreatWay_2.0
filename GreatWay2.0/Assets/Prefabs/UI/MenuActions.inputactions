@@ -19,7 +19,7 @@
                     "name": "",
                     "id": "f375f8f4-9d71-4eef-9536-f16b0b6590b7",
                     "path": "<Keyboard>/escape",
-                    "interactions": "Tap",
+                    "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
                     "action": "OpenParent",

@@ -218,6 +218,7 @@ GameObject:
   - component: {fileID: 265719145472918201}
   - component: {fileID: -1051614589676903018}
   - component: {fileID: 5220678748264571155}
+  - component: {fileID: 8629435987194540231}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -407,6 +408,7 @@ MonoBehaviour:
   _icon: {fileID: 6372244224899754407, guid: 14e148e85ec61684f831907311e4cd2a, type: 3}
   _pseudoThrowViewer: {fileID: 4478358216274673161}
   AddictionalStats: 000000000000000000000000000000000000000000000000
+  _image: {fileID: 21300048, guid: 300ea1a5869382b43bf6149aba92c4db, type: 3}
 --- !u!114 &-1051614589676903018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +442,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &8629435987194540231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034465503680846090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea63713301bb464e91ee939ba60e205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grayDescription: it is test person. dont expect anything spetial
 --- !u!1 &8059801398591551612
 GameObject:
   m_ObjectHideFlags: 0

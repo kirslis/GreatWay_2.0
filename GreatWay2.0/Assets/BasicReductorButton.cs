@@ -12,6 +12,7 @@ public class BasicReductorButton : MonoBehaviour
     [SerializeField] protected Image _baseSprite;
     [SerializeField] protected Text _TextViewer;
     [SerializeField] protected string _name;
+    [SerializeField] protected MapRedactorMenu _menu;
 
     protected MapController Map;
     protected bool IsMouseDown;

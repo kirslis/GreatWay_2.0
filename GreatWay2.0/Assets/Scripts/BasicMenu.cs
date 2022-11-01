@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BasicMenu : MonoBehaviour
 {
-    [SerializeField] GameObject _errorTextPlace;
-    [SerializeField] ErrorText _errorText;
+    [SerializeField] private GameObject _errorTextPlace;
+    [SerializeField] protected ErrorText _errorText;
 
     private BasicMenu ParentMenu;
     private MenuActions Actions;
 
-    public BasicMenu parentMenu { set { ParentMenu = value; } }
+    public BasicMenu parentMenu { set { ParentMenu = value;  } }
 
     protected virtual void Awake()
     {
@@ -42,7 +42,7 @@ public class BasicMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    protected void ThrowErrorText(string text)
+    public virtual void ThrowErrorText(string text)
     {
         ErrorText error = Instantiate(_errorText, transform);
         error.StartFly(text, _errorTextPlace.transform.position);

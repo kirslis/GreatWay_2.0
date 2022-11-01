@@ -46,18 +46,28 @@ public class GridContainer : MonoBehaviour
         RedactorCursor.SetActive(false);
     }
 
-    public void ChangeTile(BasicTile tile)
+    public bool IsChosenTileFree()
+    {
+        Vector2 pos = RedactorCursor.transform.position;
+        return Container[(int)pos.x][(int)pos.y].isPasseble;
+    }
+
+    public bool TryChangeTile(BasicTile tile)
     {
         Vector2 Pos = RedactorCursor.transform.position;
-        if (Container[(int)Pos.x][(int)Pos.y] != null && Container[(int)Pos.x][(int)Pos.y].name != tile.name)
+        if (!Container[(int)Pos.x][(int)Pos.y].GetComponent<TileContainer>().IsContainEntity() || tile.isPasseble)
         {
-            Destroy(Container[(int)Pos.x][(int)Pos.y].gameObject);
-            Debug.Log(Container[(int)Pos.x][(int)Pos.y]);
-            Container[(int)Pos.x][(int)Pos.y] = Instantiate(tile, Colls[(int)Pos.x].transform);
-            Debug.Log(Container[(int)Pos.x][(int)Pos.y]);
-            Container[(int)Pos.x][(int)Pos.y].name = tile.name;
-            Container[(int)Pos.x][(int)Pos.y].transform.position = Pos;
+            if (Container[(int)Pos.x][(int)Pos.y] != null && Container[(int)Pos.x][(int)Pos.y].name != tile.name)
+            {
+                Destroy(Container[(int)Pos.x][(int)Pos.y].gameObject);
+                Container[(int)Pos.x][(int)Pos.y] = Instantiate(tile, Colls[(int)Pos.x].transform);
+                Container[(int)Pos.x][(int)Pos.y].name = tile.name;
+                Container[(int)Pos.x][(int)Pos.y].transform.position = Pos;
+            }
+            return true;
         }
+
+        return false;
     }
 
     private void MakePosValis(ref Vector2 pos)

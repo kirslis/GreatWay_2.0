@@ -47,6 +47,6 @@ public class PseudoThrowViewer : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         ValueViewer.color = Color.green;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 }

@@ -153,13 +153,12 @@ public class PlayerMove : MonoBehaviour
     {
         Input.MoveActions.Disable();
         GridContainer.ResetLightedTiles();
-        float speed = 0.01f;
-
+        
         for (int i = 0; i < Count; i++)
         {
             while (!((Vector2)transform.position).Equals(WalkPoints[i].transform.position))
             {
-                transform.position = Vector2.MoveTowards(transform.position, WalkPoints[i].transform.position, speed);
+                transform.position = Vector2.MoveTowards(transform.position, WalkPoints[i].transform.position, 3*Time.deltaTime);
                 transform.position = new Vector3(transform.position.x, transform.position.y, -2 + YStep * transform.position.y);
 
                 yield return null;

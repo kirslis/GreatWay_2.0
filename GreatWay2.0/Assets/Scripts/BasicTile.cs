@@ -5,9 +5,7 @@ using UnityEngine;
 public class BasicTile : MonoBehaviour
 {
     [SerializeField] int _pathCost;
-    [SerializeField] bool _isPasseble;
-
-    private bool IsPasseble;
+        [SerializeField] private bool IsPasseble;
 
     private int BasePathCost;
     private Color BaseColor;
@@ -17,7 +15,7 @@ public class BasicTile : MonoBehaviour
     public int SpentMoveSpeed = -1;
     private int CurrentPathCost;
 
-    public int basePathCost { get { return BasePathCost; }}
+    public int basePathCost { get { return BasePathCost; } }
     public bool isPasseble { get { return IsPasseble; } set { IsPasseble = value; } }
     public Color visibleColor { get { return VisibleColor; } set { VisibleColor = value; Sprite.color = value; } }
     public int currentPathCost { get { return CurrentPathCost; } set { CurrentPathCost = value; } }
@@ -28,7 +26,6 @@ public class BasicTile : MonoBehaviour
 
         BasePathCost = _pathCost;
         CurrentPathCost = _pathCost;
-        IsPasseble = _isPasseble;
 
         BaseColor = Sprite.color;
         visibleColor = BaseColor;

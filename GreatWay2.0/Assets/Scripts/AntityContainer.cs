@@ -45,6 +45,7 @@ public class AntityContainer : MonoBehaviour
             newPlayer.isActive = false;
             newPlayer.name = player.name + "_" + i.ToString();
             newPlayer.GetComponent<PlayerMove>().yStep = FindObjectOfType<GridContainer>().yStep;
+            newPlayer.GetComponent<CharacterStats>().RollInit();
             Players.Add(newPlayer);
             i++;
         }
@@ -58,16 +59,19 @@ public class AntityContainer : MonoBehaviour
 
     IEnumerator MakeGamePlayble()
     {
+        Debug.Log("??");
         yield return new WaitForSeconds(7f);
+        Debug.Log("START");
         _qeue.SetQeue(Players);
+        yield return new WaitForSeconds(1f);
+
         Players[0].isActive = true;
+
+        FindObjectOfType<MapController>().isInterfaceActive = true;
     }
 
     private void SortByInit()
     {
-        foreach (Antity player in Players)
-            player.GetComponent<CharacterStats>().RollInit();
-
         for (int i = 0; i < Players.Count; i++)
         {
             int j = i;
@@ -75,11 +79,16 @@ public class AntityContainer : MonoBehaviour
             while (j > 0 && Players[j - 1].GetComponent<CharacterStats>().init < t.GetComponent<CharacterStats>().init)
             {
                 Players[j] = Players[j - 1];
+                if (CurentActivePlayerIndex == j - 1)
+                    CurentActivePlayerIndex++;
                 j--;
             }
 
             Players[j] = t;
         }
+
+        foreach (Antity player in Players)
+            Debug.Log(player.GetComponent<CharacterStats>().init);
     }
 
     public void DeleteCreatures()
@@ -90,6 +99,22 @@ public class AntityContainer : MonoBehaviour
         Players.Clear();
 
         _qeue.DeleteCreatures();
+    }
+
+    public void AddCreature(Antity Creature, Vector2 Pos)
+    {
+        Antity creature = Instantiate(Creature, _alliesContainer.transform);
+        creature.transform.position = Pos;
+        creature.GetComponent<SpriteRenderer>().color = new Color(Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, 1);
+        creature.isActive = false;
+        creature.name = creature.name + "_" + (Players.Count - 1).ToString();
+        creature.GetComponent<PlayerMove>().yStep = FindObjectOfType<GridContainer>().yStep;
+        creature.GetComponent<CharacterStats>().RollInit();
+        Players.Add(creature);
+
+        SortByInit();
+
+        _qeue.SetQeue(Players);
     }
 
     public void NextTurn()

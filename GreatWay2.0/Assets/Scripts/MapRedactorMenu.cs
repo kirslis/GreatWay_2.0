@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MapRedactorMenu : BasicMenu
 {
@@ -61,5 +62,11 @@ public class MapRedactorMenu : BasicMenu
             OpenedVatiantPanel.SetActive(false);
         OpenedVatiantPanel = VariantPanel;
         OpenedVatiantPanel.SetActive(true);
+    }
+
+    public override void ThrowErrorText(string text)
+    {
+        ErrorText error = Instantiate(_errorText, transform);
+        error.StartFly(text,Mouse.current.position.ReadValue());
     }
 }

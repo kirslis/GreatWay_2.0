@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ErrorText : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class ErrorText : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Error masage");
+    }
+
+    private void OnDisable()
+    {
+        Destroy(gameObject);
     }
 
     public void StartFly(string text, Vector2 Pos)

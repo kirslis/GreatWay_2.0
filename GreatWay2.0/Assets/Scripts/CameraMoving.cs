@@ -24,7 +24,7 @@ public class CameraMoving : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + moveSpeed.x, transform.position.y + moveSpeed.y, transform.position.z), Speed);
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + moveSpeed.x, transform.position.y + moveSpeed.y, transform.position.z), Time.deltaTime * Speed * 10);
     }
 
     private void Move(InputAction.CallbackContext context)

@@ -8,19 +8,22 @@ public class TileContainer : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.parent.TryGetComponent(out Antity ant))
+        if (collision.transform.parent.TryGetComponent(out CharacterStats ant))
         {
-            Debug.Log(ant.name + "_ENTER");
-            EntitiesOnTile.Add(ant);
+            EntitiesOnTile.Add(ant.GetComponent<Antity>());
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.transform.parent.TryGetComponent(out Antity ant))
+        if (collision.transform.parent.TryGetComponent(out CharacterStats ant))
         {
-            Debug.Log(ant.name + "_EXIT");
-            EntitiesOnTile.Remove(ant);
+            EntitiesOnTile.Remove(ant.GetComponent<Antity>());
         }
+    }
+
+    public bool IsContainEntity()
+    {
+        return EntitiesOnTile.Count > 0;
     }
 }
