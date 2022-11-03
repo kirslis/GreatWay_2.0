@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AntityContainer : MonoBehaviour
 {
+    [SerializeField] GlobalVisionController _globalController;
     [SerializeField] TurnQeue _qeue;
     [SerializeField] GameObject _alliesContainer;
     [SerializeField] List<Antity> _players;
@@ -13,6 +14,8 @@ public class AntityContainer : MonoBehaviour
     private List<Antity> TurnOrders = new List<Antity>();
     private CurentHeroArrowScript Arrow;
     private int CurentActivePlayerIndex;
+
+    public List<Antity> antityes { get { return Players; } }
 
     bool IsPosFree(Vector2 pos)
     {
@@ -55,6 +58,8 @@ public class AntityContainer : MonoBehaviour
         Arrow = Instantiate(_arrow);
         Arrow.SetTerget(Players[CurentActivePlayerIndex].gameObject);
         StartCoroutine(MakeGamePlayble());
+
+        _globalController.AllLookOut();
     }
 
     IEnumerator MakeGamePlayble()

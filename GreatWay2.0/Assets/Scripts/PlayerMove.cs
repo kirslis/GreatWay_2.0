@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     private int CurrentSpeed;
     private int LeftSpeed;
 
+    private GlobalVisionController GlobalVision;
     private bool IsLooking;
     private bool IsHold;
     private bool IsMouseDown;
@@ -44,6 +45,8 @@ public class PlayerMove : MonoBehaviour
         MaxSpeed = _speed;
         CurrentSpeed = _speed;
         LeftSpeed = _speed;
+
+        GlobalVision = FindObjectOfType<GlobalVisionController>();
 
         Spirit = new GameObject();
         Spirit.transform.parent = transform;
@@ -101,13 +104,6 @@ public class PlayerMove : MonoBehaviour
         IsLooking = false;
     }
 
-    private bool CheckCell(Vector2 MousePos)
-    {
-        return (int)Mathf.Abs(Spirit.transform.position.x - MousePos.x) + (int)Mathf.Abs(Spirit.transform.position.y - MousePos.y) == 1
-                            && (GridContainer.passebleTiles.Contains(GridContainer.GetTile(MousePos))
-                            || (GridContainer.countOfPassedTiles > 0 && GridContainer.passedTiles[GridContainer.countOfPassedTiles - 2] == GridContainer.GetTile(MousePos)));
-    }
-
     private void Update()
     {
         if (IsHold)
@@ -119,7 +115,7 @@ public class PlayerMove : MonoBehaviour
 
             if (!MousePos.Equals(Spirit.transform.position))
             {
-                if (CheckCell(MousePos))
+                if (GridContainer.IsCellpasseble(this, MousePos))
                 {
                     Spirit.transform.position = MousePos;
                     GridContainer.AddCellToPassed(this, MousePos);
@@ -163,6 +159,8 @@ public class PlayerMove : MonoBehaviour
 
                 yield return null;
             }
+
+            GlobalVision.AllLookOut();
         }
 
         GridContainer.ResetPath();

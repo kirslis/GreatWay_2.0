@@ -62,7 +62,8 @@ public class GridContainer : MonoBehaviour
                 Destroy(Container[(int)Pos.x][(int)Pos.y].gameObject);
                 Container[(int)Pos.x][(int)Pos.y] = Instantiate(tile, Colls[(int)Pos.x].transform);
                 Container[(int)Pos.x][(int)Pos.y].name = tile.name;
-                Container[(int)Pos.x][(int)Pos.y].transform.position = Pos;
+                Container[(int)Pos.x][(int)Pos.y].transform.position = new Vector3(Pos.x, Pos.y, 1);
+                FindObjectOfType<GlobalVisionController>().AllLookOut();
             }
             return true;
         }
@@ -185,6 +186,7 @@ public class GridContainer : MonoBehaviour
     {
         return Pos.x >= 0 && Pos.x < Container.Count
             && Pos.y >= 0 && Pos.y < Container[0].Count &&
+            Container[(int)Pos.x][(int)Pos.y].isSeen &&
             player.currentSpeed >= Container[(int)Pos.x][(int)Pos.y].currentPathCost &&
             PassebleTiles.Contains(Container[(int)Pos.x][(int)Pos.y]);
     }
@@ -202,7 +204,7 @@ public class GridContainer : MonoBehaviour
         {
             if (CountOfPassedTiles > 1 && PassedTiles[CountOfPassedTiles - 2] == Container[(int)Pos.x][(int)Pos.y])
                 DeleteCellsFromPassed(player, PassedTiles[CountOfPassedTiles - 1].transform.position);
-            else if (IsCellpasseble(player, Pos))
+            else 
             {
                 player.currentSpeed -= Container[(int)Pos.x][(int)Pos.y].currentPathCost;
                 Container[(int)Pos.x][(int)Pos.y].ChangeColor(Color.red);
@@ -257,5 +259,18 @@ public class GridContainer : MonoBehaviour
 
         PassebleTiles.Clear();
         CountOfPassedTiles = 0;
+    }
+
+    public void MakeTilesInVisible(List<BasicTile> tiles)
+    {
+        foreach (BasicTile tile in tiles)
+            if(tile != null)
+            tile.isVisible = false;
+    }
+
+    public void MakeTilesVisible(List<BasicTile> tiles)
+    {
+        foreach (BasicTile tile in tiles)
+            tile.isVisible = true;
     }
 }

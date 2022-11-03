@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: -1051614589676903018}
   - component: {fileID: 5220678748264571155}
   - component: {fileID: 8629435987194540231}
+  - component: {fileID: 3711944937918762193}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -421,6 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc404123323cdc4599dfd3a026a33ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fogStrite: {fileID: 0}
 --- !u!50 &5220678748264571155
 Rigidbody2D:
   serializedVersion: 4
@@ -455,6 +457,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grayDescription: it is test person. dont expect anything spetial
+--- !u!114 &3711944937918762193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034465503680846090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e299b1916563aba40814134ea62f9212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VisionDistance: 3
 --- !u!1 &8059801398591551612
 GameObject:
   m_ObjectHideFlags: 0
