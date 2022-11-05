@@ -28,6 +28,7 @@ public class GridContainer : MonoBehaviour
     public int sizeX { get { return SizeX; } }
     public int sizeY { get { return SizeY; } }
     public float yStep { get { return 1.0f / SizeY; } }
+    public List<List<BasicTile>> container { get { return Container; } }
 
     public BasicTile GetTile(Vector2 Pos)
     {
@@ -63,7 +64,6 @@ public class GridContainer : MonoBehaviour
                 Container[(int)Pos.x][(int)Pos.y] = Instantiate(tile, Colls[(int)Pos.x].transform);
                 Container[(int)Pos.x][(int)Pos.y].name = tile.name;
                 Container[(int)Pos.x][(int)Pos.y].transform.position = new Vector3(Pos.x, Pos.y, 1);
-                FindObjectOfType<GlobalVisionController>().AllLookOut();
             }
             return true;
         }
@@ -147,7 +147,7 @@ public class GridContainer : MonoBehaviour
             BasicTile StartTile = Container[(int)StartPos.x][(int)StartPos.y];
             BasicTile TargetTile = Container[(int)TargetPos.x][(int)TargetPos.y];
 
-            if (TargetTile.isPasseble && Speed >= TargetTile.currentPathCost && (TargetTile.SpentMoveSpeed == -1 || TargetTile.SpentMoveSpeed < StartTile.SpentMoveSpeed + TargetTile.currentPathCost))
+            if (TargetTile.isSeen && TargetTile.isPasseble && Speed >= TargetTile.currentPathCost && (TargetTile.SpentMoveSpeed == -1 || TargetTile.SpentMoveSpeed < StartTile.SpentMoveSpeed + TargetTile.currentPathCost))
             {
                 if (TargetTile.visibleColor != Color.red)
                     TargetTile.ChangeColor(Color.cyan);
@@ -187,8 +187,8 @@ public class GridContainer : MonoBehaviour
         return Pos.x >= 0 && Pos.x < Container.Count
             && Pos.y >= 0 && Pos.y < Container[0].Count &&
             Container[(int)Pos.x][(int)Pos.y].isSeen &&
-            player.currentSpeed >= Container[(int)Pos.x][(int)Pos.y].currentPathCost &&
-            PassebleTiles.Contains(Container[(int)Pos.x][(int)Pos.y]);
+            (PassebleTiles.Contains(Container[(int)Pos.x][(int)Pos.y]) &&
+            player.currentSpeed >= Container[(int)Pos.x][(int)Pos.y].currentPathCost || (Container[(int)Pos.x][(int)Pos.y] == PassedTiles[CountOfPassedTiles - 2]));
     }
 
     public void AddCellToPassed(PlayerMove player, Vector2 Pos)
@@ -204,7 +204,7 @@ public class GridContainer : MonoBehaviour
         {
             if (CountOfPassedTiles > 1 && PassedTiles[CountOfPassedTiles - 2] == Container[(int)Pos.x][(int)Pos.y])
                 DeleteCellsFromPassed(player, PassedTiles[CountOfPassedTiles - 1].transform.position);
-            else 
+            else
             {
                 player.currentSpeed -= Container[(int)Pos.x][(int)Pos.y].currentPathCost;
                 Container[(int)Pos.x][(int)Pos.y].ChangeColor(Color.red);
@@ -264,8 +264,8 @@ public class GridContainer : MonoBehaviour
     public void MakeTilesInVisible(List<BasicTile> tiles)
     {
         foreach (BasicTile tile in tiles)
-            if(tile != null)
-            tile.isVisible = false;
+            if (tile != null)
+                tile.isVisible = false;
     }
 
     public void MakeTilesVisible(List<BasicTile> tiles)

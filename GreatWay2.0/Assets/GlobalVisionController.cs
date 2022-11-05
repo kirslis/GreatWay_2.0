@@ -7,6 +7,7 @@ public class GlobalVisionController : MonoBehaviour
     [SerializeField] GridContainer _gridContainer;
     [SerializeField] AntityContainer _antityContainer;
 
+    private List<BasicTile> InvisibleInGameTiles = new List<BasicTile>();
     private List<BasicTile> VisibleTiles = new List<BasicTile>();
 
     public void AllLookOut()
@@ -27,5 +28,36 @@ public class GlobalVisionController : MonoBehaviour
     {
         foreach (BasicTile newTile in newVisibleTiles)
             VisibleTiles.Add(newTile);
+    }
+
+    public void EnterEditMode()
+    {
+        List<List<BasicTile>> Tiles = _gridContainer.container;
+
+        foreach (List<BasicTile> coll in Tiles)
+            foreach (BasicTile tile in coll)
+            {
+                if (!tile.isSeen)
+                    InvisibleInGameTiles.Add(tile);
+
+                tile.isVisible = true;
+            }
+    }
+
+    public void ExitEditMode()
+    {
+        List<List<BasicTile>> Tiles = _gridContainer.container;
+
+        foreach (List<BasicTile> coll in Tiles)
+            foreach (BasicTile tile in coll)
+            {
+                tile.isVisible = false;
+            }
+
+        foreach (BasicTile tile in InvisibleInGameTiles)
+            tile.isSeen = false;
+
+        InvisibleInGameTiles.Clear();
+        AllLookOut();
     }
 }

@@ -153,7 +153,7 @@ public class TurnQeue : MonoBehaviour
     {
         while (!icon.transform.localPosition.Equals(Pos))
         {
-            icon.transform.localPosition = Vector2.MoveTowards(icon.transform.localPosition, Pos, 1f);
+            icon.transform.localPosition = Vector2.MoveTowards(icon.transform.localPosition, Pos, 100 * Time.deltaTime);
             yield return null;
         }
     }

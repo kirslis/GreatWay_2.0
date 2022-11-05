@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class MapRedactorMenu : BasicMenu
 {
+    [SerializeField] GlobalVisionController _globalVision;
     [SerializeField] Button _variantMenuButton;
     [SerializeField] Sprite _variantMenuButtonSpriteSwap;
     [SerializeField] GameObject _panel;
@@ -14,6 +16,18 @@ public class MapRedactorMenu : BasicMenu
 
     private GameObject OpenedVatiantPanel;
     private bool IsOpen = false;
+
+    override protected void OnEnable()
+    {
+        base.OnEnable();
+        _globalVision.EnterEditMode();
+    }
+
+    override protected void OnDisable()
+    {
+        base.OnDisable();
+        _globalVision.ExitEditMode();
+    }
 
     override protected void Awake()
     {
@@ -58,7 +72,7 @@ public class MapRedactorMenu : BasicMenu
 
     public void ChangeVariantTipe(GameObject VariantPanel)
     {
-        if(OpenedVatiantPanel != null)
+        if (OpenedVatiantPanel != null)
             OpenedVatiantPanel.SetActive(false);
         OpenedVatiantPanel = VariantPanel;
         OpenedVatiantPanel.SetActive(true);
@@ -67,6 +81,6 @@ public class MapRedactorMenu : BasicMenu
     public override void ThrowErrorText(string text)
     {
         ErrorText error = Instantiate(_errorText, transform);
-        error.StartFly(text,Mouse.current.position.ReadValue());
+        error.StartFly(text, Mouse.current.position.ReadValue());
     }
 }

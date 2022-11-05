@@ -2357,6 +2357,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _errorTextPlace: {fileID: 0}
   _errorText: {fileID: 7687005018368449492, guid: 621b2e9fa69a894409532b9d47db31ef, type: 3}
+  _globalVision: {fileID: 2104374789}
   _variantMenuButton: {fileID: 357831637}
   _variantMenuButtonSpriteSwap: {fileID: -6254622084952476891, guid: 236587ec711348a4792e0060efb1bf73, type: 3}
   _panel: {fileID: 1377185638}

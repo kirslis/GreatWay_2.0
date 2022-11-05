@@ -19,12 +19,12 @@ public class BasicMenu : MonoBehaviour
         Actions.Enable();
     }
 
-    private void OnEnable()
+    virtual protected void OnEnable()
     {
         Actions.Enable();
     }
 
-    private void OnDisable()
+    virtual protected void OnDisable()
     {
         Actions.Disable();
     }

@@ -11,6 +11,7 @@ public class TileVisualController : MonoBehaviour
     private SpriteRenderer SpriteR;
     private Sprite BaseSprite;
 
+    public bool isSeen { set { IsSeen = value; if (!IsSeen) MakeUnSeen(); } }
     public bool isVisible { set { if (value && !IsSeen) MakeSeen(); ChageVisibleMode(value); } }
 
     private void Awake()
@@ -25,6 +26,12 @@ public class TileVisualController : MonoBehaviour
         IsSeen = true;
         SpriteR.sprite = BaseSprite;
         GetComponent<ParticleSystem>().Play();
+    }
+
+    private void MakeUnSeen()
+    {
+        IsSeen = false;
+        SpriteR.sprite = _fogStrite;
     }
 
     private void ChageVisibleMode(bool value)

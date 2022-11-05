@@ -19,9 +19,9 @@ public class BasicTile : MonoBehaviour
     public int SpentMoveSpeed = -1;
     private int CurrentPathCost;
 
-    public bool isSeen { get { return IsSeen; } }
+    public bool isSeen { get { return IsSeen; } set { IsSeen = false; GetComponent<TileVisualController>().isSeen = false; } }
     public bool isSeeThrought { get { return IsSeeThrought; } set { } }
-    public bool isVisible { set { IsVisible = value; if (value) IsSeen = true ; GetComponent<TileVisualController>().isVisible = value; } }
+    public bool isVisible { set { IsVisible = value; if (value) IsSeen = true; GetComponent<TileVisualController>().isVisible = value; } get { return IsVisible; } }
     public int basePathCost { get { return BasePathCost; } }
     public bool isPasseble { get { return IsPasseble; } set { IsPasseble = value; } }
     public Color visibleColor { get { return VisibleColor; } set { VisibleColor = value; ChangeColorAnim(value); } }
@@ -34,7 +34,7 @@ public class BasicTile : MonoBehaviour
         BasePathCost = _pathCost;
         CurrentPathCost = _pathCost;
 
-        IsSeeThrought = _isSeeThrought; 
+        IsSeeThrought = _isSeeThrought;
         BaseColor = Sprite.color;
         visibleColor = BaseColor;
     }
@@ -58,7 +58,7 @@ public class BasicTile : MonoBehaviour
 
     private void ChangeColorAnim(Color newColor)
     {
-       StopAllCoroutines();
+        StopAllCoroutines();
         StartCoroutine(ChangeColorCoroutine(newColor));
     }
 
