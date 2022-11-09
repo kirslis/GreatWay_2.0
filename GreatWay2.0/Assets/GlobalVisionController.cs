@@ -9,6 +9,9 @@ public class GlobalVisionController : MonoBehaviour
 
     private List<BasicTile> InvisibleInGameTiles = new List<BasicTile>();
     private List<BasicTile> VisibleTiles = new List<BasicTile>();
+    private bool IsInReductMode = false;
+
+    public bool isInReductMode { get { return IsInReductMode; } }
 
     public void AllLookOut()
     {
@@ -30,9 +33,15 @@ public class GlobalVisionController : MonoBehaviour
             VisibleTiles.Add(newTile);
     }
 
+    public void AddToInvisibleInGame(BasicTile tile)
+    {
+        InvisibleInGameTiles.Add(tile);
+    }
+
     public void EnterEditMode()
     {
         List<List<BasicTile>> Tiles = _gridContainer.container;
+        IsInReductMode = true;
 
         foreach (List<BasicTile> coll in Tiles)
             foreach (BasicTile tile in coll)
@@ -46,16 +55,19 @@ public class GlobalVisionController : MonoBehaviour
 
     public void ExitEditMode()
     {
+        IsInReductMode = false;
         List<List<BasicTile>> Tiles = _gridContainer.container;
 
         foreach (List<BasicTile> coll in Tiles)
             foreach (BasicTile tile in coll)
             {
-                tile.isVisible = false;
+                if (tile != null)
+                    tile.isVisible = false;
             }
 
         foreach (BasicTile tile in InvisibleInGameTiles)
-            tile.isSeen = false;
+            if (tile != null)
+                tile.isSeen = false;
 
         InvisibleInGameTiles.Clear();
         AllLookOut();

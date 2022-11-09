@@ -34,7 +34,7 @@ public class MapController : MonoBehaviour
     {
         if (_gridContainer.IsChosenTileFree())
         {
-            _antityContainer.AddCreature(creature, Pos);
+            _antityContainer.AddCreature(creature, _gridContainer.redactorCursorPos);
             return true;
         }
 

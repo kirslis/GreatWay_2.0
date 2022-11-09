@@ -1,0 +1,45 @@
+{
+    "name": "DiceActions",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "fef008d8-7c29-4fa9-a27f-500e80863374",
+            "actions": [
+                {
+                    "name": "ActivateDice",
+                    "type": "Button",
+                    "id": "1f42e101-5d33-44ce-ae59-649fa6f657f6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "cc2d1fd8-8f93-4eb5-bf2d-787125abe3ad",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivateDice",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "New control scheme",
+            "bindingGroup": "New control scheme",
+            "devices": [
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

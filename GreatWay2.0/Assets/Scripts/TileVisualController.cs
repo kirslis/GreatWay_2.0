@@ -18,7 +18,9 @@ public class TileVisualController : MonoBehaviour
     {
         SpriteR = GetComponent<SpriteRenderer>();
         BaseSprite = SpriteR.sprite;
-        SpriteR.sprite = _fogStrite;
+
+        if (!FindObjectOfType<GlobalVisionController>().isInReductMode)
+            SpriteR.sprite = _fogStrite;
     }
 
     private void MakeSeen()

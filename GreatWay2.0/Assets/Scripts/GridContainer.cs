@@ -8,6 +8,7 @@ public class GridContainer : MonoBehaviour
     [SerializeField] BasicTile _tile;
     [SerializeField] GameObject ContainerObject;
     [SerializeField] GameObject _redactorCursor;
+    [SerializeField] GlobalVisionController _globalVisionController;
 
     private int SizeX;
     private int SizeY;
@@ -29,6 +30,7 @@ public class GridContainer : MonoBehaviour
     public int sizeY { get { return SizeY; } }
     public float yStep { get { return 1.0f / SizeY; } }
     public List<List<BasicTile>> container { get { return Container; } }
+    public Vector2 redactorCursorPos { get { return RedactorCursor.transform.position; } }
 
     public BasicTile GetTile(Vector2 Pos)
     {
@@ -64,6 +66,7 @@ public class GridContainer : MonoBehaviour
                 Container[(int)Pos.x][(int)Pos.y] = Instantiate(tile, Colls[(int)Pos.x].transform);
                 Container[(int)Pos.x][(int)Pos.y].name = tile.name;
                 Container[(int)Pos.x][(int)Pos.y].transform.position = new Vector3(Pos.x, Pos.y, 1);
+                _globalVisionController.AddToInvisibleInGame(Container[(int)Pos.x][(int)Pos.y]);
             }
             return true;
         }
