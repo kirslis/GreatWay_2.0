@@ -7,10 +7,12 @@ public class GameInterface : BasicMenu
 {
     [SerializeField] BasicMenu MainMenu;
     [SerializeField] List<Button> Buttons;
+    [SerializeField] GameObject _antitiesEnterfaceFolder;
 
     private bool IsActive = true;
 
     public bool isEnterfaceActive { set { SetEntarfaceActive(value); } }
+    public GameObject antitiesEnterfaceFolder { get { return _antitiesEnterfaceFolder; } }
 
     private void SetEntarfaceActive(bool isActive)
     {

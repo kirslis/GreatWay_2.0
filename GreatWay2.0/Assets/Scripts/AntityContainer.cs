@@ -15,6 +15,9 @@ public class AntityContainer : MonoBehaviour
     private CurentHeroArrowScript Arrow;
     private int CurentActivePlayerIndex;
 
+    private List<Antity> AllyesList = new List<Antity>();
+    private List <Antity> EnemyesList = new List<Antity>();
+
     public List<Antity> antityes { get { return Players; } }
 
     bool IsPosFree(Vector2 pos)
@@ -44,12 +47,19 @@ public class AntityContainer : MonoBehaviour
         {
             Antity newPlayer = Instantiate(player, _alliesContainer.transform);
             newPlayer.transform.position = GetFreePos();
-            newPlayer.GetComponent<SpriteRenderer>().color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+            newPlayer.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
             newPlayer.isActive = false;
             newPlayer.name = player.name + "_" + i.ToString();
             newPlayer.GetComponent<PlayerMove>().yStep = FindObjectOfType<GridContainer>().yStep;
             newPlayer.GetComponent<CharacterStats>().RollInit();
             Players.Add(newPlayer);
+
+            if (newPlayer.tag == "Ally")
+                AllyesList.Add(newPlayer);
+            else if(newPlayer.tag == "Enemy")
+                EnemyesList.Add(newPlayer);
+
+
             i++;
         }
 
@@ -64,7 +74,6 @@ public class AntityContainer : MonoBehaviour
 
     IEnumerator MakeGamePlayble()
     {
-        Debug.Log("??");
         yield return new WaitForSeconds(7f);
         Debug.Log("START");
         _qeue.SetQeue(Players);
@@ -110,7 +119,7 @@ public class AntityContainer : MonoBehaviour
     {
         Antity creature = Instantiate(Creature, _alliesContainer.transform);
         creature.transform.position = Pos;
-        creature.GetComponent<SpriteRenderer>().color = new Color(Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, 1);
+        creature.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, 1);
         creature.isActive = false;
         creature.name = creature.name + "_" + (Players.Count - 1).ToString();
         creature.GetComponent<PlayerMove>().yStep = FindObjectOfType<GridContainer>().yStep;

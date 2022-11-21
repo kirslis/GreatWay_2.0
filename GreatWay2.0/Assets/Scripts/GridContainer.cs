@@ -74,7 +74,7 @@ public class GridContainer : MonoBehaviour
         return false;
     }
 
-    private void MakePosValis(ref Vector2 pos)
+    private void MakePosValid(ref Vector2 pos)
     {
         if (pos.x < 0)
             pos.x = 0;
@@ -97,7 +97,7 @@ public class GridContainer : MonoBehaviour
         if (IsReducting)
         {
             Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            MakePosValis(ref pos);
+            MakePosValid(ref pos);
 
             RedactorCursor.transform.position = new Vector3((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), -3);
         }

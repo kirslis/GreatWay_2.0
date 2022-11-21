@@ -21,8 +21,6 @@ public class DescriptionViewer : MonoBehaviour
     {
         if (!IsOpen)
         {
-            Debug.Log(BlackText.rectTransform.sizeDelta.y);
-            Debug.Log(GrayText.rectTransform.sizeDelta.y);
             StartCoroutine(OpenCoroutine(Pos));
             IsOpen = true;
         }
@@ -34,8 +32,8 @@ public class DescriptionViewer : MonoBehaviour
 
         RectTransform Rect = gameObject.GetComponent<RectTransform>();
         Rect.sizeDelta = new Vector2(BaseWidh, 0);
-        transform.position = new Vector3(Pos.x, Pos.y + (BlackText.rectTransform.sizeDelta.y + GrayText.rectTransform.sizeDelta.y) * 4, Pos.z);
-        Vector2 FinalSize = new Vector2(Rect.sizeDelta.x, BlackText.rectTransform.sizeDelta.y + GrayText.rectTransform.sizeDelta.y + 20);
+        transform.position = new Vector3(Pos.x, Pos.y + (BlackText.rectTransform.sizeDelta.y + GrayText.rectTransform.sizeDelta.y) * 4, 0);
+        Vector2 FinalSize = new Vector2(BaseWidh, BlackText.rectTransform.sizeDelta.y + GrayText.rectTransform.sizeDelta.y + 20);
         float sizeStep = (BlackText.rectTransform.sizeDelta.y + GrayText.rectTransform.sizeDelta.y) / 20;
         while (!Rect.sizeDelta.Equals(FinalSize))
         {
@@ -58,7 +56,7 @@ public class DescriptionViewer : MonoBehaviour
     IEnumerator CloseCoroutine()
     {
         RectTransform Rect = gameObject.GetComponent<RectTransform>();
-        Vector2 FinalSize = new Vector2(Rect.sizeDelta.x, 0);
+        Vector2 FinalSize = new Vector2(BaseWidh, 0);
         float sizeStep = (BlackText.rectTransform.sizeDelta.y + GrayText.rectTransform.sizeDelta.y) / 20;
         while (!Rect.sizeDelta.Equals(FinalSize))
         {
@@ -66,7 +64,7 @@ public class DescriptionViewer : MonoBehaviour
             yield return null;
         }
 
-        Rect.sizeDelta = new Vector2(0, 0);
+        Rect.sizeDelta = new Vector2(BaseWidh, 0);
         gameObject.SetActive(false);
     }
 }

@@ -27,7 +27,7 @@ public class DicePlace : MonoBehaviour
         for (int i = 0; i < Count; i++)
         {
             Dices.Add(Instantiate(Dice));
-            Dices[i].transform.position = new Vector3(Random.Range(_generatePos.transform.position.x - 1, _generatePos.transform.position.x + 1), Random.Range(_generatePos.transform.position.y - 1, _generatePos.transform.position.y + 1), _generatePos.transform.position.z);
+            Dices[i].transform.position = new Vector3(Random.Range(_generatePos.transform.position.x - 30, _generatePos.transform.position.x + 30), Random.Range(_generatePos.transform.position.y - 30, _generatePos.transform.position.y + 30), _generatePos.transform.position.z);
 
             yield return new WaitForSeconds(0.3f);
         }

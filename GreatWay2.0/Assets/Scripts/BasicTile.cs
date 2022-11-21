@@ -7,6 +7,7 @@ public class BasicTile : MonoBehaviour
     [SerializeField] int _pathCost;
     [SerializeField] private bool IsPasseble = true;
     [SerializeField] bool _isSeeThrought = true;
+    [SerializeField] bool _isAttackThrought = true;
 
     private int BasePathCost;
     private Color BaseColor;
@@ -15,6 +16,7 @@ public class BasicTile : MonoBehaviour
     private bool IsVisible;
     private bool IsSeen;
     private bool IsSeeThrought;
+    private bool IsAttackThrought;
 
     public int SpentMoveSpeed = -1;
     private int CurrentPathCost;
@@ -26,6 +28,7 @@ public class BasicTile : MonoBehaviour
     public bool isPasseble { get { return IsPasseble; } set { IsPasseble = value; } }
     public Color visibleColor { get { return VisibleColor; } set { VisibleColor = value; ChangeColorAnim(value); } }
     public int currentPathCost { get { return CurrentPathCost; } set { CurrentPathCost = value; } }
+    public bool isAttackThrought { get { return IsAttackThrought; } set { IsAttackThrought = value; } }
 
     private void Awake()
     {
@@ -37,6 +40,7 @@ public class BasicTile : MonoBehaviour
         IsSeeThrought = _isSeeThrought;
         BaseColor = Sprite.color;
         visibleColor = BaseColor;
+        IsAttackThrought = _isAttackThrought;
     }
 
     public void SetBaseColor(Color newColor)

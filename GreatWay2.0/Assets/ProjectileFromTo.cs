@@ -21,7 +21,7 @@ public class ProjectileFromTo : MonoBehaviour
     void Update()
     {
         if (Target != null && !transform.position.Equals(Target.transform.position))
-            Rb.AddForce(Target.transform.position - transform.position);
+            Rb.AddForce((Target.transform.position - transform.position) * 300 * Time.deltaTime);
     }
 
     virtual protected void OnTriggerEnter(Collider other)

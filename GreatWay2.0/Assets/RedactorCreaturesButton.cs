@@ -18,13 +18,18 @@ public class RedactorCreaturesButton : BasicReductorButton, IPointerEnterHandler
 
     private void FixedUpdate()
     {
-        if (IsMouseDown)
+        if (IsMouseDown && IsSingleReducted)
         {
-            IsMouseDown = false;
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            IsSingleReducted = false;
+            Vector2 mousePos = Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             mousePos = new Vector2((int)(mousePos.x + 0.5f), (int)(mousePos.y + 0.5f));
 
-            if (!LastTilePos.Equals(mousePos))
+            Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
+
+            if (hit.collider != null)
+                AbortReduct();
+
+            else if (!LastTilePos.Equals(mousePos))
             {
                 if (!Map.TryAddCreature(_resourse.GetComponent<Antity>(), mousePos))
                     ErrorMassage("something interferes");

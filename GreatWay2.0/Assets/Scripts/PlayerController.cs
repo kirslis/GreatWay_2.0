@@ -10,5 +10,6 @@ public class PlayerController : Antity
     {
         base.SetActive(value);
         GetComponent<PlayerMove>().isActivaPlayer = value;
+        GetComponent<UiController>().isActive = value;
     }
 }

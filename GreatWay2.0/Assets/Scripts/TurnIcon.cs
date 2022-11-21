@@ -9,5 +9,6 @@ public class TurnIcon : MonoBehaviour
     private Antity Parrent;
 
     public bool isVisible { get { return IsVisible; } set { IsVisible = value; } }
-    public Antity parrent { get { return Parrent; } set { Parrent = value; } }
+    public Antity parrent { get { return Parrent; } set { Parrent = value; GetComponent<Image>().sprite = Parrent.GetComponent<CharacterStats>().image; } }
+
 }

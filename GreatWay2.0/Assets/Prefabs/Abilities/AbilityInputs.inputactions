@@ -1,0 +1,63 @@
+{
+    "name": "AbilityInputs",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "c38530cd-1ba8-4c44-beb8-90838f6e2e79",
+            "actions": [
+                {
+                    "name": "Use",
+                    "type": "Button",
+                    "id": "3ca8bb87-c35e-48cb-85a4-b79a20688a2a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "AbortAiming",
+                    "type": "Button",
+                    "id": "03448ca5-572d-40a8-af48-dc128302ad91",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5939b8a6-d811-484b-9e2b-b0324dd61b4e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fafcc464-e3c0-4613-b888-f00359ecf86e",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbortAiming",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ca8e1b03-f1c2-4457-883d-9fb914141221",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbortAiming",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

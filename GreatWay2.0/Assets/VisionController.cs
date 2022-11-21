@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class VisionController : MonoBehaviour
 {
+    [SerializeField] int VisionDistance;
+
     private List<BasicTile> VisibleTiles = new List<BasicTile>();
     private GlobalVisionController GlobalVision;
-    [SerializeField] int VisionDistance;
     private GridContainer Grid;
     private float YDeviation = 0.2f;
 
@@ -30,8 +31,6 @@ public class VisionController : MonoBehaviour
         int bottomBorder = Pos.y - VisionDistance > 0 ? (int)Pos.y - VisionDistance : 0;
         int topBorder = Pos.y + VisionDistance < Grid.sizeY ? (int)Pos.y + VisionDistance : Grid.sizeY - 1;
 
-        Debug.Log("VISION:" + leftBorder + " -l " + rightBorder + "-r " + topBorder + "-t " + bottomBorder + "-b");
-
         for (int i = bottomBorder; i <= topBorder; i++)
         {
             for (int j = leftBorder; j <= rightBorder; j++)
@@ -42,7 +41,6 @@ public class VisionController : MonoBehaviour
             }
         }
 
-        Debug.Log("ADD");
         GlobalVision.AddVisibleTiles(VisibleTiles);
     }
 
@@ -67,7 +65,6 @@ public class VisionController : MonoBehaviour
             bool isVisible = true;
             while (i < hits.Length && isVisible)
             {
-                Debug.Log(hits[i].collider.gameObject.name);
                 if (!hits[i].collider.GetComponent<BasicTile>().isSeeThrought && hits[i].collider.gameObject != tile.gameObject)
                     isVisible = false;
 
@@ -76,13 +73,15 @@ public class VisionController : MonoBehaviour
 
             if (isVisible)
             {
-                Debug.DrawRay(startPos, (Vector2)tile.transform.position - startPos, Color.green, 5);
+                Debug.DrawRay(startPos, (Vector2)tile.transform.position - startPos, Color.green, 3);
+                directions.Clear();
                 return true;
             }
         }
 
-        Debug.DrawRay(startPos, (Vector2)tile.transform.position - startPos, Color.red, 5);
-
+        Debug.DrawRay(startPos, (Vector2)tile.transform.position - startPos, Color.red, 3);
+        
+        directions.Clear();
         return false;
     }
 }

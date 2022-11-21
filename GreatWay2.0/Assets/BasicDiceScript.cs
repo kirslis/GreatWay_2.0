@@ -70,7 +70,9 @@ public class BasicDiceScript : MonoBehaviour
         num.transform.position = transform.position;
         num.value = int.Parse(Num.text);
         num.GetComponent<TextMeshPro>().text = Num.text;
+        num.GetComponent<TextMeshPro>().color = Color.red;
         num.target = Place.resultViewer.gameObject;
+        num.GetComponent<Rigidbody>().velocity = new Vector2(Random.Range(-4,4) * 25, Random.Range(-4,4) * 25);
 
         Destroy(gameObject);
     }

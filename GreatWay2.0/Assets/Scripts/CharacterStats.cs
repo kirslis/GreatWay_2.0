@@ -7,8 +7,10 @@ public class CharacterStats : MonoBehaviour
 {
     [SerializeField] TurnIcon _icon;
     [SerializeField] PseudoThrowViewer _pseudoThrowViewer;
-    [SerializeField] int[] AddictionalStats = new int[6];
+    [SerializeField] int[] _addictionalStats = new int[6];
     [SerializeField] Sprite _image;
+    [SerializeField] int _countOfHPDices;
+    [SerializeField] int _typeOfHPDice;
 
     private List<int> Stats = new List<int>();
     private List<int> StatMods = new List<int>();
@@ -16,6 +18,9 @@ public class CharacterStats : MonoBehaviour
     private int CountOfStats = 6;
     private int Init = -1;
     private TurnIcon Icon;
+    private int MaxHP;
+    private int CurrentHp;
+    private UiController UI;
 
     public Sprite image { get { return _image; } }
     public TurnIcon icon { get { return Icon; } }
@@ -23,6 +28,8 @@ public class CharacterStats : MonoBehaviour
 
     private void Awake()
     {
+        UI = GetComponent<UiController>();
+
         StatsDictionry = new Dictionary<string, int>()
         {
             {"str", 0 },
@@ -43,6 +50,28 @@ public class CharacterStats : MonoBehaviour
         Icon.parrent = GetComponent<Antity>();
         Icon.gameObject.SetActive(false);
         GenerateStats();
+
+        int CurentStatIndex;
+        StatsDictionry.TryGetValue("fort", out CurentStatIndex);
+
+        for (int i = 0; i < _countOfHPDices; i++)
+        {
+            int Add = (Random.Range(1, _typeOfHPDice + 1) + StatMods[CurentStatIndex]);
+            MaxHP += Add > 0 ? Add : 1;
+        }
+
+        CurrentHp = MaxHP;
+
+        UI.playerInteface.maxHp = MaxHP;
+        UI.playerInteface.currentHp = CurrentHp;
+
+        UI.playerInteface.UpdateStatsView();
+    }
+
+    public void DealDamage(int damge, string DamageType)
+    {
+        CurrentHp -= damge;
+        UI.playerInteface.UpdateStatsView();
     }
 
     private void GenerateStats()
@@ -73,7 +102,7 @@ public class CharacterStats : MonoBehaviour
 
         int mod;
         StatsDictionry.TryGetValue("dex", out mod);
-        int Value = Random.Range(1, 20);
+        int Value = Random.Range(1, 21);
 
         _pseudoThrowViewer.gameObject.SetActive(true);
         _pseudoThrowViewer.View(Value, StatMods[mod]);

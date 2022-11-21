@@ -1,0 +1,33 @@
+{
+    "name": "VariiantPanelActions",
+    "maps": [
+        {
+            "name": "Opened",
+            "id": "dec07fb3-781f-492f-9a3f-90b97d031319",
+            "actions": [
+                {
+                    "name": "LMouse",
+                    "type": "Button",
+                    "id": "e57e7800-c959-40e7-bcce-d7fa20b2b062",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e393e98a-abf7-4942-a4a5-29b90e951e4f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

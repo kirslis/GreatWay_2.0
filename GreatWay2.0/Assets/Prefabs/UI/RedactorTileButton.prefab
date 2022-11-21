@@ -214,9 +214,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73999d7d094b00445ab033bdff8001a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tile: {fileID: 2833624288882750164, guid: b08c1f3f88b7c924f9ee92c7b8eb2dd5, type: 3}
+  _resourse: {fileID: 0}
   _descriptionViewer: {fileID: 0}
-  _grayDecription: 
+  _baseSprite: {fileID: 0}
+  _TextViewer: {fileID: 0}
+  _name: 
+  _menu: {fileID: 0}
 --- !u!65 &8378616110410701454
 BoxCollider:
   m_ObjectHideFlags: 0

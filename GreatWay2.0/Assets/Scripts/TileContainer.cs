@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class TileContainer : MonoBehaviour
 {
-    private List<Antity> EntitiesOnTile = new List<Antity>();
+    private Antity EntityOnTile;
+
+    public Antity entityOnTile { get { return EntityOnTile; } } 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.transform.parent.TryGetComponent(out CharacterStats ant))
         {
-            EntitiesOnTile.Add(ant.GetComponent<Antity>());
+            EntityOnTile = ant.GetComponent<Antity>();
         }
     }
 
@@ -18,12 +20,24 @@ public class TileContainer : MonoBehaviour
     {
         if (collision.transform.parent.TryGetComponent(out CharacterStats ant))
         {
-            EntitiesOnTile.Remove(ant.GetComponent<Antity>());
+            EntityOnTile = null;
         }
+    }
+
+    public void MarkTargets(Color color, string tag)
+    {
+        if (EntityOnTile != null && EntityOnTile.tag == tag)
+                EntityOnTile.GetComponent<AntityVisualController>().color = color;
+    }
+
+    public void RefreshTargets()
+    {
+        if (EntityOnTile != null)
+            EntityOnTile.GetComponent<AntityVisualController>().ResetColor();
     }
 
     public bool IsContainEntity()
     {
-        return EntitiesOnTile.Count > 0;
+        return EntityOnTile != null;
     }
 }

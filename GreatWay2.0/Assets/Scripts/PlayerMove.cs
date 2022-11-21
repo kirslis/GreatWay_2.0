@@ -82,6 +82,14 @@ public class PlayerMove : MonoBehaviour
         Input.Disable();
     }
 
+    public void SetMoveble(bool value)
+    {
+        if (value)
+            Input.Enable();
+        else
+            Input.Disable();
+    }
+
     private bool IsClickOnObject()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -97,6 +105,7 @@ public class PlayerMove : MonoBehaviour
 
     private void AbortMoving()
     {
+        Debug.Log("ABORT MOVING");
         GridContainer.ResetLightedTiles();
         Spirit.gameObject.SetActive(false);
         GridContainer.ResetPath();
@@ -167,10 +176,10 @@ public class PlayerMove : MonoBehaviour
 
                 yield return null;
             }
-
+            LeftSpeed -= WalkPoints[i].currentPathCost;
             GlobalVision.AllLookOut();
         }
-
+        IsLooking = false;
         GridContainer.ResetPath();
 
         Input.MoveActions.Enable();

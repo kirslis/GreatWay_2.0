@@ -17,6 +17,8 @@ public class BasicReductorButton : MonoBehaviour
     protected MapController Map;
     protected bool IsMouseDown;
     protected bool IsReducting { set { MiniTile.gameObject.SetActive(value); } get { return MiniTile.gameObject.activeSelf; } }
+    protected bool IsSingleReducted;
+    protected Camera Cam;
 
     private bool IsMouseIn;
     private float WaitTime;
@@ -45,10 +47,10 @@ public class BasicReductorButton : MonoBehaviour
         else
             _TextViewer.text = _resourse.name;
 
-
+        Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
         Input = new RedactorButtonActions();
         Input.Reduct.AbortReduct.performed += context => { if (IsReducting) AbortReduct(); };
-        Input.Reduct.ReductMap.performed += context => { if (IsReducting) IsMouseDown = !IsMouseDown; };
+        Input.Reduct.ReductMap.performed += context => { if (IsReducting) IsMouseDown = !IsMouseDown; if (!IsSingleReducted) IsSingleReducted = true; };
 
         Map = FindObjectOfType<MapController>();
 
@@ -71,6 +73,8 @@ public class BasicReductorButton : MonoBehaviour
 
     private void Update()
     {
+        Vector2 Pos = Mouse.current.position.ReadValue();
+
         if (IsMouseIn)
         {
             WaitTime += Time.deltaTime;
@@ -80,12 +84,12 @@ public class BasicReductorButton : MonoBehaviour
         {
             _descriptionViewer.gameObject.SetActive(true);
             _descriptionViewer.SetDescription(_resourse.GetComponent<BasicDescription>());
-            _descriptionViewer.OpenDescription(Mouse.current.position.ReadValue());
+            _descriptionViewer.OpenDescription(Cam.ScreenToWorldPoint(Pos));
         }
 
         if (IsReducting)
         {
-            MiniTile.transform.position = Mouse.current.position.ReadValue() + MiniDeviation;
+            MiniTile.transform.position = (Vector2)Cam.ScreenToWorldPoint(Pos) + MiniDeviation;
         }
     }
 
@@ -95,7 +99,7 @@ public class BasicReductorButton : MonoBehaviour
         Map.StartReduct();
     }
 
-    private void AbortReduct()
+    protected void AbortReduct()
     {
         IsReducting = false;
         IsMouseDown = false;

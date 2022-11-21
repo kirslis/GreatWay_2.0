@@ -58,16 +58,16 @@ public class GlobalVisionController : MonoBehaviour
         IsInReductMode = false;
         List<List<BasicTile>> Tiles = _gridContainer.container;
 
-        foreach (List<BasicTile> coll in Tiles)
-            foreach (BasicTile tile in coll)
-            {
-                if (tile != null)
-                    tile.isVisible = false;
-            }
-
         foreach (BasicTile tile in InvisibleInGameTiles)
             if (tile != null)
                 tile.isSeen = false;
+
+        foreach (List<BasicTile> coll in Tiles)
+            foreach (BasicTile tile in coll)
+            {
+                if (tile != null && tile.isSeen)
+                    tile.isVisible = false;
+            }
 
         InvisibleInGameTiles.Clear();
         AllLookOut();

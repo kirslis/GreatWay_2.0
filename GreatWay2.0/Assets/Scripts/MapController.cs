@@ -12,7 +12,7 @@ public class MapController : MonoBehaviour
 
     private bool IsGenerated = false;
 
-    public bool isInterfaceActive { set {_gameInterface.isEnterfaceActive = value; } }
+    public bool isInterfaceActive { set { _gameInterface.isEnterfaceActive = value; } }
     public bool isGenerated { get { return IsGenerated; } }
 
     public void StartReduct()
@@ -43,11 +43,18 @@ public class MapController : MonoBehaviour
 
     public void GenerateMap(int sizeX, int sizeY)
     {
+        StartCoroutine(GenerateMapCourutine(sizeX, sizeY));
+    }
+
+    IEnumerator GenerateMapCourutine(int sizeX, int sizeY)
+    {
         isInterfaceActive = false;
         if (IsGenerated)
             ClearMap();
 
         _gridContainer.GenerateMap(sizeX, sizeY);
+        yield return null;
+
         _antityContainer.GenerateCreatures();
         IsGenerated = true;
     }

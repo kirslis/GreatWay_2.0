@@ -12,7 +12,7 @@ public class TileVisualController : MonoBehaviour
     private Sprite BaseSprite;
 
     public bool isSeen { set { IsSeen = value; if (!IsSeen) MakeUnSeen(); } }
-    public bool isVisible { set { if (value && !IsSeen) MakeSeen(); ChageVisibleMode(value); } }
+    public bool isVisible { set { if (value && !IsSeen) MakeSeen(); ChangeVisibleMode(value); } }
 
     private void Awake()
     {
@@ -36,11 +36,11 @@ public class TileVisualController : MonoBehaviour
         SpriteR.sprite = _fogStrite;
     }
 
-    private void ChageVisibleMode(bool value)
+    private void ChangeVisibleMode(bool value)
     {
         if (value)
             GetComponent<BasicTile>().SetBaseColor(Color.white);
-        else
+        else if(IsSeen)
             GetComponent<BasicTile>().SetBaseColor(Color.gray);
         IsVisible = value;
     }
