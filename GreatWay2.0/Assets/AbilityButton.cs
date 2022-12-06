@@ -10,15 +10,15 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     [SerializeField] Image _blankImage;
 
     private ActionButtonActions Actions;
-    private Camera Cam;
-    private Image SmallButton;
+    protected Camera Cam;
+    protected Image SmallButton;
     private BasicAbilityScript Ability;
     private AbilityController Player;
-    private bool IsAiming;
+    protected bool IsAiming;
     private BasicTile LastTargetTile = null;
 
-    public BasicAbilityScript ability { set { Ability = value; GetComponent<Image>().sprite = value.skillSprite; SmallButton.sprite = value.skillSprite; } get { return Ability; } }
-    public AbilityController player { set { Player = value; } }
+    public BasicAbilityScript ability { set { Ability = value; GetComponent<Image>().sprite = value.skillSprite; SmallButton.sprite = value.skillSprite; Debug.Log(name); } get { return Ability; } }
+    public AbilityController player { set { Player = value;  } }
 
     private void Awake()
     {
@@ -28,9 +28,9 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
         Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
         SmallButton = Instantiate(_blankImage, transform);
-        SmallButton.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
-        Color baseColor = SmallButton.GetComponent<Image>().color;
-        SmallButton.GetComponent<Image>().color = new Color(baseColor.r, baseColor.g, baseColor.b, 0.5f);
+        SmallButton.sprite = GetComponent<Image>().sprite;
+        Color baseColor = SmallButton.color;
+        SmallButton.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0.5f);
         SmallButton.enabled = false;
         SmallButton.rectTransform.sizeDelta = Vector2.one * 50;
         SmallButton.maskable = false;
@@ -50,7 +50,7 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
             ////Debug.Log(Cam.ScreenToViewportPoint(Mouse.current.position.ReadValue()));
             ///
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit,1000, LayerMask.GetMask("Grid"))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit, 1000, LayerMask.GetMask("Grid"))
                 && hit.transform.parent.TryGetComponent(out BasicTile targetTile) && !targetTile.Equals(LastTargetTile)
                 && Ability.IsTileTargetble(targetTile))
             {
@@ -87,15 +87,16 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         GetComponent<Button>().enabled = true;
     }
 
-    public void OnClick()
+    virtual public void OnClick()
     {
         Debug.Log("CLICK");
         IsAiming = true;
+        Debug.Log("PLAYER = " + Player);
         Ability.OnAbilityClick(Player);
         Actions.Enable();
     }
 
-    private void StopAiming()
+    virtual protected void StopAiming()
     {
         IsAiming = false;
         Ability.Abort();

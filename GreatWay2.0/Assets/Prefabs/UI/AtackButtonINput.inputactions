@@ -1,0 +1,33 @@
+{
+    "name": "AtackButtonINput",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "0c596db2-3259-423c-a6e0-0fc66c2cd14d",
+            "actions": [
+                {
+                    "name": "RightMouse",
+                    "type": "Button",
+                    "id": "23af403f-f76e-45ad-baeb-67017292fa30",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "840f17a6-abad-4cb0-b4c8-adbf9ea334dd",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightMouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

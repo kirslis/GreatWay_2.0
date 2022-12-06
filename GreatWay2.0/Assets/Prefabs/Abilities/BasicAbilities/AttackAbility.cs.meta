@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 56b7c9c631083e441a08da75a1bfc748
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _baseAbilityImage: {instanceID: 0}
+  - _baseAbilityButton: {fileID: 3830354949634947889, guid: ef359f497c1204f44a47b865f3eb52af, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

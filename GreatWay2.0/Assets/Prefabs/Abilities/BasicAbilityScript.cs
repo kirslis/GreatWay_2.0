@@ -8,22 +8,26 @@ public class BasicAbilityScript : ScriptableObject
 {
     [SerializeField] public string _areaTypeTag = "single";
 
-    [SerializeField] Sprite _baseAbilityImage;
-    [SerializeField] AbilityButton _baseAbilityButton;
-    [SerializeField] string _targetTag;
-    [SerializeField] int _range;
+    [SerializeField] protected Sprite _baseAbilityImage;
+    [SerializeField] public AbilityButton _baseAbilityButton;
+    [SerializeField] protected string _targetTag;
+    [SerializeField] protected int _range;
+    [SerializeField] protected DataTypeHolderScript.AbiltyType _type;
 
     protected BasicUsibleTargetAreaViewer Area;
+    protected AbilityController Caster;
 
-    private List<ButtonPin> CoreButtons = new List<ButtonPin>();
-    private List<ButtonPin> SubButtons = new List<ButtonPin>();
+    protected List<ButtonPin> CoreButtons = new List<ButtonPin>();
+    protected List<ButtonPin> SubButtons = new List<ButtonPin>();
     private AbilityInputs Input;
 
+    public AbilityController caster { set { Caster = value; } }
     public Sprite skillSprite { get { return _baseAbilityImage; } }
     public BasicUsibleTargetAreaViewer area { set { Area = value; } }
+    public DataTypeHolderScript.AbiltyType type { get { return _type; } }
 
     //ссылка на кнопку и ее обладателя
-    private struct ButtonPin
+    protected struct ButtonPin
     {
         public AbilityButton button;
         public AbilityController player;
@@ -46,13 +50,15 @@ public class BasicAbilityScript : ScriptableObject
 
     public void OnAbilityClick(AbilityController player)
     {
+        Debug.Log(player + " - " + _range + " - " + GetTargetTag() + " - " + Area);
         Input.Enable();
-        Area.LightUpTargetArea(player.transform.position, _range, _targetTag);
+        Caster = player;
+        Area.LightUpTargetArea(player.transform.position, _range, GetTargetTag());
     }
 
     public virtual void Use()
     {
-
+        Abort();
     }
 
     public void Abort()
@@ -61,7 +67,7 @@ public class BasicAbilityScript : ScriptableObject
         Input.Disable();
     }
 
-    private bool TryGetSubButton(AbilityController player, out ButtonPin OutButton)
+    protected bool TryGetSubButton(AbilityController player, out ButtonPin OutButton)
     {
         foreach (ButtonPin button in SubButtons)
             if (button.player.Equals(player))
@@ -74,7 +80,7 @@ public class BasicAbilityScript : ScriptableObject
         return false;
     }
 
-    private void DeleteSubButton(ButtonPin button)
+    protected void DeleteSubButton(ButtonPin button)
     {
         Destroy(button.button.gameObject);
         SubButtons.Remove(button);
@@ -91,7 +97,7 @@ public class BasicAbilityScript : ScriptableObject
             }
     }
 
-    public AbilityButton AddNewSubButton(AbilityController Player)
+    virtual public AbilityButton AddNewSubButton(AbilityController Player)
     {
         if (SubButtons.Count > 0 && TryGetSubButton(Player, out ButtonPin button))
             DeleteSubButton(button);
@@ -104,7 +110,7 @@ public class BasicAbilityScript : ScriptableObject
         return NewButton;
     }
 
-    public AbilityButton AddNewCoreButton(AbilityController Player)
+    virtual public AbilityButton AddNewCoreButton(AbilityController Player)
     {
         AbilityButton NewButton = Instantiate(_baseAbilityButton);
         NewButton.ability = this;
@@ -121,7 +127,17 @@ public class BasicAbilityScript : ScriptableObject
 
     public void Reaim(BasicTile NewTargetTile)
     {
-        Debug.Log("REAIM");
-        Area.Reaim(NewTargetTile, _targetTag);
+        Area.Reaim(NewTargetTile, GetTargetTag());
+    }
+
+    private string GetTargetTag()
+    {
+        string TargetTag;
+        if (_targetTag == "Ally" && Caster.tag == "Ally" || _targetTag == "Enemy" && Caster.tag == "Enemy")
+            TargetTag = "Ally";
+        else
+            TargetTag = "Enemy";
+
+        return TargetTag;
     }
 }

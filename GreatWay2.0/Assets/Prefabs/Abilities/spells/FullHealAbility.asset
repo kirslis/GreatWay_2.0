@@ -17,3 +17,4 @@ MonoBehaviour:
   _baseAbilityButton: {fileID: 1756680680454434576, guid: 28a82afc386e35d41b8563476d736512, type: 3}
   _targetTag: Ally
   _range: 6
+  _type: 2

@@ -122,11 +122,13 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
     virtual public void AbortAiming()
     {
+        TargetCursor.transform.position = new Vector2(-100, -100);
         TargetCursor.gameObject.SetActive(false);
 
         foreach (TargetTile tile in TargetTiles)
             RefreshTargetTileColor(tile.Tile);
         TargetTiles.Clear();
+        Targets.Clear();
         IsAiming = false;
     }
 

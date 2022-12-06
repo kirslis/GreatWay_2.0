@@ -222,9 +222,10 @@ GameObject:
   - component: {fileID: 3711944937918762193}
   - component: {fileID: -8196206536154498893}
   - component: {fileID: 7319858322811895834}
+  - component: {fileID: 1754842036026074542}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,7 +292,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -446,8 +447,8 @@ MonoBehaviour:
   _pseudoThrowViewer: {fileID: 4478358216274673161}
   _addictionalStats: 000000000000000000000000000000000000000000000000
   _image: {fileID: 21300048, guid: 300ea1a5869382b43bf6149aba92c4db, type: 3}
-  _countOfHPDices: 0
-  _typeOfHPDice: 0
+  _countOfHPDices: 3
+  _typeOfHPDice: 8
 --- !u!114 &8629435987194540231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,10 +487,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9753904166bfcc459c628aa83d6688d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _abilities:
-  - {fileID: 11400000, guid: 606a957c5b55bbd4f9000fcafd4bc056, type: 2}
-  - {fileID: 11400000, guid: 1908cd239cdb07045bb179ca1ebc801d, type: 2}
-  - {fileID: 11400000, guid: 68e8885c8e8f4ca4f98985b0b43bb58d, type: 2}
+  _spells: []
+  _actions: []
   _playerUIController: {fileID: 1680859570584994038}
 --- !u!114 &7319858322811895834
 MonoBehaviour:
@@ -503,6 +502,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5e649decaf6143af47da43d5c2354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1754842036026074542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034465503680846090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddbb87ffbb50f34da2517ce90c0062b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainWeapon: {fileID: 11400000, guid: a08f2f0e5d45aa6428a5ab7664f896af, type: 2}
+  _subWeapon: {fileID: 11400000, guid: d8c743f0678f5f646aae8ad0f2230cee, type: 2}
 --- !u!1 &8059801398591551612
 GameObject:
   m_ObjectHideFlags: 0

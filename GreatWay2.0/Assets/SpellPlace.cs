@@ -17,12 +17,15 @@ public class SpellPlace : MonoBehaviour
 
     public void ChangeSpell(AbilityButton Spell, AbilityController Player)
     {
-        if(CurrentButton != null)
+        if (CurrentButton != null)
         {
             AbilityManager.DeleteSubButton(CurrentButton);
         }
 
-        CurrentButton = AbilityManager.CreateNewSubAbilityButton(Spell.ability, Player);
+        if (Spell.ability is AttackAbility)
+            CurrentButton = AbilityManager.CreateNewSubAttackButton(Spell.ability as AttackAbility, Player);
+        else
+            CurrentButton = AbilityManager.CreateNewSubAbilityButton(Spell.ability, Player);
         CurrentButton.transform.SetParent(transform, false);
         CurrentButton.transform.position = transform.position;
 

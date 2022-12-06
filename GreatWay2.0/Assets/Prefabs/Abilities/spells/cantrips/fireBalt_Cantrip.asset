@@ -7,13 +7,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbee13965520eb44582c1638f3814972, type: 3}
+  m_Script: {fileID: 11500000, guid: c11ebe4c8a585f8409235e6d3a1808f1, type: 3}
   m_Name: fireBalt_Cantrip
   m_EditorClassIdentifier: 
-  _baseAbilityImage: {fileID: 21300000, guid: 530bcabb1501d8148a19a77465ecac03, type: 3}
+  _areaTypeTag: single
+  _baseAbilityImage: {fileID: 21300000, guid: 6a3fb9963fb36ac49ac25095ee92a4fe, type: 3}
   _baseAbilityButton: {fileID: 1756680680454434576, guid: 28a82afc386e35d41b8563476d736512, type: 3}
-  _areaType: {fileID: 11400000, guid: 9e01b6c9cc4b41346bdbd5fe88c18379, type: 2}
   _targetTag: Enemy
   _range: 6
+  _type: 2
+  _countOfDamageDices: 1
+  _damageDiceType: 6
+  _damageType: 0
+  _abilityName: Fire Balt
+  _isGaranteedHit: 0
+  _shotenParticle: {fileID: 5574819358003780844, guid: 4e82c208710bcb94fbfb04e224733f7b, type: 3}
+  _attackType: 2

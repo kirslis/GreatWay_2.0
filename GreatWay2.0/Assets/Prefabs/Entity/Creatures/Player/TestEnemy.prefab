@@ -5002,6 +5002,7 @@ GameObject:
   - component: {fileID: 5089560003729236237}
   - component: {fileID: 208062603079441691}
   - component: {fileID: 7043245354620864713}
+  - component: {fileID: -278242241300851130}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -5205,6 +5206,8 @@ MonoBehaviour:
   _pseudoThrowViewer: {fileID: 1100574335088865219}
   _addictionalStats: 000000000000000000000000000000000000000000000000
   _image: {fileID: -2331352242086191015, guid: 6fc66c021eec74942b4e71a3fde4dc04, type: 3}
+  _countOfHPDices: 3
+  _typeOfHPDice: 8
 --- !u!50 &8724534870948147417
 Rigidbody2D:
   serializedVersion: 4
@@ -5264,6 +5267,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5e649decaf6143af47da43d5c2354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-278242241300851130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836589967148583104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9753904166bfcc459c628aa83d6688d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spells:
+  - {fileID: 11400000, guid: 1e8ca900faaecf74d967221b2bad08ea, type: 2}
+  - {fileID: 11400000, guid: 68e8885c8e8f4ca4f98985b0b43bb58d, type: 2}
+  _actions: []
+  _playerUIController: {fileID: -5877287865981645576}
 --- !u!1 &8639309259933461651
 GameObject:
   m_ObjectHideFlags: 0

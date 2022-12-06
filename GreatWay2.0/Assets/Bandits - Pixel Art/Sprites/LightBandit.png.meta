@@ -254,9 +254,9 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -325,7 +325,7 @@ TextureImporter:
       name: LightBandit_36
       rect:
         serializedVersion: 2
-        x: 14
+        x: 476
         y: 227
         width: 20
         height: 20
@@ -346,10 +346,10 @@ TextureImporter:
       name: LightBandit_0
       rect:
         serializedVersion: 2
-        x: 14
+        x: 138
         y: 210
-        width: 26
-        height: 37
+        width: 33
+        height: 34
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -367,10 +367,10 @@ TextureImporter:
       name: LightBandit_1
       rect:
         serializedVersion: 2
-        x: 62
+        x: 186
         y: 210
-        width: 26
-        height: 37
+        width: 33
+        height: 34
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -388,10 +388,10 @@ TextureImporter:
       name: LightBandit_2
       rect:
         serializedVersion: 2
-        x: 110
+        x: 234
         y: 210
-        width: 26
-        height: 36
+        width: 33
+        height: 35
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -409,10 +409,10 @@ TextureImporter:
       name: LightBandit_3
       rect:
         serializedVersion: 2
-        x: 158
+        x: 282
         y: 210
-        width: 26
-        height: 36
+        width: 33
+        height: 35
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -430,10 +430,10 @@ TextureImporter:
       name: LightBandit_4
       rect:
         serializedVersion: 2
-        x: 197
+        x: 328
         y: 210
-        width: 33
-        height: 35
+        width: 26
+        height: 36
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -451,10 +451,10 @@ TextureImporter:
       name: LightBandit_5
       rect:
         serializedVersion: 2
-        x: 245
+        x: 376
         y: 210
-        width: 33
-        height: 35
+        width: 26
+        height: 36
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -472,10 +472,10 @@ TextureImporter:
       name: LightBandit_6
       rect:
         serializedVersion: 2
-        x: 293
+        x: 424
         y: 210
-        width: 33
-        height: 34
+        width: 26
+        height: 37
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -493,10 +493,10 @@ TextureImporter:
       name: LightBandit_7
       rect:
         serializedVersion: 2
-        x: 341
+        x: 472
         y: 210
-        width: 33
-        height: 34
+        width: 26
+        height: 37
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -514,10 +514,10 @@ TextureImporter:
       name: LightBandit_8
       rect:
         serializedVersion: 2
-        x: 14
+        x: 138
         y: 162
-        width: 25
-        height: 33
+        width: 31
+        height: 35
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -535,10 +535,10 @@ TextureImporter:
       name: LightBandit_9
       rect:
         serializedVersion: 2
-        x: 58
-        y: 163
-        width: 29
-        height: 33
+        x: 187
+        y: 162
+        width: 31
+        height: 35
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -556,10 +556,10 @@ TextureImporter:
       name: LightBandit_10
       rect:
         serializedVersion: 2
-        x: 105
-        y: 162
-        width: 32
-        height: 35
+        x: 234
+        y: 164
+        width: 31
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -577,10 +577,10 @@ TextureImporter:
       name: LightBandit_11
       rect:
         serializedVersion: 2
-        x: 158
-        y: 161
-        width: 25
-        height: 35
+        x: 283
+        y: 162
+        width: 20
+        height: 33
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -598,10 +598,10 @@ TextureImporter:
       name: LightBandit_12
       rect:
         serializedVersion: 2
-        x: 209
-        y: 162
-        width: 20
-        height: 33
+        x: 329
+        y: 161
+        width: 25
+        height: 35
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -619,10 +619,10 @@ TextureImporter:
       name: LightBandit_13
       rect:
         serializedVersion: 2
-        x: 247
-        y: 164
-        width: 31
-        height: 32
+        x: 375
+        y: 162
+        width: 32
+        height: 35
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -640,10 +640,10 @@ TextureImporter:
       name: LightBandit_14
       rect:
         serializedVersion: 2
-        x: 294
-        y: 162
-        width: 31
-        height: 35
+        x: 425
+        y: 163
+        width: 29
+        height: 33
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -661,10 +661,10 @@ TextureImporter:
       name: LightBandit_15
       rect:
         serializedVersion: 2
-        x: 343
+        x: 473
         y: 162
-        width: 31
-        height: 35
+        width: 25
+        height: 33
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -682,10 +682,10 @@ TextureImporter:
       name: LightBandit_16
       rect:
         serializedVersion: 2
-        x: 12
+        x: 138
         y: 114
         width: 24
-        height: 46
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -703,10 +703,10 @@ TextureImporter:
       name: LightBandit_17
       rect:
         serializedVersion: 2
-        x: 59
+        x: 186
         y: 114
-        width: 25
-        height: 45
+        width: 33
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -724,10 +724,10 @@ TextureImporter:
       name: LightBandit_18
       rect:
         serializedVersion: 2
-        x: 107
+        x: 234
         y: 114
-        width: 25
-        height: 45
+        width: 36
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -745,10 +745,10 @@ TextureImporter:
       name: LightBandit_19
       rect:
         serializedVersion: 2
-        x: 155
+        x: 282
         y: 114
-        width: 24
-        height: 45
+        width: 38
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -766,10 +766,10 @@ TextureImporter:
       name: LightBandit_20
       rect:
         serializedVersion: 2
-        x: 192
+        x: 333
         y: 114
-        width: 38
-        height: 44
+        width: 24
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -787,10 +787,10 @@ TextureImporter:
       name: LightBandit_21
       rect:
         serializedVersion: 2
-        x: 242
+        x: 380
         y: 114
-        width: 36
-        height: 44
+        width: 25
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -808,10 +808,10 @@ TextureImporter:
       name: LightBandit_22
       rect:
         serializedVersion: 2
-        x: 293
+        x: 428
         y: 114
-        width: 33
-        height: 44
+        width: 25
+        height: 45
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -829,10 +829,10 @@ TextureImporter:
       name: LightBandit_23
       rect:
         serializedVersion: 2
-        x: 350
+        x: 476
         y: 114
         width: 24
-        height: 44
+        height: 46
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -850,10 +850,10 @@ TextureImporter:
       name: LightBandit_24
       rect:
         serializedVersion: 2
-        x: 4
+        x: 140
         y: 66
-        width: 39
-        height: 12
+        width: 23
+        height: 33
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -871,10 +871,10 @@ TextureImporter:
       name: LightBandit_25
       rect:
         serializedVersion: 2
-        x: 55
+        x: 187
         y: 66
-        width: 35
-        height: 22
+        width: 26
+        height: 31
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -892,9 +892,9 @@ TextureImporter:
       name: LightBandit_26
       rect:
         serializedVersion: 2
-        x: 106
+        x: 235
         y: 66
-        width: 27
+        width: 26
         height: 31
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -913,7 +913,7 @@ TextureImporter:
       name: LightBandit_27
       rect:
         serializedVersion: 2
-        x: 155
+        x: 283
         y: 66
         width: 26
         height: 31
@@ -934,7 +934,7 @@ TextureImporter:
       name: LightBandit_28
       rect:
         serializedVersion: 2
-        x: 203
+        x: 331
         y: 66
         width: 26
         height: 31
@@ -955,9 +955,9 @@ TextureImporter:
       name: LightBandit_29
       rect:
         serializedVersion: 2
-        x: 251
+        x: 379
         y: 66
-        width: 26
+        width: 27
         height: 31
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -976,10 +976,10 @@ TextureImporter:
       name: LightBandit_30
       rect:
         serializedVersion: 2
-        x: 299
+        x: 422
         y: 66
-        width: 26
-        height: 31
+        width: 35
+        height: 22
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -997,10 +997,10 @@ TextureImporter:
       name: LightBandit_31
       rect:
         serializedVersion: 2
-        x: 349
+        x: 469
         y: 66
-        width: 23
-        height: 33
+        width: 39
+        height: 12
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1018,10 +1018,10 @@ TextureImporter:
       name: LightBandit_32
       rect:
         serializedVersion: 2
-        x: 14
+        x: 324
         y: 18
-        width: 26
-        height: 34
+        width: 43
+        height: 8
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1039,10 +1039,10 @@ TextureImporter:
       name: LightBandit_33
       rect:
         serializedVersion: 2
-        x: 62
+        x: 378
         y: 18
-        width: 26
-        height: 34
+        width: 24
+        height: 37
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1060,10 +1060,10 @@ TextureImporter:
       name: LightBandit_34
       rect:
         serializedVersion: 2
-        x: 110
+        x: 424
         y: 18
-        width: 24
-        height: 37
+        width: 26
+        height: 34
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1081,10 +1081,10 @@ TextureImporter:
       name: LightBandit_35
       rect:
         serializedVersion: 2
-        x: 145
+        x: 472
         y: 18
-        width: 43
-        height: 8
+        width: 26
+        height: 34
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class AbilityController : MonoBehaviour
 {
-    [SerializeField] List<BasicAbilityScript> _abilities;
+    [SerializeField] List<BasicAbilityScript> _spells;
+    [SerializeField] List<BasicAbilityScript> _actions;
     [SerializeField] UiController _playerUIController;
 
     private AbilityManager AbilityFolder;
+    //private 
 
     private void Awake()
     {
         AbilityFolder = FindObjectOfType<AbilityManager>();
 
-        foreach (BasicAbilityScript ability in _abilities)
+        foreach (BasicAbilityScript ability in _spells)
         {
-            AbilityButton NewButton = AbilityFolder.CreateNewCoreAbilityButton(ability, this);
-            NewButton.transform.parent = _playerUIController.playerInteface.basicActionsVariantPanel.buttonContainer.transform;
+            AbilityButton NewButton = AbilityFolder.CreateNewCoreSpellButton(ability, this);
+            NewButton.transform.parent = _playerUIController.playerInteface.spellVariantPanel.buttonContainer.transform;
         }
+    }
+
+    public void AddAction(BasicAbilityScript action)
+    {
+    }
+
+    public void AddAttack(BasicWeapon weapon)
+    {
+        AbilityFolder.AddAttackAbility(weapon, this).transform.parent = _playerUIController.playerInteface.basicAtionVariantPanel.buttonContainer.transform;
     }
 
 }

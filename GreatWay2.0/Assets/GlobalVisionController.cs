@@ -23,7 +23,6 @@ public class GlobalVisionController : MonoBehaviour
         foreach (Antity antity in antities)
             antity.GetComponent<VisionController>().LookOut();
 
-        Debug.Log("ERLEY");
         _gridContainer.MakeTilesVisible(VisibleTiles);
     }
 

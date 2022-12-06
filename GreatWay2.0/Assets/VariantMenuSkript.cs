@@ -10,7 +10,6 @@ public class VariantMenuSkript : MonoBehaviour
     [SerializeField] Sprite _variantMenuButtonSpriteSwap;
     [SerializeField] GameObject _panel;
     [SerializeField] GameObject _buttonsContainer;
-    [SerializeField] int _countOfButtonsInRow = 1;
 
     private VariiantPanelActions Action;
     private Camera Cam;
@@ -39,7 +38,7 @@ public class VariantMenuSkript : MonoBehaviour
         if (!IsOpen)
         {
             StartCoroutine(ChangeSizeVarianMenuCoroutine(
-                 (_buttonsContainer.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y + _buttonsContainer.GetComponent<VerticalLayoutGroup>().spacing) * _buttonsContainer.transform.childCount / _countOfButtonsInRow + (_buttonsContainer.transform.childCount % _countOfButtonsInRow != 0 ? 1 : 0) + _buttonsContainer.GetComponent<VerticalLayoutGroup>().padding.top
+                 (_buttonsContainer.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta.y + _buttonsContainer.GetComponent<GridLayoutGroup>().spacing.y) * 2
                  ));
             Action.Enable();
         }

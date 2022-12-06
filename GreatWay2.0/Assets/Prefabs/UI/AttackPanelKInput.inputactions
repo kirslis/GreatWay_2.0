@@ -1,0 +1,33 @@
+{
+    "name": "AttackPanelKInput",
+    "maps": [
+        {
+            "name": "Mouse",
+            "id": "1c31ec76-2b82-4fe9-93ef-f5e8282efee1",
+            "actions": [
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "7f2729fc-0f2e-40ad-a2a4-bc18c68df12a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b63708d5-1386-4b54-852e-3e66d7b5f48e",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

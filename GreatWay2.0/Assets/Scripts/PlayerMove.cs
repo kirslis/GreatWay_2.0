@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] int _speed = 6;
 
+    private Animator Anim;
     private int MaxSpeed;
     private int CurrentSpeed;
     private int LeftSpeed;
@@ -42,6 +43,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
+        Anim = GetComponent<Animator>();
+
         MaxSpeed = _speed;
         CurrentSpeed = _speed;
         LeftSpeed = _speed;
@@ -158,6 +161,7 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveToEndPoint()
     {
+        Anim.SetBool("IsRunning", true);
         List<BasicTile> WalkPoints = GridContainer.passedTiles;
         StartCoroutine(MoveCourutine(WalkPoints, GridContainer.countOfPassedTiles));
     }
@@ -169,6 +173,11 @@ public class PlayerMove : MonoBehaviour
 
         for (int i = 0; i < Count; i++)
         {
+            if (WalkPoints[i].transform.position.x < transform.position.x)
+                GetComponent<SpriteRenderer>().flipX = true;
+            else if (WalkPoints[i].transform.position.x > transform.position.x)
+                GetComponent<SpriteRenderer>().flipX = false;
+
             while (!((Vector2)transform.position).Equals(WalkPoints[i].transform.position))
             {
                 transform.position = Vector2.MoveTowards(transform.position, WalkPoints[i].transform.position, 3 * Time.deltaTime);
@@ -181,6 +190,7 @@ public class PlayerMove : MonoBehaviour
         }
         IsLooking = false;
         GridContainer.ResetPath();
+        Anim.SetBool("IsRunning", false);
 
         Input.MoveActions.Enable();
     }
