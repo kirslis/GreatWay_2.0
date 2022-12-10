@@ -16,11 +16,13 @@ public class BasicAbilityScript : ScriptableObject
 
     protected BasicUsibleTargetAreaViewer Area;
     protected AbilityController Caster;
+    protected AbilityManager AbilityManager;
 
     protected List<ButtonPin> CoreButtons = new List<ButtonPin>();
     protected List<ButtonPin> SubButtons = new List<ButtonPin>();
     private AbilityInputs Input;
 
+    public AbilityManager abilityManager { set { AbilityManager = value; } }
     public AbilityController caster { set { Caster = value; } }
     public Sprite skillSprite { get { return _baseAbilityImage; } }
     public BasicUsibleTargetAreaViewer area { set { Area = value; } }
@@ -50,9 +52,10 @@ public class BasicAbilityScript : ScriptableObject
 
     public void OnAbilityClick(AbilityController player)
     {
-        Debug.Log(player + " - " + _range + " - " + GetTargetTag() + " - " + Area);
         Input.Enable();
         Caster = player;
+        Debug.Log(player + " - " + _range + " - " + GetTargetTag() + " - " + Area);
+
         Area.LightUpTargetArea(player.transform.position, _range, GetTargetTag());
     }
 

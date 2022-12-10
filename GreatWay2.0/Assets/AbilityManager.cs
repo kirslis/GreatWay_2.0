@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class AbilityManager : MonoBehaviour
     [SerializeField] List<BasicAbilityScript> _spells;
     [SerializeField] SimpleAttackButon _simpleAttackButton;
     [SerializeField] List<BasicAbilityScript> _actions;
+    [SerializeField] ErrorText _errorText;
 
     private List<AttackAbility> Attacks = new List<AttackAbility>();
 
@@ -22,6 +24,7 @@ public class AbilityManager : MonoBehaviour
             while (i < _areaViewers.Count && _areaViewers[i]._typeTag != ability._areaTypeTag)
                 i++;
 
+            ability.abilityManager = this;
             ability.area = _areaViewers[i];
             ability.Awake();
         }
@@ -78,17 +81,18 @@ public class AbilityManager : MonoBehaviour
         while (i < _areaViewers.Count && _areaViewers[i]._typeTag != newAttack._areaTypeTag)
             i++;
 
+        newAttack.abilityManager = this;
         newAttack.area = _areaViewers[i];
         newAttack.Awake();
 
         Attacks.Add(newAttack);
-   
+
         return newAttack.AddNewCoreButton(Player);
     }
 
     public AbilityButton CreateNewSubAttackButton(AttackAbility Ability, AbilityController Player)
     {
-        foreach (AttackAbility attack in Attacks )
+        foreach (AttackAbility attack in Attacks)
             if (Ability.Equals(attack))
             {
                 return attack.AddNewSubButton(Player);
@@ -96,5 +100,12 @@ public class AbilityManager : MonoBehaviour
 
         Debug.Log("Not Ok");
         return null;
+    }
+
+    public void RollMassage(Vector3 Pos, string Massage, int value, Color color)
+    {
+        ErrorText text = Instantiate(_errorText);
+        text.GetComponent<TextMeshPro>().color = color;
+        text.StartFly(Massage + " " + value.ToString(), new Vector3(Pos.x, Pos.y + 0.5f, -3));
     }
 }

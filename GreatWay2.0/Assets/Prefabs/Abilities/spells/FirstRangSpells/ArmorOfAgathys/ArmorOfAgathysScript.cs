@@ -10,10 +10,10 @@ public class ArmorOfAgathysScript : DamageIncomingBuff
 
     public override void Use()
     {
-        List<Antity> targets = Area.targets;
-        foreach (Antity target in targets)
+        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+        foreach (DataTypeHolderScript.TargetAntity target in targets)
         {
-            target.GetComponent<CharacterStats>().temporaryHP = 5;
+            target.Target.GetComponent<CharacterStats>().temporaryHP = 5;
         }
 
         base.Use();

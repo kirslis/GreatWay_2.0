@@ -29,15 +29,20 @@ public class CharacterStats : MonoBehaviour
     private int MaxHP;
     private int CurrentHP;
     private int TemporaryHP;
+    private int AC;
     private UiController UI;
+    private AbilityManager AbilityManager;
 
     public int temporaryHP { set { if (value > TemporaryHP) { TemporaryHP = value; UI.playerInteface.temporaryHP = value; UI.playerInteface.UpdateStatsView(); } } get { return TemporaryHP; } }
     public Sprite image { get { return _image; } }
     public TurnIcon icon { get { return Icon; } }
     public int init { get { return Init; } }
 
+    public int ac { get { return AC; } }
+
     private void Awake()
     {
+        AbilityManager = FindObjectOfType<AbilityManager>();
         Anim = GetComponent<Animator>();
         UI = GetComponent<UiController>();
 
@@ -71,8 +76,13 @@ public class CharacterStats : MonoBehaviour
             MaxHP += Add > 0 ? Add : 1;
         }
 
+        StatsDictionry.TryGetValue("dex", out CurentStatIndex);
+
+        AC = 10 + StatMods[CurentStatIndex];
+
         CurrentHP = MaxHP;
 
+        UI.playerInteface.aC = AC;
         UI.playerInteface.maxHp = MaxHP;
         UI.playerInteface.currentHp = CurrentHP;
 
@@ -119,11 +129,13 @@ public class CharacterStats : MonoBehaviour
         {
             if (TemporaryHP >= damage)
             {
+                AbilityManager.RollMassage(transform.position, "", damage, Color.blue);
                 TemporaryHP -= damage;
                 damage = 0;
             }
             else
             {
+                AbilityManager.RollMassage(transform.position, "", TemporaryHP, Color.blue);
                 damage -= TemporaryHP;
                 TemporaryHP = 0;
             }
@@ -133,10 +145,13 @@ public class CharacterStats : MonoBehaviour
 
         if (damage > 0)
         {
+            AbilityManager.RollMassage(transform.position, "", damage, Color.red);
             CurrentHP -= damage;
             UI.playerInteface.currentHp = CurrentHP;
             Anim.SetTrigger("Hurt");
         }
+        else
+            AbilityManager.RollMassage(transform.position, "blocked", -1, Color.gray);
 
         foreach (HurtListener listener in HurtListeners)
             listener(this);
@@ -178,6 +193,7 @@ public class CharacterStats : MonoBehaviour
 
     public void Heal(int heal)
     {
+        AbilityManager.RollMassage(transform.position, "", heal, Color.green);
         CurrentHP += heal;
         if (CurrentHP > MaxHP)
             CurrentHP = MaxHP;

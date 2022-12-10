@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Basic Damage Ability", menuName = "Basic Damage Ability", order = 51)]
@@ -15,20 +16,41 @@ public class BasicDamageAbilityScript : BasicAbilityScript
 
     public override void Use()
     {
-        List<Antity> targets = Area.targets;
+        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
         Debug.Log("DAMAGE!");
-        foreach (Antity target in targets)
+        foreach (DataTypeHolderScript.TargetAntity target in targets)
         {
-            Debug.Log(target);
-            
+            int attackRoll;
+            bool isHitting = false;
+
+            if (!_isGaranteedHit)
+            {
+                if (target.TypeOfTarget == 1)
+                {
+                    int firstRoll = Random.Range(1, 21);
+                    int secondRoll = Random.Range(1, 21);
+                    attackRoll = Mathf.Min(firstRoll, secondRoll);
+                }
+                else
+                    attackRoll = Random.Range(1, 21);
+
+                isHitting = attackRoll >= target.Target.GetComponent<CharacterStats>().ac;
+                AbilityManager.RollMassage(Caster.transform.position, "attack roll", attackRoll, Color.red);
+            }
+            else
+                isHitting = true;
+
 
             Vector3 StartPos = new Vector3(Caster.transform.position.x, Caster.transform.position.y + Caster.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2, Caster.transform.position.z);
 
             BasicShotenParticleScript particle = Instantiate(_shotenParticle, StartPos, Quaternion.identity);
-            particle.target = target;
+
+            particle.target = target.Target;
+
             particle.ability = this;
+            particle.isHitting = isHitting;
         }
-        Abort();
+        base.Use();
     }
 
     public virtual void DealDamage(Antity target)

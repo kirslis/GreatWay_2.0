@@ -12,13 +12,13 @@ public class BasicHealAbility : BasicAbilityScript
 
     public override void Use()
     {
-        List<Antity> targets = Area.targets;
+        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
         Debug.Log("Heal!");
-        foreach (Antity target in targets)
+        foreach (DataTypeHolderScript.TargetAntity target in targets)
         {
             Debug.Log(target);
-            HealingParticlesScript healing = Instantiate(_healingParticle, target.transform.position, Quaternion.identity);
-            healing.target = target;
+            HealingParticlesScript healing = Instantiate(_healingParticle, target.Target.transform.position, Quaternion.identity);
+            healing.target = target.Target;
             healing.ability = this;
         }
         Abort();

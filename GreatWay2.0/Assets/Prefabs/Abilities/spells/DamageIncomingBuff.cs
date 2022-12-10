@@ -10,12 +10,12 @@ public class DamageIncomingBuff : BasicAbilityScript
 
     public override void Use()
     {
-        List<Antity> targets = Area.targets;
-        foreach (Antity target in targets)
+        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+        foreach (DataTypeHolderScript.TargetAntity target in targets)
         {
-            target.GetComponent<CharacterStats>().AddDamageIncomingModificator(DamageIncoming);
-            target.GetComponent<CharacterStats>().AddHurtListener(HurtCheck);
-            Instantiate(_particles, target.transform);
+            target.Target.GetComponent<CharacterStats>().AddDamageIncomingModificator(DamageIncoming);
+            target.Target.GetComponent<CharacterStats>().AddHurtListener(HurtCheck);
+            Instantiate(_particles, target.Target.transform);
         }
         base.Use();
     }

@@ -36,7 +36,9 @@ public class DataTypeHolderScript : ScriptableObject
 
     public enum WeaponMod
     {
-
+        ranged,
+        reaching,
+        fencing
     }
 
     public enum AbiltyType
@@ -44,5 +46,17 @@ public class DataTypeHolderScript : ScriptableObject
         basicAbility,
         classAbility,
         spell
+    }
+
+    public struct TargetAntity
+    {
+        public Antity Target;
+        public int TypeOfTarget;
+
+        public TargetAntity(Antity target, int typeOfTile)
+        {
+            Target = target;
+            TypeOfTarget = typeOfTile;
+        }
     }
 }

@@ -19,6 +19,7 @@ public class BasicWeapon : BasicEquip
     private int DamageMod = 0;
 
     public int range { get { return _range; } }
+    public List<DataTypeHolderScript.WeaponMod> weaponMods { get { return _weaponMods; } }
 
     public void Equip(CharacterStats Person)
     {

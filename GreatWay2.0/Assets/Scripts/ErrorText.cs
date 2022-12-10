@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class ErrorText : MonoBehaviour
 {
@@ -19,26 +20,45 @@ public class ErrorText : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void StartFly(string text, Vector2 Pos)
+    public void StartFly(string text, Vector3 Pos)
     {
-        GetComponent<Text>().text = text;
+        if (GetComponent<Text>() != null)
+            GetComponent<Text>().text = text;
+        else
+            GetComponent<TextMeshPro>().text = text;
         transform.position = Pos;
         StartCoroutine(ErrorTextFlyCoroutine());
     }
 
     IEnumerator ErrorTextFlyCoroutine()
     {
-        yield return new WaitForSeconds(WaitTime);
 
-        Vector2 targetPos = new Vector2(transform.position.x, transform.position.y + 300);
-        while (GetComponent<Text>().color.a > 0)
+        if (GetComponent<Text>() != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
-            Color currColor  = GetComponent<Text>().color;
-            GetComponent<Text>().color = new Color(currColor.r, currColor.g, currColor.b, currColor.a - 0.2f * Time.deltaTime);
-            yield return null;
+            yield return new WaitForSeconds(WaitTime);
+            Vector2 targetPos = new Vector2(transform.position.x, transform.position.y + 300);
+
+            while (GetComponent<Text>().color.a > 0)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                Color currColor = GetComponent<Text>().color;
+                GetComponent<Text>().color = new Color(currColor.r, currColor.g, currColor.b, currColor.a - 0.2f * Time.deltaTime);
+                yield return null;
+            }
         }
 
+        else if (GetComponent<TextMeshPro>() != null)
+        {
+            Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+
+            while (GetComponent<TextMeshPro>().color.a > 0)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, speed / 100 * Time.deltaTime);
+                Color currColor = GetComponent<TextMeshPro>().color;
+                GetComponent<TextMeshPro>().color = new Color(currColor.r, currColor.g, currColor.b, currColor.a - 0.2f * Time.deltaTime);
+                yield return null;
+            }
+        }
         Destroy(gameObject);
     }
 }

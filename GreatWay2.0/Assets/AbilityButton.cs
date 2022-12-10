@@ -18,7 +18,7 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     private BasicTile LastTargetTile = null;
 
     public BasicAbilityScript ability { set { Ability = value; GetComponent<Image>().sprite = value.skillSprite; SmallButton.sprite = value.skillSprite; Debug.Log(name); } get { return Ability; } }
-    public AbilityController player { set { Player = value;  } }
+    public AbilityController player { set { Player = value; } }
 
     private void Awake()
     {
@@ -40,22 +40,11 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         if (IsAiming)
         {
-            ////Debug.Log(Mouse.current.position.ReadValue());
-            //Debug.Log("Raycast" + Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit1) /*+*/
-            //        + " hit " + hit1.transform.parent.TryGetComponent(out BasicTile targetTile1) 
-            //    " targetTile " + targetTile1 +
-            //    " Equals " + !targetTile1.Equals(LastTargetTile) +
-            //"is targetble " + Ability.IsTileTargetble(targetTile1)
-            //);
-            ////Debug.Log(Cam.ScreenToViewportPoint(Mouse.current.position.ReadValue()));
-            ///
-
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit, 1000, LayerMask.GetMask("Grid"))
                 && hit.transform.parent.TryGetComponent(out BasicTile targetTile) && !targetTile.Equals(LastTargetTile)
                 && Ability.IsTileTargetble(targetTile))
             {
                 LastTargetTile = targetTile;
-                Debug.Log("Reaiming");
                 Ability.Reaim(targetTile);
             }
         }

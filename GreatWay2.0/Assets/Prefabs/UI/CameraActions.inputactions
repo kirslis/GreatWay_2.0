@@ -11,7 +11,8 @@
                     "id": "3c9a34df-f85b-49b0-984c-836d8f0ca4d5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Zoom",
@@ -19,25 +20,15 @@
                     "id": "331b6510-31fd-4736-8c18-b7212ac953de",
                     "expectedControlType": "Axis",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "f017a3cc-d8df-4a4d-a71d-6358ed397ca9",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Moving",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "Move",
                     "id": "ee619f2a-bfd3-43a5-9bd3-f72030d81d51",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class VariantMenuSkript : MonoBehaviour
 {
@@ -14,14 +15,15 @@ public class VariantMenuSkript : MonoBehaviour
     private VariiantPanelActions Action;
     private Camera Cam;
     private bool IsOpen = false;
-    private BoxCollider collider;
+    private bool IsChanging = false;
+    private BoxCollider menuCollider;
 
     public GameObject buttonContainer { get { return _buttonsContainer; } }
 
     private void Awake()
     {
         Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
-        collider = GetComponent<BoxCollider>();
+        menuCollider = GetComponent<BoxCollider>();
 
         Action = new VariiantPanelActions();
         Action.Opened.LMouse.performed += context =>
@@ -34,7 +36,6 @@ public class VariantMenuSkript : MonoBehaviour
 
     public void VariantMenuButtonClick()
     {
-        Debug.Log("CLICK");
         if (!IsOpen)
         {
             StartCoroutine(ChangeSizeVarianMenuCoroutine(
@@ -55,6 +56,8 @@ public class VariantMenuSkript : MonoBehaviour
         Action.Disable();
     }
 
+
+
     IEnumerator ChangeSizeVarianMenuCoroutine(float targetHeight)
     {
         _variantMenuButton.enabled = false;
@@ -64,8 +67,8 @@ public class VariantMenuSkript : MonoBehaviour
         while (Rect.sizeDelta.y != targetHeight)
         {
             Rect.sizeDelta = Vector2.MoveTowards(Rect.sizeDelta, new Vector2(Rect.sizeDelta.x, targetHeight), speed * Time.deltaTime);
-            collider.size = Rect.sizeDelta;
-            collider.center = new Vector2(0, collider.size.y / 2);
+            menuCollider.size = Rect.sizeDelta;
+            menuCollider.center = new Vector2(0, menuCollider.size.y / 2);
             yield return null;
         }
 
@@ -79,5 +82,23 @@ public class VariantMenuSkript : MonoBehaviour
         _variantMenuButton.GetComponent<Image>().sprite = _variantMenuButtonSpriteSwap;
         _variantMenuButtonSpriteSwap = t;
         _variantMenuButton.enabled = true;
+    }
+
+    private void OnEnable()
+    {
+        if (IsOpen)
+        {
+            _panel.GetComponent<RectTransform>().sizeDelta = new Vector2(_panel.GetComponent<RectTransform>().sizeDelta.x, 0);
+            menuCollider.size = _panel.GetComponent<RectTransform>().sizeDelta;
+            menuCollider.center = new Vector2(0, menuCollider.size.y / 2);
+            SwapButtonSprite();
+            IsOpen = !IsOpen;
+            Action.Disable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        Action.Disable();
     }
 }

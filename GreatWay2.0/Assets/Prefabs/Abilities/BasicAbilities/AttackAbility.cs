@@ -7,7 +7,18 @@ public class AttackAbility : BasicAbilityScript
 {
     private BasicWeapon Weapon;
 
-    public BasicWeapon weapon { set { Weapon = value; _range = Weapon.range; } }
+    public BasicWeapon weapon
+    {
+        set
+        {
+            Weapon = value;
+            _range = Weapon.range;
+            if (!Weapon.weaponMods.Contains(DataTypeHolderScript.WeaponMod.ranged))
+                _areaTypeTag = "mili";
+            else
+                _areaTypeTag = "single";
+        }
+    }
 
     public override void Awake()
     {
@@ -16,6 +27,17 @@ public class AttackAbility : BasicAbilityScript
 
     public override void Use()
     {
+        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+        Debug.Log("DAMAGE!");
+        foreach (DataTypeHolderScript.TargetAntity target in targets)
+        {
+            Debug.Log(target);
+
+
+            Vector3 StartPos = new Vector3(Caster.transform.position.x, Caster.transform.position.y + Caster.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2, Caster.transform.position.z);
+
+            //Weapon.DealDamageFast(caster, )
+        }
         base.Use();
     }
 

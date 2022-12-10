@@ -8,6 +8,7 @@ public class CameraMoving : MonoBehaviour
     [SerializeField] float Speed;
     [SerializeField] float ScrollSpeed;
 
+    bool isMoving = false;
     private CameraActions InputActions;
     Vector2 moveSpeed;
 
@@ -15,8 +16,8 @@ public class CameraMoving : MonoBehaviour
     void Start()
     {
         InputActions = new CameraActions();
-        InputActions.Move.Moving.performed += Move;
-        InputActions.Move.Moving.canceled += context => { moveSpeed = Vector2.zero; };
+        InputActions.Move.Moving.performed += context => isMoving = true; ;
+        InputActions.Move.Moving.canceled += context => { moveSpeed = Vector2.zero; isMoving = false; };
         InputActions.Move.Zoom.performed += Scroll;
         InputActions.Enable();
     }
@@ -24,20 +25,17 @@ public class CameraMoving : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + moveSpeed.x, transform.position.y + moveSpeed.y, transform.position.z), Time.deltaTime * Speed * 10);
+        if (isMoving)
+        {
+            moveSpeed = InputActions.Move.Moving.ReadValue<Vector2>();
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x + moveSpeed.x, transform.position.y + moveSpeed.y, transform.position.z), Time.deltaTime * Speed * 10);
+        }
     }
-
-    private void Move(InputAction.CallbackContext context)
-    {
-        moveSpeed = context.ReadValue<Vector2>();
-       
-    }
-
     private void Scroll(InputAction.CallbackContext context)
     {
         if (context.ReadValue<float>() < 0 && Camera.main.orthographicSize < 9)
             Camera.main.orthographicSize += ScrollSpeed;
-        else if(context.ReadValue<float>() > 0 && Camera.main.orthographicSize > 2)
+        else if (context.ReadValue<float>() > 0 && Camera.main.orthographicSize > 2)
             Camera.main.orthographicSize -= ScrollSpeed;
     }
 }

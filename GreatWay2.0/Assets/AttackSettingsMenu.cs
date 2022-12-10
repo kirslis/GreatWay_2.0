@@ -12,7 +12,7 @@ public class AttackSettingsMenu : MonoBehaviour
     private AttackPanelInput Action;
     private Camera Cam;
     private bool IsOpen = false;
-    private BoxCollider collider;
+    private BoxCollider manuCollider;
 
     public bool isOpen { get { return IsOpen; } }
     public GameObject buttonContainer { get { return _buttonsContainer; } }
@@ -20,7 +20,7 @@ public class AttackSettingsMenu : MonoBehaviour
     private void Awake()
     {
         Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
-        collider = GetComponent<BoxCollider>();
+        manuCollider = GetComponent<BoxCollider>();
 
         Action = new AttackPanelInput();
         Action.Mouse.RightClick.performed += context =>
@@ -64,8 +64,8 @@ public class AttackSettingsMenu : MonoBehaviour
         while (Rect.sizeDelta.y != targetHeight)
         {
             Rect.sizeDelta = Vector2.MoveTowards(Rect.sizeDelta, new Vector2(Rect.sizeDelta.x, targetHeight), speed * Time.deltaTime);
-            collider.size = Rect.sizeDelta;
-            collider.center = new Vector2(0, collider.size.y / 2);
+            manuCollider.size = Rect.sizeDelta;
+            manuCollider.center = new Vector2(0, manuCollider.size.y / 2);
             yield return null;
         }
 
