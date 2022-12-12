@@ -8,6 +8,7 @@ public class GameInterface : BasicMenu
     [SerializeField] BasicMenu MainMenu;
     [SerializeField] List<Button> Buttons;
     [SerializeField] GameObject _antitiesEnterfaceFolder;
+    [SerializeField] AntityContainer _antityContainer;
 
     private bool IsActive = true;
 
@@ -26,5 +27,19 @@ public class GameInterface : BasicMenu
     {
         if (IsActive)
             OpenNewMenu(MainMenu);
+    }
+
+    protected override void OnEnable()
+    {
+        if (_antityContainer.antityes.Count > 0)
+            _antityContainer.currentPlayer.GetComponent<PlayerController>().InputMode(true);
+        base.OnEnable();
+    }
+
+    protected override void OnDisable()
+    {
+        if (_antityContainer.antityes.Count > 0)
+            _antityContainer.currentPlayer.GetComponent<PlayerController>().InputMode(false);
+        base.OnDisable();
     }
 }

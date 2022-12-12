@@ -1,24 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AntityContainer : MonoBehaviour
 {
     [SerializeField] GlobalVisionController _globalController;
     [SerializeField] TurnQeue _qeue;
     [SerializeField] GameObject _alliesContainer;
+    [SerializeField] GameObject _enviromentsContainer;
     [SerializeField] List<Antity> _players;
     [SerializeField] CurentHeroArrowScript _arrow;
+    [SerializeField] ActionsPanel _panel;
+    [SerializeField] GridContainer _grid;
 
     private List<Antity> Players = new List<Antity>();
     private List<Antity> TurnOrders = new List<Antity>();
+    private List<Enviroment> Enviroments = new List<Enviroment>();
     private CurentHeroArrowScript Arrow;
-    private int CurentActivePlayerIndex;
+    private int CurentActivePlayerIndex = -1;
+    private EnviromentChecking Input;
+    private Camera Cam;
 
     private List<Antity> AllyesList = new List<Antity>();
-    private List <Antity> EnemyesList = new List<Antity>();
+    private List<Antity> EnemyesList = new List<Antity>();
 
     public List<Antity> antityes { get { return Players; } }
+    public Antity currentPlayer { get { return Players[CurentActivePlayerIndex]; } }
+
+    private void Awake()
+    {
+        Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
+        Input = new EnviromentChecking();
+        Input.CheckEnviroment.RightClick.performed += context =>
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.transform.parent.TryGetComponent(out Enviroment obj) && obj.isInteracteble)
+            {
+                if (Mathf.Pow(currentPlayer.transform.position.x - obj.transform.position.x, 2) + Mathf.Pow(currentPlayer.transform.position.y - obj.transform.position.y, 2) <= Mathf.Sqrt(2))
+                    //_panel.gameObject.SetActive(true);
+                    //_panel.transform.position = Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                    obj.OpenClose();
+            }
+        };
+
+        Input.Enable();
+    }
 
     bool IsPosFree(Vector2 pos)
     {
@@ -56,7 +84,7 @@ public class AntityContainer : MonoBehaviour
 
             if (newPlayer.tag == "Ally")
                 AllyesList.Add(newPlayer);
-            else if(newPlayer.tag == "Enemy")
+            else if (newPlayer.tag == "Enemy")
                 EnemyesList.Add(newPlayer);
 
 
@@ -64,8 +92,8 @@ public class AntityContainer : MonoBehaviour
         }
 
         SortByInit();
-        CurentActivePlayerIndex = 0;
         Arrow = Instantiate(_arrow);
+        NextTurn();
         Arrow.SetTerget(Players[CurentActivePlayerIndex].gameObject);
         StartCoroutine(MakeGamePlayble());
 
@@ -76,7 +104,7 @@ public class AntityContainer : MonoBehaviour
     {
         yield return new WaitForSeconds(7f);
         Debug.Log("START");
-        _qeue.SetQeue(Players);
+        _qeue.SetQeue(Players, CurentActivePlayerIndex);
         yield return new WaitForSeconds(1f);
 
         Players[0].isActive = true;
@@ -108,11 +136,46 @@ public class AntityContainer : MonoBehaviour
     public void DeleteCreatures()
     {
         foreach (Antity player in Players)
+        {
             Destroy(player.gameObject);
+            Destroy(player.GetComponent<UiController>().playerInteface.gameObject);
+        }
 
         Players.Clear();
 
         _qeue.DeleteCreatures();
+    }
+
+    public void DeleteCreature()
+    {
+        Antity creature = _grid.GetChosenTile().GetComponent<TileContainer>().entityOnTile;
+        if (creature != null)
+            DeleteCreature(creature);
+
+        Destroy(creature.gameObject);
+    }
+
+    public void DeleteEnviroment()
+    {
+        Enviroment obj = _grid.GetChosenTile().GetComponent<TileContainer>().objectOnTile;
+
+        Destroy(obj.gameObject);
+    }
+
+    public void DeleteCreature(Antity creature)
+    {
+        if (CurentActivePlayerIndex > Players.IndexOf(creature))
+        {
+            Debug.Log(CurentActivePlayerIndex + " " + Players.IndexOf(creature));
+            CurentActivePlayerIndex--;
+        }
+        Players.Remove(creature);
+
+        _qeue.SetQeue(Players, CurentActivePlayerIndex);
+
+        _grid.GetTile(creature.transform.position).GetComponent<TileContainer>().DeleteCreatureFromTile();
+        if (CurentActivePlayerIndex == Players.IndexOf(creature))
+            NextTurn();
     }
 
     public void AddCreature(Antity Creature, Vector2 Pos)
@@ -128,18 +191,31 @@ public class AntityContainer : MonoBehaviour
 
         SortByInit();
 
-        _qeue.SetQeue(Players);
+        _qeue.SetQeue(Players, CurentActivePlayerIndex);
+    }
+
+    public void AddEnviroment(Enviroment obj, Vector2 Pos, float zAngle)
+    {
+        if (_grid.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null)
+            Destroy(_grid.GetTile(Pos).GetComponent<TileContainer>().objectOnTile.gameObject);
+
+
+        Enviroment newObject = Instantiate(obj, _enviromentsContainer.transform);
+        newObject.transform.position = new Vector3(Pos.x, Pos.y, -1);
+        newObject.transform.Rotate(0, 0, zAngle);
     }
 
     public void NextTurn()
     {
-        Players[CurentActivePlayerIndex].isActive = false;
+        if (CurentActivePlayerIndex >= 0)
+            Players[CurentActivePlayerIndex].isActive = false;
 
         CurentActivePlayerIndex++;
         if (CurentActivePlayerIndex >= Players.Count)
             CurentActivePlayerIndex = 0;
 
         Players[CurentActivePlayerIndex].isActive = true;
+        Players[CurentActivePlayerIndex].NextTurn();
         Arrow.SetTerget(Players[CurentActivePlayerIndex].gameObject);
         _qeue.NextTurn();
     }

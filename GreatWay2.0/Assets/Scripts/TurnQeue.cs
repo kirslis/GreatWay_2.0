@@ -36,48 +36,72 @@ public class TurnQeue : MonoBehaviour
         if (IStart >= Icons.Count)
             IStart = 0;
         IEnd++;
-        if(IEnd >= Icons.Count)
+        if (IEnd >= Icons.Count)
             IEnd = 0;
 
         Debug.Log(IStart + " " + IEnd);
     }
 
-    public void SetQeue(List<Antity> Antities)
+    public void SetQeue(List<Antity> Antities, int firstIndex)
     {
+        while (Icons.Count > 0)
+        {
+            TurnIcon icon = Icons[0];
+            Icons.Remove(icon);
+            if (icon != null)
+                Destroy(icon.gameObject);
+        }
+
         while (Antities.Count > Icons.Count)
             Icons.Add(new TurnIcon());
 
-        foreach (TurnIcon icon in Icons)
-        {
-            if (icon != null && !Antities.Contains(icon.parrent))
-                DeleteAnim(icon);
-        }
+        //foreach (TurnIcon icon in Icons)
+        //{
+        //    if (icon != null && !Antities.Contains(icon.parrent))
+        //        iconsToDelete.Add(icon);
+        //}
+
 
         ImagesCount = Antities.Count;
 
         for (int i = 0; i < Antities.Count; i++)
         {
-            if (!ContainCheck(Antities[i]))
-            {
-                for (int j = ImagesCount - 1; j > i; j--)
-                {
-                    Icons[j] = Icons[j - 1];
-                    if (IStart == j - 1)
-                        MoveIStartleft();
-                }
-                Icons[i] = Instantiate(Antities[i].GetComponent<CharacterStats>().icon, transform);
-                Icons[i].transform.position = new Vector3(0, 100, 0);
-                Icons[i].gameObject.SetActive(true);
-                Icons[i].parrent = Antities[i].GetComponent<CharacterStats>().icon.parrent;
-                Icons[i].GetComponent<Image>().color = Antities[i].GetComponent<SpriteRenderer>().color;
-            }
+            Icons[i] = Instantiate(Antities[firstIndex].GetComponent<CharacterStats>().icon, transform);
+            Icons[i].transform.position = new Vector3(0, 100, 0);
+            Icons[i].gameObject.SetActive(true);
+            Icons[i].parrent = Antities[firstIndex].GetComponent<CharacterStats>().icon.parrent;
+            Icons[i].GetComponent<Image>().color = Antities[firstIndex].GetComponent<SpriteRenderer>().color;
+
+            firstIndex++;
+            if (firstIndex == Antities.Count)
+                firstIndex = 0;
         }
+
+
+        //for (int i = 0; i < Antities.Count; i++)
+        //{
+        //    if (!ContainCheck(Antities[i]))
+        //    {
+        //        for (int j = ImagesCount - 1; j > i; j--)
+        //        {
+        //            Icons[j] = Icons[j - 1];
+        //            if (IStart == j - 1)
+        //                MoveIStartleft();
+        //        }
+        //        Icons[i] = Instantiate(Antities[i].GetComponent<CharacterStats>().icon, transform);
+        //        Icons[i].transform.position = new Vector3(0, 100, 0);
+        //        Icons[i].gameObject.SetActive(true);
+        //        Icons[i].parrent = Antities[i].GetComponent<CharacterStats>().icon.parrent;
+        //        Icons[i].GetComponent<Image>().color = Antities[i].GetComponent<SpriteRenderer>().color;
+        //    }
+        //}
 
         if (!IsFightStarted)
         {
             IsFightStarted = true;
-            IStart = 0;
         }
+
+        IStart = 0;
 
         Resize();
     }
@@ -118,7 +142,7 @@ public class TurnQeue : MonoBehaviour
                     AddAnim(Icons[i], Poses[index]);
             }
             else if (Icons[i].isVisible == true)
-                DeleteAnim(Icons[i]);
+                HideAnim(Icons[i]);
         }
     }
 
@@ -137,12 +161,33 @@ public class TurnQeue : MonoBehaviour
         StartCoroutine(MoveToPoseCourutine(icon, Pos));
     }
 
+    private void HideAnim(TurnIcon icon)
+    {
+        Vector2 EndPos = new Vector2(icon.transform.localPosition.x, icon.transform.localPosition.y + 70);
+        icon.isVisible = false;
+
+        StartCoroutine(MoveToPoseCourutine(icon, EndPos));
+    }
+
     private void DeleteAnim(TurnIcon icon)
     {
         Vector2 EndPos = new Vector2(icon.transform.localPosition.x, icon.transform.localPosition.y + 70);
         icon.isVisible = false;
-        StartCoroutine(MoveToPoseCourutine(icon, EndPos));
+
+        Icons.Remove(icon);
+        Destroy(icon.gameObject);
     }
+
+    //IEnumerator DeleteCourutine(TurnIcon icon, Vector2 Pos)
+    //{
+    //    while (!icon.transform.localPosition.Equals(Pos))
+    //    {
+    //        icon.transform.localPosition = Vector2.MoveTowards(icon.transform.localPosition, Pos, 100 * Time.deltaTime);
+    //        yield return null;
+    //    }
+
+
+    //}
 
     private void MoveToPosAnim(TurnIcon icon, Vector2 Pos)
     {
@@ -153,7 +198,7 @@ public class TurnQeue : MonoBehaviour
     {
         while (!icon.transform.localPosition.Equals(Pos))
         {
-            icon.transform.localPosition = Vector2.MoveTowards(icon.transform.localPosition, Pos, 100 * Time.deltaTime);
+            icon.transform.localPosition = Vector2.MoveTowards(icon.transform.localPosition, Pos, 500 * Time.deltaTime);
             yield return null;
         }
     }
@@ -162,7 +207,7 @@ public class TurnQeue : MonoBehaviour
     {
         VisibleCount = ImagesCount < 10 ? ImagesCount : 10;
         IEnd = IStart + VisibleCount - 1;
-        if(IEnd >= Icons.Count)
+        if (IEnd >= Icons.Count)
             IEnd -= Icons.Count;
         IsNeedToResize = true;
         ResizeAnim();

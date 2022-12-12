@@ -497,7 +497,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ce4993feab8a9242b58d8a30f806997, type: 2}
   - {fileID: 11400000, guid: 68e8885c8e8f4ca4f98985b0b43bb58d, type: 2}
   - {fileID: 11400000, guid: 1e8ca900faaecf74d967221b2bad08ea, type: 2}
-  _actions: []
+  _actions:
+  - {fileID: 11400000, guid: d4f96d7d23f0f28458569e1c7ebc978e, type: 2}
   _playerUIController: {fileID: 1680859570584994038}
 --- !u!114 &7319858322811895834
 MonoBehaviour:

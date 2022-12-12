@@ -48,6 +48,12 @@ public class DataTypeHolderScript : ScriptableObject
         spell
     }
 
+    public enum ActiveType
+    {
+        mainActive,
+        subActive
+    }
+
     public struct TargetAntity
     {
         public Antity Target;

@@ -55,6 +55,12 @@ public class GridContainer : MonoBehaviour
         return Container[(int)pos.x][(int)pos.y].isPasseble;
     }
 
+    public BasicTile GetChosenTile()
+    {
+        Vector2 pos = RedactorCursor.transform.position;
+        return Container[(int)pos.x][(int)pos.y];
+    }
+
     public bool TryChangeTile(BasicTile tile)
     {
         Vector2 Pos = RedactorCursor.transform.position;
@@ -150,10 +156,11 @@ public class GridContainer : MonoBehaviour
             BasicTile StartTile = Container[(int)StartPos.x][(int)StartPos.y];
             BasicTile TargetTile = Container[(int)TargetPos.x][(int)TargetPos.y];
 
-            if (TargetTile.isSeen && TargetTile.isPasseble && Speed >= TargetTile.currentPathCost && (TargetTile.SpentMoveSpeed == -1 || TargetTile.SpentMoveSpeed < StartTile.SpentMoveSpeed + TargetTile.currentPathCost))
+            if (TargetTile.isSeen && TargetTile.isPasseble && Speed >= TargetTile.currentPathCost && (TargetTile.SpentMoveSpeed == -1 || TargetTile.SpentMoveSpeed > StartTile.SpentMoveSpeed + TargetTile.currentPathCost))
             {
                 if (TargetTile.visibleColor != Color.red)
                     TargetTile.ChangeColor(Color.cyan);
+                TargetTile.SpentMoveSpeed = StartTile.SpentMoveSpeed + TargetTile.currentPathCost;
                 PassebleTiles.Add(TargetTile);
                 LightUpWais(new Vector3(TargetPos.x, TargetPos.y), Speed - TargetTile.currentPathCost);
             }
@@ -163,6 +170,7 @@ public class GridContainer : MonoBehaviour
     public void LightUpWaisWrapped(Vector3 Pos, int MoveSpeed)
     {
         ResetLightedTiles();
+        GetTile(Pos).SpentMoveSpeed = 0;
         LightUpWais(Pos, MoveSpeed);
     }
 
@@ -241,7 +249,7 @@ public class GridContainer : MonoBehaviour
         player.currentSpeed += Container[(int)Pos.x][(int)Pos.y].currentPathCost;
         CountOfPassedTiles--;
         if (!IsTilePassed(Container[(int)Pos.x][(int)Pos.y]))
-            Container[(int)Pos.x][(int)Pos.y].ChangeColor(Color.cyan);
+            Container[(int)Pos.x][(int)Pos.y].RefreshTile();
     }
 
     public bool IsTilePassed(BasicTile tile)

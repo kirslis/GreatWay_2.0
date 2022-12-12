@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b3ba4990f69514e9e14a30610ce059, type: 3}
   m_Name: ArmorOfAgathys
   m_EditorClassIdentifier: 
-  _areaTypeTag: single
+  _areaTypeTag: self
   _baseAbilityImage: {fileID: 21300000, guid: c46d83f2b73aaa141bd5015819342d81, type: 3}
   _baseAbilityButton: {fileID: 1756680680454434576, guid: 28a82afc386e35d41b8563476d736512, type: 3}
   _targetTag: Ally
   _range: 6
   _type: 2
+  _activeType: 0
   _particles: {fileID: 4047553567900908985, guid: d3c854748b425354ea075f4fbe23f72f, type: 3}
   DamageParticles: {fileID: -7431275782075965555, guid: 1e252c859e8edb94c936f68752959d9d, type: 3}

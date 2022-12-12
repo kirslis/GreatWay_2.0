@@ -20,6 +20,12 @@ public class AbilityController : MonoBehaviour
             AbilityButton NewButton = AbilityFolder.CreateNewCoreSpellButton(ability, this);
             NewButton.transform.parent = _playerUIController.playerInteface.spellVariantPanel.buttonContainer.transform;
         }
+
+        foreach (BasicAbilityScript ability in _actions)
+        {
+            AbilityButton NewButton = AbilityFolder.CreateNewCoreAbilityButton(ability, this);
+            NewButton.transform.parent = _playerUIController.playerInteface.basicAtionVariantPanel.buttonContainer.transform;
+        }
     }
 
     public void AddAction(BasicAbilityScript action)

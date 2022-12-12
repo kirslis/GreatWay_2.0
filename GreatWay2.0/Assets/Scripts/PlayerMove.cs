@@ -23,14 +23,13 @@ public class PlayerMove : MonoBehaviour
 
     public float yStep { set { YStep = value; } }
     public int currentSpeed { get { return CurrentSpeed; } set { CurrentSpeed = value; } }
-    public bool isActivaPlayer
+    public bool isActivePlayer
     {
         set
         {
             if (value)
             {
                 Input.MoveActions.Enable();
-                CurrentSpeed = MaxSpeed;
             }
             else
             {
@@ -40,6 +39,14 @@ public class PlayerMove : MonoBehaviour
             GridContainer.GetTile(transform.position).isPasseble = value;
         }
     }
+
+    public void NewTurn()
+    {
+        CurrentSpeed = MaxSpeed;
+        LeftSpeed = CurrentSpeed;
+        Debug.Log("NExtTurn speed = " + CurrentSpeed);
+    }
+
 
     private void Awake()
     {
@@ -85,14 +92,6 @@ public class PlayerMove : MonoBehaviour
         Input.Disable();
     }
 
-    public void SetMoveble(bool value)
-    {
-        if (value)
-            Input.Enable();
-        else
-            Input.Disable();
-    }
-
     private bool IsClickOnObject()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -102,6 +101,7 @@ public class PlayerMove : MonoBehaviour
 
     private void LookOut()
     {
+        Debug.Log(CurrentSpeed);
         GridContainer.LightUpWaisWrapped(transform.position, currentSpeed);
         IsLooking = true;
     }
@@ -114,6 +114,7 @@ public class PlayerMove : MonoBehaviour
         GridContainer.ResetPath();
         CurrentSpeed = LeftSpeed;
         IsLooking = false;
+        IsHold = false;
     }
 
     private int GetMaxDelta(Vector2 Pos)
@@ -168,10 +169,11 @@ public class PlayerMove : MonoBehaviour
 
     private IEnumerator MoveCourutine(List<BasicTile> WalkPoints, int Count)
     {
-        Input.MoveActions.Disable();
+        GetComponent<PlayerController>().InputMode(false);
+
         GridContainer.ResetLightedTiles();
 
-        for (int i = 0; i < Count; i++)
+        for (int i = 1; i < Count; i++)
         {
             if (WalkPoints[i].transform.position.x < transform.position.x)
                 GetComponent<SpriteRenderer>().flipX = true;
@@ -188,11 +190,21 @@ public class PlayerMove : MonoBehaviour
             LeftSpeed -= WalkPoints[i].currentPathCost;
             GlobalVision.AllLookOut();
         }
-        IsLooking = false;
-        GridContainer.ResetPath();
+        AbortMoving();
         Anim.SetBool("IsRunning", false);
 
-        Input.MoveActions.Enable();
+        GetComponent<PlayerController>().InputMode(true);
+
+    }
+
+    public void Dash()
+    {
+        Debug.Log("speed before = " + CurrentSpeed + " " + MaxSpeed);
+
+        CurrentSpeed += MaxSpeed;
+
+        Debug.Log("speed after = " + CurrentSpeed + " " + MaxSpeed);
+
     }
 
 }

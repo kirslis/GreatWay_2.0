@@ -1,0 +1,34 @@
+{
+    "name": "EnviromentChecking",
+    "maps": [
+        {
+            "name": "CheckEnviroment",
+            "id": "378db83d-4eba-4c64-a089-12e34e195d8c",
+            "actions": [
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "17fd270d-190f-40bd-bd65-33497aa2e338",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a488a0cc-e795-45a0-8de9-db135362c839",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

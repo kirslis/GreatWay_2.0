@@ -16,6 +16,7 @@ public class BasicDamageAbilityScript : BasicAbilityScript
 
     public override void Use()
     {
+
         List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
         Debug.Log("DAMAGE!");
         foreach (DataTypeHolderScript.TargetAntity target in targets)

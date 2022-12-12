@@ -44,6 +44,15 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea883b21-4dc2-4b62-a871-b4f9dd320334"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -79,6 +88,17 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
                     ""action"": ""ReductMap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2bdb1ce-30d8-450c-8ad2-94c9e1c56a2d"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -106,6 +126,7 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
         m_Reduct = asset.FindActionMap("Reduct", throwIfNotFound: true);
         m_Reduct_AbortReduct = m_Reduct.FindAction("AbortReduct", throwIfNotFound: true);
         m_Reduct_ReductMap = m_Reduct.FindAction("ReductMap", throwIfNotFound: true);
+        m_Reduct_Rotate = m_Reduct.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -167,12 +188,14 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
     private IReductActions m_ReductActionsCallbackInterface;
     private readonly InputAction m_Reduct_AbortReduct;
     private readonly InputAction m_Reduct_ReductMap;
+    private readonly InputAction m_Reduct_Rotate;
     public struct ReductActions
     {
         private @RedactorButtonActions m_Wrapper;
         public ReductActions(@RedactorButtonActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @AbortReduct => m_Wrapper.m_Reduct_AbortReduct;
         public InputAction @ReductMap => m_Wrapper.m_Reduct_ReductMap;
+        public InputAction @Rotate => m_Wrapper.m_Reduct_Rotate;
         public InputActionMap Get() { return m_Wrapper.m_Reduct; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +211,9 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
                 @ReductMap.started -= m_Wrapper.m_ReductActionsCallbackInterface.OnReductMap;
                 @ReductMap.performed -= m_Wrapper.m_ReductActionsCallbackInterface.OnReductMap;
                 @ReductMap.canceled -= m_Wrapper.m_ReductActionsCallbackInterface.OnReductMap;
+                @Rotate.started -= m_Wrapper.m_ReductActionsCallbackInterface.OnRotate;
+                @Rotate.performed -= m_Wrapper.m_ReductActionsCallbackInterface.OnRotate;
+                @Rotate.canceled -= m_Wrapper.m_ReductActionsCallbackInterface.OnRotate;
             }
             m_Wrapper.m_ReductActionsCallbackInterface = instance;
             if (instance != null)
@@ -198,6 +224,9 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
                 @ReductMap.started += instance.OnReductMap;
                 @ReductMap.performed += instance.OnReductMap;
                 @ReductMap.canceled += instance.OnReductMap;
+                @Rotate.started += instance.OnRotate;
+                @Rotate.performed += instance.OnRotate;
+                @Rotate.canceled += instance.OnRotate;
             }
         }
     }
@@ -215,5 +244,6 @@ public partial class @RedactorButtonActions : IInputActionCollection2, IDisposab
     {
         void OnAbortReduct(InputAction.CallbackContext context);
         void OnReductMap(InputAction.CallbackContext context);
+        void OnRotate(InputAction.CallbackContext context);
     }
 }

@@ -9,6 +9,7 @@ public class MapController : MonoBehaviour
     [SerializeField] GridContainer _gridContainer;
     [SerializeField] Button _endOfTurnButton;
     [SerializeField] GameInterface _gameInterface;
+    [SerializeField] AbilityManager _abilityManger;
 
     private bool IsGenerated = false;
 
@@ -35,6 +36,18 @@ public class MapController : MonoBehaviour
         if (_gridContainer.IsChosenTileFree())
         {
             _antityContainer.AddCreature(creature, _gridContainer.redactorCursorPos);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TryAddEnviroment(Enviroment obj, Vector2 Pos, float zAngle)
+    {
+        Debug.Log(_gridContainer.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null);
+        if (_gridContainer.IsChosenTileFree() || _gridContainer.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null)
+        {
+            _antityContainer.AddEnviroment(obj, _gridContainer.redactorCursorPos, zAngle);
             return true;
         }
 
@@ -68,6 +81,7 @@ public class MapController : MonoBehaviour
 
     public void NextTurn()
     {
+        _abilityManger.curentAbility = null;
         _antityContainer.NextTurn();
         StartCoroutine(RotateButtonCoroutine());
     }

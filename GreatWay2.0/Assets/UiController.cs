@@ -16,4 +16,9 @@ public class UiController : MonoBehaviour
         PlayerInterface = Instantiate(_interfacePrefab, FindObjectOfType<GameInterface>(true).antitiesEnterfaceFolder.transform);
         PlayerInterface.name = transform.name + "_interface";
     }
+
+    private void OnDestroy()
+    {
+        Destroy(PlayerInterface.gameObject);
+    }
 }

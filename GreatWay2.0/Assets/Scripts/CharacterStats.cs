@@ -32,13 +32,16 @@ public class CharacterStats : MonoBehaviour
     private int AC;
     private UiController UI;
     private AbilityManager AbilityManager;
+    private bool MainActive;
+    private bool SubActive;
 
     public int temporaryHP { set { if (value > TemporaryHP) { TemporaryHP = value; UI.playerInteface.temporaryHP = value; UI.playerInteface.UpdateStatsView(); } } get { return TemporaryHP; } }
     public Sprite image { get { return _image; } }
     public TurnIcon icon { get { return Icon; } }
     public int init { get { return Init; } }
-
     public int ac { get { return AC; } }
+    public bool mainActive { get { return MainActive; } set { MainActive = value; } }
+    public bool subActive { get { return SubActive; } set { SubActive = value; } }
 
     private void Awake()
     {
@@ -156,6 +159,12 @@ public class CharacterStats : MonoBehaviour
         foreach (HurtListener listener in HurtListeners)
             listener(this);
         UI.playerInteface.UpdateStatsView();
+
+        if(CurrentHP <= 0)
+        {
+            FindObjectOfType<AntityContainer>().DeleteCreature(this.GetComponent<Antity>()); 
+            Anim.SetTrigger("Die");
+        }
     }
 
     private void GenerateStats()
@@ -214,5 +223,11 @@ public class CharacterStats : MonoBehaviour
             VC.ResetColor();
             yield return new WaitForSeconds(0.3f);
         }
+    }
+
+    public void NewTurn()
+    {
+        MainActive = true;
+        SubActive = true;
     }
 }

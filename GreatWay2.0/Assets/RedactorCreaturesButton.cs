@@ -7,16 +7,17 @@ using UnityEngine.EventSystems;
 
 public class RedactorCreaturesButton : BasicReductorButton, IPointerEnterHandler, IPointerExitHandler
 {
-    private Vector2 LastTilePos = new Vector2();
+    protected Vector2 LastTilePos = new Vector2();
 
     protected override void Awake()
     {
-        GetComponent<Image>().sprite = _resourse.GetComponent<CharacterStats>().image;
+        if (_resourse.GetComponent<CharacterStats>() != null)
+            GetComponent<Image>().sprite = _resourse.GetComponent<CharacterStats>().image;
         base.Awake();
     }
 
 
-    private void FixedUpdate()
+    virtual protected void FixedUpdate()
     {
         if (IsMouseDown && IsSingleReducted)
         {

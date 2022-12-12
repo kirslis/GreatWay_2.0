@@ -13,12 +13,26 @@ public class AbilityManager : MonoBehaviour
 
     private List<AttackAbility> Attacks = new List<AttackAbility>();
 
+    private BasicAbilityScript CurentAbility = null;
+    public BasicAbilityScript curentAbility { set { if (CurentAbility != null) CurentAbility.Abort(); CurentAbility = value; } }
+
     private void Awake()
     {
         foreach (BasicUsibleTargetAreaViewer area in _areaViewers)
             area.Awake();
 
         foreach (BasicAbilityScript ability in _spells)
+        {
+            int i = 0;
+            while (i < _areaViewers.Count && _areaViewers[i]._typeTag != ability._areaTypeTag)
+                i++;
+
+            ability.abilityManager = this;
+            ability.area = _areaViewers[i];
+            ability.Awake();
+        }
+
+        foreach (BasicAbilityScript ability in _actions)
         {
             int i = 0;
             while (i < _areaViewers.Count && _areaViewers[i]._typeTag != ability._areaTypeTag)
@@ -43,7 +57,7 @@ public class AbilityManager : MonoBehaviour
 
     public AbilityButton CreateNewCoreAbilityButton(BasicAbilityScript Ability, AbilityController Player)
     {
-        foreach (BasicAbilityScript script in _spells)
+        foreach (BasicAbilityScript script in _actions)
             if (Ability.Equals(script))
                 return script.AddNewCoreButton(Player);
 
@@ -51,13 +65,26 @@ public class AbilityManager : MonoBehaviour
         return null;
     }
 
-    public AbilityButton CreateNewSubAbilityButton(BasicAbilityScript Ability, AbilityController Player)
+    public AbilityButton CreateNewSubButton(BasicAbilityScript Ability, AbilityController Player)
     {
-        foreach (BasicAbilityScript script in _spells)
-            if (Ability.Equals(script))
-            {
-                return script.AddNewSubButton(Player);
-            }
+        if (Ability.type == DataTypeHolderScript.AbiltyType.basicAbility)
+        {
+            foreach (BasicAbilityScript script in _actions)
+                if (Ability.Equals(script))
+
+
+                    return script.AddNewSubButton(Player);
+        }
+
+        else if (Ability.type == DataTypeHolderScript.AbiltyType.spell)
+        {
+            foreach (BasicAbilityScript script in _spells)
+                if (Ability.Equals(script))
+                {
+                    return script.AddNewSubButton(Player);
+                }
+        }
+
 
         Debug.Log("Not Ok");
         return null;

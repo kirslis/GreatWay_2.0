@@ -24,8 +24,10 @@ public class SpellPlace : MonoBehaviour
 
         if (Spell.ability is AttackAbility)
             CurrentButton = AbilityManager.CreateNewSubAttackButton(Spell.ability as AttackAbility, Player);
-        else
-            CurrentButton = AbilityManager.CreateNewSubAbilityButton(Spell.ability, Player);
+        else 
+            CurrentButton = AbilityManager.CreateNewSubButton(Spell.ability, Player);
+
+        Debug.Log(CurrentButton);
         CurrentButton.transform.SetParent(transform, false);
         CurrentButton.transform.position = transform.position;
 

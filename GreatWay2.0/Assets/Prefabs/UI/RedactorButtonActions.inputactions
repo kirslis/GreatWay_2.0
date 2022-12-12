@@ -11,7 +11,8 @@
                     "id": "275b5680-d548-4577-89f5-f60ac7519a0b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ReductMap",
@@ -19,7 +20,17 @@
                     "id": "d6d581ab-eed6-47ef-a4ab-239ca9f694fc",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "ea883b21-4dc2-4b62-a871-b4f9dd320334",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -53,6 +64,17 @@
                     "processors": "",
                     "groups": "New control scheme",
                     "action": "ReductMap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2bdb1ce-30d8-450c-8ad2-94c9e1c56a2d",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

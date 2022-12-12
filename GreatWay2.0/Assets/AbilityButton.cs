@@ -78,11 +78,20 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     virtual public void OnClick()
     {
-        Debug.Log("CLICK");
-        IsAiming = true;
-        Debug.Log("PLAYER = " + Player);
-        Ability.OnAbilityClick(Player);
-        Actions.Enable();
+        if (Ability._activeType == DataTypeHolderScript.ActiveType.mainActive && Player.GetComponent<CharacterStats>().mainActive ||
+   Ability._activeType == DataTypeHolderScript.ActiveType.subActive && Player.GetComponent<CharacterStats>().subActive)
+        {
+            Debug.Log("CLICK");
+            IsAiming = true;
+            Debug.Log("PLAYER = " + Player);
+            Ability.OnAbilityClick(Player);
+            Actions.Enable();
+        }
+        else
+        {
+            Debug.Log("NO ACTIVE POINT");
+
+        }
     }
 
     virtual protected void StopAiming()

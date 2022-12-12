@@ -14,4 +14,10 @@ public class Antity : MonoBehaviour
     {
         IsActivePlayer = value;
     }
+
+    virtual public void NextTurn()
+    {
+        GetComponent<CharacterStats>().NewTurn();
+        GetComponent<PlayerMove>().NewTurn();
+    }
 }

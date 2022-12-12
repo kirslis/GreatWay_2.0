@@ -21,9 +21,30 @@ public class BasicTile : MonoBehaviour
     public int SpentMoveSpeed = -1;
     private int CurrentPathCost;
 
-    public bool isSeen { get { return IsSeen; } set { IsSeen = false; GetComponent<TileVisualController>().isSeen = false; } }
-    public bool isSeeThrought { get { return IsSeeThrought; } set { } }
-    public bool isVisible { set { IsVisible = value; if (value) IsSeen = true; GetComponent<TileVisualController>().isVisible = value; } get { return IsVisible; } }
+    public bool isSeen { get { return IsSeen; } set { IsSeen = false; GetComponent<TileVisualController>().isSeen = false; GetComponent<TileContainer>().MakeUnSeen(); } }
+    public bool isSeeThrought { get { return IsSeeThrought; } set { IsSeeThrought = value; } }
+    public bool isVisible
+    {
+        set
+        {
+            IsVisible = value;
+            if (value)
+            {
+                IsSeen = true;
+                GetComponent<TileContainer>().makeSeen();
+            }
+            else
+            {
+                if (isSeen)
+                    GetComponent<TileContainer>().makeInvisible();
+                else
+                    GetComponent<TileContainer>().MakeUnSeen();
+            }
+            GetComponent<TileVisualController>().isVisible = value;
+
+        }
+        get { return IsVisible; }
+    }
     public int basePathCost { get { return BasePathCost; } }
     public bool isPasseble { get { return IsPasseble; } set { IsPasseble = value; } }
     public Color visibleColor { get { return VisibleColor; } set { VisibleColor = value; ChangeColorAnim(value); } }

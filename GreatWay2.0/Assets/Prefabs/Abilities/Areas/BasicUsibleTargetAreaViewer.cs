@@ -41,7 +41,8 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
     virtual public void LightUpTargetArea(Vector3 StartPos, int Range, string tag)
     {
-        TargetCursor.gameObject.SetActive(true);
+        if (TargetCursor != null)
+            TargetCursor.gameObject.SetActive(true);
 
         IsAiming = true;
         Grid = FindObjectOfType<GridContainer>();
@@ -122,8 +123,11 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
     virtual public void AbortAiming()
     {
-        TargetCursor.transform.position = new Vector2(-100, -100);
-        TargetCursor.gameObject.SetActive(false);
+        if (TargetCursor != null)
+        {
+            TargetCursor.transform.position = new Vector2(-100, -100);
+            TargetCursor.gameObject.SetActive(false);
+        }
 
         foreach (TargetTile tile in TargetTiles)
             RefreshTargetTileColor(tile.Tile);

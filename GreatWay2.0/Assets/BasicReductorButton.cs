@@ -23,10 +23,10 @@ public class BasicReductorButton : MonoBehaviour
     private bool IsMouseIn;
     private float WaitTime;
     private float WaitTimeToOpenDescription = 1f;
-    private RedactorButtonActions Input;
+    protected RedactorButtonActions Input;
     private Vector3 MiniSize = new Vector3(1, 1, 1f);
     private Vector2 MiniDeviation = new Vector2(-20, 30);
-    private Image MiniTile;
+    protected Image MiniTile;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -44,7 +44,7 @@ public class BasicReductorButton : MonoBehaviour
     {
         if (_name != "")
             _TextViewer.text = _name;
-        else
+        else if(_resourse != null)
             _TextViewer.text = _resourse.name;
 
         Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
@@ -93,13 +93,13 @@ public class BasicReductorButton : MonoBehaviour
         }
     }
 
-    public void StartReduct()
+    public virtual void StartReduct()
     {
         IsReducting = true;
         Map.StartReduct();
     }
 
-    protected void AbortReduct()
+    virtual protected void AbortReduct()
     {
         IsReducting = false;
         IsMouseDown = false;

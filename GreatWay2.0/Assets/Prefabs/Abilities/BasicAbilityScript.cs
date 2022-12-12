@@ -13,9 +13,12 @@ public class BasicAbilityScript : ScriptableObject
     [SerializeField] protected string _targetTag;
     [SerializeField] protected int _range;
     [SerializeField] protected DataTypeHolderScript.AbiltyType _type;
+    [SerializeField] public DataTypeHolderScript.ActiveType _activeType;
 
     protected BasicUsibleTargetAreaViewer Area;
-    protected AbilityController Caster;
+
+    protected AbilityController C;
+    protected AbilityController Caster { set { C = value; } get { return C; } }
     protected AbilityManager AbilityManager;
 
     protected List<ButtonPin> CoreButtons = new List<ButtonPin>();
@@ -45,15 +48,17 @@ public class BasicAbilityScript : ScriptableObject
     public virtual void Awake()
     {
         Input = new AbilityInputs();
-        Input.Mouse.Use.performed += context => Use();
+        Input.Mouse.Use.performed += context => { if (Area.targets.Count > 0) { Use(); } };
         Input.Mouse.AbortAiming.performed += context => Abort();
         Input.Disable();
     }
 
     public void OnAbilityClick(AbilityController player)
     {
-        Input.Enable();
         Caster = player;
+        AbilityManager.curentAbility = this;
+        Input.Enable();
+        Caster.GetComponent<PlayerController>().InputMode(false);
         Debug.Log(player + " - " + _range + " - " + GetTargetTag() + " - " + Area);
 
         Area.LightUpTargetArea(player.transform.position, _range, GetTargetTag());
@@ -61,11 +66,17 @@ public class BasicAbilityScript : ScriptableObject
 
     public virtual void Use()
     {
+        if (_activeType == DataTypeHolderScript.ActiveType.mainActive)
+            Caster.GetComponent<CharacterStats>().mainActive = false;
+        else if (_activeType == DataTypeHolderScript.ActiveType.subActive)
+            Caster.GetComponent<CharacterStats>().subActive = false;
         Abort();
     }
 
     public void Abort()
     {
+        Debug.Log("Caster - " + Caster + " Spell name = " + this.name);
+        Caster.GetComponent<PlayerController>().InputMode(true);
         Area.AbortAiming();
         Input.Disable();
     }

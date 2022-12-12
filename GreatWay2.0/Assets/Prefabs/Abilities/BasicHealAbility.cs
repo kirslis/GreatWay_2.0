@@ -16,12 +16,12 @@ public class BasicHealAbility : BasicAbilityScript
         Debug.Log("Heal!");
         foreach (DataTypeHolderScript.TargetAntity target in targets)
         {
-            Debug.Log(target);
             HealingParticlesScript healing = Instantiate(_healingParticle, target.Target.transform.position, Quaternion.identity);
             healing.target = target.Target;
             healing.ability = this;
         }
-        Abort();
+      
+        base.Use();
     }
 
     public void Heal(Antity target)
