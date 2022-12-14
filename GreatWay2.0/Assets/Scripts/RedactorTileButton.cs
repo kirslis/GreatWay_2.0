@@ -25,7 +25,10 @@ public class RedactorTileButton : BasicReductorButton, IPointerEnterHandler, IPo
 
             Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
             if (hit.collider != null)
+            {
                 AbortReduct();
+                Debug.Log(hit.collider.gameObject);
+            }
             else if (!LastTilePos.Equals(mousePos))
             {
                 if (!Map.TryChangeTile(_resourse.GetComponent<BasicTile>()))

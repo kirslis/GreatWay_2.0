@@ -10,9 +10,12 @@ public class RedactorEnviromentButton : BasicReductorButton, IPointerEnterHandle
     protected Vector2 LastTilePos = new Vector2();
     private float zAngle = 0;
     private GameObject miniObject;
+    private GridContainer Grid;
 
     protected override void Awake()
     {
+        Grid = FindObjectOfType<GridContainer>();
+
         miniObject = new GameObject();
         miniObject.AddComponent<SpriteRenderer>();
         miniObject.GetComponent<SpriteRenderer>().sprite = _resourse.GetComponent<SpriteRenderer>().sprite;
@@ -37,7 +40,10 @@ public class RedactorEnviromentButton : BasicReductorButton, IPointerEnterHandle
             {
                 Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
                 if (hit.collider != null)
+                {
+                    Debug.Log(hit.collider.gameObject);
                     AbortReduct();
+                }
                 else if (!LastTilePos.Equals(mousePos))
                 {
                     if (!Map.TryAddEnviroment(_resourse.GetComponent<Enviroment>(), mousePos, zAngle))
@@ -45,7 +51,8 @@ public class RedactorEnviromentButton : BasicReductorButton, IPointerEnterHandle
                     LastTilePos = mousePos;
                 }
             }
-            miniObject.transform.position = mousePos;
+            
+            miniObject.transform.position = new Vector3(Grid.redactorCursorPos.x, Grid.redactorCursorPos.y, -3);
         }
     }
 
@@ -64,6 +71,6 @@ public class RedactorEnviromentButton : BasicReductorButton, IPointerEnterHandle
     {
         miniObject.SetActive(true);
         base.StartReduct();
-        //MiniTile.gameObject.SetActive(false);
+        MiniTile.gameObject.GetComponent<Image>().enabled = false;
     }
 }

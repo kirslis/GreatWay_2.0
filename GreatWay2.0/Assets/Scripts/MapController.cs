@@ -44,6 +44,8 @@ public class MapController : MonoBehaviour
 
     public bool TryAddEnviroment(Enviroment obj, Vector2 Pos, float zAngle)
     {
+        _gridContainer.MakePosValid(ref Pos);
+
         Debug.Log(_gridContainer.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null);
         if (_gridContainer.IsChosenTileFree() || _gridContainer.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null)
         {
@@ -77,6 +79,7 @@ public class MapController : MonoBehaviour
         _gridContainer.DeleteMap();
         _antityContainer.DeleteCreatures();
         IsGenerated = false;
+        Debug.Log("DELETEMAP");
     }
 
     public void NextTurn()

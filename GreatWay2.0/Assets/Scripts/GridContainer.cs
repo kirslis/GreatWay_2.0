@@ -47,6 +47,7 @@ public class GridContainer : MonoBehaviour
     {
         IsReducting = false;
         RedactorCursor.SetActive(false);
+        Debug.Log("ABORT REDUCT");
     }
 
     public bool IsChosenTileFree()
@@ -80,7 +81,7 @@ public class GridContainer : MonoBehaviour
         return false;
     }
 
-    private void MakePosValid(ref Vector2 pos)
+    public void MakePosValid(ref Vector2 pos)
     {
         if (pos.x < 0)
             pos.x = 0;
@@ -145,6 +146,9 @@ public class GridContainer : MonoBehaviour
             i++;
         }
 
+        FindObjectOfType<GlobalVisionController>().DeleteMap();
+        PassebleTiles.Clear();
+        PassedTiles.Clear();
         Colls.Clear();
         Container.Clear();
     }
@@ -186,7 +190,7 @@ public class GridContainer : MonoBehaviour
     {
         foreach (BasicTile tile in PassebleTiles)
         {
-            if (tile.visibleColor != Color.red)
+            if (tile != null && tile.visibleColor != Color.red)
                 tile.RefreshTile();
         }
 
@@ -250,6 +254,7 @@ public class GridContainer : MonoBehaviour
         CountOfPassedTiles--;
         if (!IsTilePassed(Container[(int)Pos.x][(int)Pos.y]))
             Container[(int)Pos.x][(int)Pos.y].RefreshTile();
+
     }
 
     public bool IsTilePassed(BasicTile tile)
@@ -266,7 +271,8 @@ public class GridContainer : MonoBehaviour
     public void ResetPath()
     {
         foreach (BasicTile tile in PassedTiles)
-            tile.RefreshTile();
+            if (tile != null)
+                tile.RefreshTile();
 
         PassebleTiles.Clear();
         CountOfPassedTiles = 0;

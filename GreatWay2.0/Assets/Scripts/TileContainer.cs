@@ -39,7 +39,10 @@ public class TileContainer : MonoBehaviour
 
         else if (collision.transform.TryGetComponent(out Enviroment obj))
         {
+            Debug.Log("EXIT");
             GetComponent<BasicTile>().isPasseble = true;
+            GetComponent<BasicTile>().isSeeThrought = true;
+            GetComponent<BasicTile>().isAttackThrought = true;
             ObjectOnTile = null;
         }
     }

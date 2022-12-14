@@ -15,6 +15,7 @@ public class GlobalVisionController : MonoBehaviour
 
     public void AllLookOut()
     {
+        Debug.Log("LOOKBEGIN");
         _gridContainer.MakeTilesInVisible(VisibleTiles);
         VisibleTiles.Clear();
 
@@ -24,6 +25,14 @@ public class GlobalVisionController : MonoBehaviour
             antity.GetComponent<VisionController>().LookOut();
 
         _gridContainer.MakeTilesVisible(VisibleTiles);
+        Debug.Log("LOOKEND");
+    }
+
+    public void DeleteMap()
+    {
+        InvisibleInGameTiles.Clear();
+        VisibleTiles.Clear();
+
     }
 
     public void AddVisibleTiles(List<BasicTile> newVisibleTiles)

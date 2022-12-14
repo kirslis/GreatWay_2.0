@@ -12,6 +12,7 @@ public class BasicAbilityScript : ScriptableObject
     [SerializeField] public AbilityButton _baseAbilityButton;
     [SerializeField] protected string _targetTag;
     [SerializeField] protected int _range;
+    [SerializeField] public string _abilityName;
     [SerializeField] protected DataTypeHolderScript.AbiltyType _type;
     [SerializeField] public DataTypeHolderScript.ActiveType _activeType;
 

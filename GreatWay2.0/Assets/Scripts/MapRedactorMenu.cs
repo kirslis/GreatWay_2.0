@@ -46,6 +46,8 @@ public class MapRedactorMenu : BasicMenu
     public override void ThrowErrorText(string text)
     {
         ErrorText error = Instantiate(_errorText, transform);
-        error.StartFly(text, Mouse.current.position.ReadValue());
+        error.transform.position = Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        error.transform.position = new Vector3(error.transform.position.x, error.transform.position.y, 0);
+        error.StartFly(text, Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
     }
 }

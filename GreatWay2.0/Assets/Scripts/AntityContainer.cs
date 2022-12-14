@@ -38,7 +38,8 @@ public class AntityContainer : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.transform.parent.TryGetComponent(out Enviroment obj) && obj.isInteracteble)
             {
-                if (Mathf.Pow(currentPlayer.transform.position.x - obj.transform.position.x, 2) + Mathf.Pow(currentPlayer.transform.position.y - obj.transform.position.y, 2) <= Mathf.Sqrt(2))
+                if (Mathf.Pow(currentPlayer.transform.position.x - obj.transform.position.x, 2) + Mathf.Pow(currentPlayer.transform.position.y - obj.transform.position.y, 2) <= Mathf.Sqrt(2)
+                && Mathf.Pow(currentPlayer.transform.position.x - obj.transform.position.x, 2) + Mathf.Pow(currentPlayer.transform.position.y - obj.transform.position.y, 2) != 0)
                     //_panel.gameObject.SetActive(true);
                     //_panel.transform.position = Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                     obj.OpenClose();
@@ -75,12 +76,20 @@ public class AntityContainer : MonoBehaviour
         {
             Antity newPlayer = Instantiate(player, _alliesContainer.transform);
             newPlayer.transform.position = GetFreePos();
+
             newPlayer.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+            Debug.Log("GENERATED" + (i - 1));
             newPlayer.isActive = false;
+
+            Debug.Log("GENERATED" + i);
+
             newPlayer.name = player.name + "_" + i.ToString();
+            Debug.Log("GENERATED" + i + 1);
+
             newPlayer.GetComponent<PlayerMove>().yStep = FindObjectOfType<GridContainer>().yStep;
             newPlayer.GetComponent<CharacterStats>().RollInit();
             Players.Add(newPlayer);
+
 
             if (newPlayer.tag == "Ally")
                 AllyesList.Add(newPlayer);
@@ -90,12 +99,14 @@ public class AntityContainer : MonoBehaviour
 
             i++;
         }
+        Debug.Log("GENERATED");
 
         SortByInit();
         Arrow = Instantiate(_arrow);
         NextTurn();
         Arrow.SetTerget(Players[CurentActivePlayerIndex].gameObject);
         StartCoroutine(MakeGamePlayble());
+
 
         _globalController.AllLookOut();
     }
@@ -142,7 +153,8 @@ public class AntityContainer : MonoBehaviour
         }
 
         Players.Clear();
-
+        AllyesList.Clear();
+        EnemyesList.Clear();
         _qeue.DeleteCreatures();
     }
 
@@ -159,11 +171,14 @@ public class AntityContainer : MonoBehaviour
     {
         Enviroment obj = _grid.GetChosenTile().GetComponent<TileContainer>().objectOnTile;
 
-        Destroy(obj.gameObject);
+        if (obj != null)
+            Destroy(obj.gameObject);
     }
 
     public void DeleteCreature(Antity creature)
     {
+        if (currentPlayer == creature)
+            NextTurn();
         if (CurentActivePlayerIndex > Players.IndexOf(creature))
         {
             Debug.Log(CurentActivePlayerIndex + " " + Players.IndexOf(creature));
@@ -174,8 +189,6 @@ public class AntityContainer : MonoBehaviour
         _qeue.SetQeue(Players, CurentActivePlayerIndex);
 
         _grid.GetTile(creature.transform.position).GetComponent<TileContainer>().DeleteCreatureFromTile();
-        if (CurentActivePlayerIndex == Players.IndexOf(creature))
-            NextTurn();
     }
 
     public void AddCreature(Antity Creature, Vector2 Pos)

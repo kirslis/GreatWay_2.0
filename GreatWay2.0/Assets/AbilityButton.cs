@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     [SerializeField] Image _blankImage;
+    [SerializeField] Text _textViwer;
 
     private ActionButtonActions Actions;
     protected Camera Cam;
@@ -17,7 +18,7 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     protected bool IsAiming;
     private BasicTile LastTargetTile = null;
 
-    public BasicAbilityScript ability { set { Ability = value; GetComponent<Image>().sprite = value.skillSprite; SmallButton.sprite = value.skillSprite; Debug.Log(name); } get { return Ability; } }
+    public BasicAbilityScript ability { set { Ability = value; GetComponent<Image>().sprite = value.skillSprite; SmallButton.sprite = value.skillSprite; _textViwer.text = value._abilityName; } get { return Ability; } }
     public AbilityController player { set { Player = value; } }
 
     private void Awake()

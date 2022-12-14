@@ -9,7 +9,6 @@ public class BasicDamageAbilityScript : BasicAbilityScript
     [SerializeField] int _countOfDamageDices;
     [SerializeField] int _damageDiceType;
     [SerializeField] DataTypeHolderScript.DamageType _damageType;
-    [SerializeField] string _abilityName;
     [SerializeField] bool _isGaranteedHit;
     [SerializeField] BasicShotenParticleScript _shotenParticle;
     [SerializeField] DataTypeHolderScript.AttackType _attackType = DataTypeHolderScript.AttackType.magic;

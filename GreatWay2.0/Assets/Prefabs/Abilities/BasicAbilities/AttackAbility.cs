@@ -13,6 +13,7 @@ public class AttackAbility : BasicAbilityScript
         {
             Weapon = value;
             _range = Weapon.range;
+            _abilityName = Weapon._name + " Attack";
             if (!Weapon.weaponMods.Contains(DataTypeHolderScript.WeaponMod.ranged))
                 _areaTypeTag = "mili";
             else

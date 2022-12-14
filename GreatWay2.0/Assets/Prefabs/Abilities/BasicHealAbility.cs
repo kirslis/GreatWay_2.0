@@ -8,8 +8,7 @@ public class BasicHealAbility : BasicAbilityScript
     [SerializeField] HealingParticlesScript _healingParticle;
     [SerializeField] int _countOfHealDices;
     [SerializeField] int _healDiceType;
-    [SerializeField] string _abilityName;
-
+    
     public override void Use()
     {
         List<DataTypeHolderScript.TargetAntity> targets = Area.targets;

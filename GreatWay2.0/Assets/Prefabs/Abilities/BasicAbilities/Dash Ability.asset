@@ -17,6 +17,7 @@ MonoBehaviour:
   _baseAbilityButton: {fileID: 1756680680454434576, guid: 28a82afc386e35d41b8563476d736512, type: 3}
   _targetTag: Ally
   _range: 0
+  _abilityName: Dash
   _type: 0
   _activeType: 0
   paticles: {fileID: 8986279933872296291, guid: b209f56d3cdfcf74481f467a62b7d635, type: 3}

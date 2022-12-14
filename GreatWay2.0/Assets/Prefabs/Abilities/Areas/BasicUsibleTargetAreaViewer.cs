@@ -95,7 +95,7 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
             i++;
         }
 
-        if (isAttackeble && isVisible)
+        if (isAttackeble && isVisible && tile.isSeen)
         {
             ChangeTargetTileColor(tile, Color.green, tag);
 
@@ -105,7 +105,7 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
             return;
         }
 
-        if (isAttackeble && !isVisible)
+        if (isAttackeble && (!isVisible || !tile.isSeen))
         {
             ChangeTargetTileColor(tile, Color.yellow, tag);
 

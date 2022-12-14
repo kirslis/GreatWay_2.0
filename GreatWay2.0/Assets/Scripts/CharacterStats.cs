@@ -40,8 +40,8 @@ public class CharacterStats : MonoBehaviour
     public TurnIcon icon { get { return Icon; } }
     public int init { get { return Init; } }
     public int ac { get { return AC; } }
-    public bool mainActive { get { return MainActive; } set { MainActive = value; } }
-    public bool subActive { get { return SubActive; } set { SubActive = value; } }
+    public bool mainActive { get { return MainActive; } set { MainActive = value; UI.playerInteface.mainActionPoint = value; } }
+    public bool subActive { get { return SubActive; } set { SubActive = value; UI.playerInteface.subActionPoint = value; } }
 
     private void Awake()
     {
@@ -227,7 +227,7 @@ public class CharacterStats : MonoBehaviour
 
     public void NewTurn()
     {
-        MainActive = true;
-        SubActive = true;
+        mainActive = true;
+        subActive = true;
     }
 }

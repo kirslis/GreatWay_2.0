@@ -22,7 +22,10 @@ public class DeleteEnviromentReductButton : DeleteAntityReductButton
                 Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
 
                 if (hit.collider != null)
+                {
+                    Debug.Log(hit.collider.gameObject);
                     AbortReduct();
+                }
 
                 else if (!LastTilePos.Equals(mousePos))
                 {

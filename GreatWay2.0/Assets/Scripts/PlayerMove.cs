@@ -27,16 +27,19 @@ public class PlayerMove : MonoBehaviour
     {
         set
         {
-            if (value)
+            if (value && FindObjectOfType<AntityContainer>().currentPlayer == GetComponent<Antity>())
             {
+                GridContainer.GetTile(transform.position).isPasseble = true;
+
                 Input.MoveActions.Enable();
             }
             else
             {
+                Debug.Log("GENERATED2");
+                GridContainer.GetTile(transform.position).isPasseble = false;
                 Input.MoveActions.Disable();
-                AbortMoving();
+                                AbortMoving();
             }
-            GridContainer.GetTile(transform.position).isPasseble = value;
         }
     }
 
@@ -110,8 +113,11 @@ public class PlayerMove : MonoBehaviour
     {
         Debug.Log("ABORT MOVING");
         GridContainer.ResetLightedTiles();
+
         Spirit.gameObject.SetActive(false);
         GridContainer.ResetPath();
+        Debug.Log("GENERATED3");
+
         CurrentSpeed = LeftSpeed;
         IsLooking = false;
         IsHold = false;

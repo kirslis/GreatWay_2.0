@@ -9,11 +9,13 @@ public class BasicMenu : MonoBehaviour
 
     private BasicMenu ParentMenu;
     private MenuActions Actions;
+    protected Camera Cam;
 
     public BasicMenu parentMenu { set { ParentMenu = value;  } }
 
     protected virtual void Awake()
     {
+        Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
         Actions = new MenuActions();
         Actions.MenuesAction.OpenParent.performed += context => OpenParentMenu();
         Actions.Enable();

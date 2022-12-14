@@ -7,7 +7,7 @@ public class SimpleAttackButon : AbilityButton
 {
     private BasicWeapon Weapon;
 
-    public BasicWeapon weapon { set { name = value.name; Weapon = value; GetComponent<Image>().sprite = value._buttonImage;  SmallButton.sprite = value._buttonImage; } }
+    public BasicWeapon weapon { set { name = value._name; Weapon = value; GetComponent<Image>().sprite = value._buttonImage;  SmallButton.sprite = value._buttonImage; } }
 
 
 }

@@ -9,7 +9,7 @@ public class VisionController : MonoBehaviour
     private List<BasicTile> VisibleTiles = new List<BasicTile>();
     private GlobalVisionController GlobalVision;
     private GridContainer Grid;
-    private float YDeviation = 0.2f;
+    private float YDeviation = 0;
 
     public int visionDistance { set { VisionDistance = value; } }
 
@@ -51,10 +51,10 @@ public class VisionController : MonoBehaviour
         float halfOfTile = 0.5f;
 
         List<Vector2> directions = new List<Vector2>();
-        directions.Add(new Vector2(tile.transform.position.x - halfOfTile, tile.transform.position.y));
-        directions.Add(new Vector2(tile.transform.position.x + halfOfTile, tile.transform.position.y));
-        directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y - halfOfTile));
-        directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y + halfOfTile));
+        //directions.Add(new Vector2(tile.transform.position.x - halfOfTile, tile.transform.position.y));
+        //directions.Add(new Vector2(tile.transform.position.x + halfOfTile, tile.transform.position.y));
+        //directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y - halfOfTile));
+        //directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y + halfOfTile));
         directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y));
 
 

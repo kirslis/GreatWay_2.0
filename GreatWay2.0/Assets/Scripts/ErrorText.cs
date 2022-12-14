@@ -35,12 +35,10 @@ public class ErrorText : MonoBehaviour
 
         if (GetComponent<Text>() != null)
         {
-            yield return new WaitForSeconds(WaitTime);
-            Vector2 targetPos = new Vector2(transform.position.x, transform.position.y + 300);
-
+            Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + 300, 0);
             while (GetComponent<Text>().color.a > 0)
             {
-                transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
                 Color currColor = GetComponent<Text>().color;
                 GetComponent<Text>().color = new Color(currColor.r, currColor.g, currColor.b, currColor.a - 0.2f * Time.deltaTime);
                 yield return null;
@@ -49,7 +47,8 @@ public class ErrorText : MonoBehaviour
 
         else if (GetComponent<TextMeshPro>() != null)
         {
-            Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+            yield return new WaitForSeconds(WaitTime);
+            Vector3 targetPos = new Vector3(transform.position.x, transform.position.y + 2, 0);
 
             while (GetComponent<TextMeshPro>().color.a > 0)
             {

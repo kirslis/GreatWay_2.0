@@ -17,6 +17,7 @@ MonoBehaviour:
   _baseAbilityButton: {fileID: 1756680680454434576, guid: 28a82afc386e35d41b8563476d736512, type: 3}
   _targetTag: Ally
   _range: 6
+  _abilityName: armor og agathis
   _type: 2
   _activeType: 0
   _particles: {fileID: 4047553567900908985, guid: d3c854748b425354ea075f4fbe23f72f, type: 3}

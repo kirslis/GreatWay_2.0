@@ -202,7 +202,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 0.9}
+  m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
 --- !u!1 &8034465503680846090
 GameObject:
@@ -383,6 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Collider3d: {fileID: 5618707824559816660}
+  Interface: {fileID: 0}
 --- !u!114 &6509120294292085783
 MonoBehaviour:
   m_ObjectHideFlags: 0

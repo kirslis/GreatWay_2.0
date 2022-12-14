@@ -30,7 +30,7 @@ public class BasicReductorButton : MonoBehaviour
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        IsMouseIn = true;
+        //IsMouseIn = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -49,7 +49,7 @@ public class BasicReductorButton : MonoBehaviour
 
         Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
         Input = new RedactorButtonActions();
-        Input.Reduct.AbortReduct.performed += context => { if (IsReducting) AbortReduct(); };
+        Input.Reduct.AbortReduct.performed += context => { if (IsReducting) { AbortReduct(); Debug.Log("MOUSE ABORT"); }; };
         Input.Reduct.ReductMap.performed += context => { if (IsReducting) IsMouseDown = !IsMouseDown; if (!IsSingleReducted) IsSingleReducted = true; };
 
         Map = FindObjectOfType<MapController>();

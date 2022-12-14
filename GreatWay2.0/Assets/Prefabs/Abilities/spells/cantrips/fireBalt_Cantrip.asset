@@ -17,11 +17,12 @@ MonoBehaviour:
   _baseAbilityButton: {fileID: 1756680680454434576, guid: 28a82afc386e35d41b8563476d736512, type: 3}
   _targetTag: Enemy
   _range: 6
-  _type: 2
+  _type: 0
+  _activeType: 1
   _countOfDamageDices: 1
   _damageDiceType: 6
   _damageType: 0
   _abilityName: Fire Balt
-  _isGaranteedHit: 0
+  _isGaranteedHit: 1
   _shotenParticle: {fileID: 5574819358003780844, guid: 4e82c208710bcb94fbfb04e224733f7b, type: 3}
-  _attackType: 2
+  _attackType: 0

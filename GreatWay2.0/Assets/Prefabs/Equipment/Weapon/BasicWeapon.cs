@@ -6,7 +6,8 @@ using UnityEngine;
 public class BasicWeapon : BasicEquip
 {
     [SerializeField] public SimpleAttackButon _simpleAttackButon;
-    [SerializeField] public Sprite _buttonImage; 
+    [SerializeField] public Sprite _buttonImage;
+    [SerializeField] public string _name;
 
     [SerializeField] DataTypeHolderScript.WeaponType _weaponType;
     [SerializeField] List<DataTypeHolderScript.DiceType> _damageDices;
@@ -31,7 +32,7 @@ public class BasicWeapon : BasicEquip
         int SumDamage = 0;
         foreach (DataTypeHolderScript.DiceType damageType in _damageDices)
         {
-            SumDamage += Random.Range(1, 7);
+            SumDamage += Random.Range(1, 9);
         }
 
         Target.DealDamage(SumDamage, _damageType, attackType, AttackPerson);
