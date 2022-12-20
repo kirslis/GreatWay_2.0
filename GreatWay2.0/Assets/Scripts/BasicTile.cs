@@ -21,6 +21,7 @@ public class BasicTile : MonoBehaviour
     public int SpentMoveSpeed = -1;
     private int CurrentPathCost;
 
+    public BasicTile previosTile = null;
     public bool isSeen { get { return IsSeen; } set { IsSeen = false; GetComponent<TileVisualController>().isSeen = false; GetComponent<TileContainer>().MakeUnSeen(); } }
     public bool isSeeThrought { get { return IsSeeThrought; } set { IsSeeThrought = value; } }
     public bool isVisible
@@ -77,6 +78,7 @@ public class BasicTile : MonoBehaviour
 
     public void RefreshTile()
     {
+        previosTile = null;
         visibleColor = BaseColor;
         SpentMoveSpeed = -1;
     }

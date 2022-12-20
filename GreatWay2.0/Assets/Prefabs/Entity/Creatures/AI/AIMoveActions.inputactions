@@ -1,0 +1,54 @@
+{
+    "name": "AIMoveActions",
+    "maps": [
+        {
+            "name": "actions",
+            "id": "77c6ce2d-d45e-4b05-ade2-b041c9cbb810",
+            "actions": [
+                {
+                    "name": "LMB",
+                    "type": "Button",
+                    "id": "953010eb-673c-40f6-b186-7616e9243fa7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RMB",
+                    "type": "Button",
+                    "id": "238202bf-c809-4104-9206-97b853fe2e8a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7a3e081c-9404-4d6d-b163-f62303085349",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fddad282-da1a-4c59-afe0-8149f48462df",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RMB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

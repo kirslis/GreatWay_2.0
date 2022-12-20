@@ -37,6 +37,23 @@ public class GridContainer : MonoBehaviour
         return Container[(int)Pos.x][(int)Pos.y];
     }
 
+    //возвращает массив соседних к tile тайлов 
+    public List<BasicTile> getAdjacentTiles(BasicTile tile)
+    {
+        Vector2 tilePos = tile.transform.position; 
+        List<BasicTile> adjacteds = new List<BasicTile>();
+        if(tilePos.x > 0)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x - 1, tilePos.y)));
+        if (tilePos.x < SizeX - 1)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x + 1, tilePos.y)));
+        if (tilePos.y > 0)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x, tilePos.y - 1)));
+        if (tilePos.y < SizeY - 1)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x, tilePos.y + 1)));
+
+        return adjacteds;
+    }
+
     public void StartReduct()
     {
         IsReducting = true;

@@ -5002,9 +5002,8 @@ GameObject:
   - component: {fileID: 6836589967148583109}
   - component: {fileID: 6836589967148583110}
   - component: {fileID: 6836589967148583111}
+  - component: {fileID: 1952606515486640521}
   - component: {fileID: -5877287865981645576}
-  - component: {fileID: 4700239793571017041}
-  - component: {fileID: 8299777789906702070}
   - component: {fileID: 7725186286464667101}
   - component: {fileID: 3661518527364191091}
   - component: {fileID: 8724534870948147417}
@@ -5012,6 +5011,8 @@ GameObject:
   - component: {fileID: 208062603079441691}
   - component: {fileID: 7043245354620864713}
   - component: {fileID: -278242241300851130}
+  - component: {fileID: 2349592660368292994}
+  - component: {fileID: 6844463211011383384}
   m_Layer: 0
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -5109,6 +5110,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1952606515486640521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836589967148583104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf0d2bb3cbd6cd4fb19f12360e3b9fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Interface: {fileID: 0}
+  Collider3d: {fileID: 8978485970734853662}
 --- !u!114 &-5877287865981645576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5122,33 +5137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interfacePrefab: {fileID: 5292902366281868567, guid: 98dede9aae2e24f4993c4fba5f7f481c, type: 3}
---- !u!114 &4700239793571017041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6836589967148583104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9366ea57b0cbf7e4dae73cdc6af2d769, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 6
---- !u!114 &8299777789906702070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6836589967148583104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 592d5eb85b9b19545ac2afbd25f2b013, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Collider3d: {fileID: 8978485970734853662}
-  Interface: {fileID: 0}
 --- !u!114 &7725186286464667101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5297,6 +5285,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 68e8885c8e8f4ca4f98985b0b43bb58d, type: 2}
   _actions: []
   _playerUIController: {fileID: -5877287865981645576}
+--- !u!114 &2349592660368292994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836589967148583104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51e741627c9366244a03235077a24f50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 0
+--- !u!114 &6844463211011383384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6836589967148583104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cad97d99afa0ef745aae09219402fe75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _AIMove: {fileID: 2349592660368292994}
 --- !u!1 &8639309259933461651
 GameObject:
   m_ObjectHideFlags: 0

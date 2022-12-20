@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Antity : MonoBehaviour
 {
+    [SerializeField] GameInterface Interface;
     [SerializeField] GameObject Collider3d;
     protected bool IsActivePlayer;
 
@@ -18,6 +19,5 @@ public class Antity : MonoBehaviour
     virtual public void NextTurn()
     {
         GetComponent<CharacterStats>().NewTurn();
-        GetComponent<PlayerMove>().NewTurn();
     }
 }
