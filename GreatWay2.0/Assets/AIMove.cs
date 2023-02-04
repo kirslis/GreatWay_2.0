@@ -4,109 +4,93 @@ using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class AIMove : MonoBehaviour
+public class AIMove : Move
 {
-    [SerializeField] int _speed;
+    private List<BasicTile> PatroleTrail = new List<BasicTile>();
+    private int CurrentpatrolePointIndex = 0;
 
-    private List<BasicTile> PatrouleTrail = new List<BasicTile>();
-    private GridContainer Grid;
-    private AIMoveActions Input;
-    private bool IsTrailCreating = false;
+    private List<BasicTile> reachableTiles = new List<BasicTile>();
+    private List<BasicTile> exploredTiles = new List<BasicTile>();
 
-    public BasicTile addTilePatrouleTrail { set { } }
-
-    private void Awake()
+    public List<BasicTile> patroleTrail
     {
-        Input = new AIMoveActions();
-
-        Input.actions.LMB.performed += context =>
+        set
         {
-            if (IsTrailCreating)
-            {
-                BasicTile newTile = Grid.GetChosenTile();
-                if (!PatrouleTrail.Contains(newTile))
-                    PatrouleTrail.Add(newTile);
-            }
-        };
+            PatroleTrail = value;
 
-        Input.actions.RMB.performed += context =>
-        {
-            if (IsTrailCreating)
-            {
-                StopCreatingPatrouleTrial();
-            }
-        };
-
-        Input.Enable();
-
-        Grid = FindObjectOfType<GridContainer>();
-    }
-
-    public void CreatePatrouleTrail()
-    {
-        IsTrailCreating = true;
-        Grid.StartReduct();
-    }
-
-    private void StopCreatingPatrouleTrial()
-    {
-        IsTrailCreating = false;
-        Grid.AbortReduct();
+            Debug.Log("Trail set " + PatroleTrail.Count);
+        }
     }
 
     public void MoveToNextPatrolePoint()
     {
-        BasicTile currentTile = Grid.GetTile(transform.position);
+        StartCoroutine(MoveToNextPoinCourutine());
+    }
 
-        if (currentTile == PatrouleTrail[0])
+    IEnumerator MoveToNextPoinCourutine()
+    {
+        while (currentSpeed > 0)
         {
-            BasicTile t = PatrouleTrail.First();
-            PatrouleTrail.RemoveAt(0);
-            PatrouleTrail.Add(t);
+            BasicTile currentTile = GridContainer.GetTile(transform.position);
+
+            if (currentTile == PatroleTrail[CurrentpatrolePointIndex])
+            {
+                CurrentpatrolePointIndex++;
+                if (CurrentpatrolePointIndex == PatroleTrail.Count)
+                    CurrentpatrolePointIndex = 0;
+            }
+
+            List<BasicTile> Path = FindPath(currentTile, PatroleTrail[CurrentpatrolePointIndex]);
+
+            ResetCost(reachableTiles);
+            reachableTiles.Clear();
+            ResetCost(exploredTiles);
+            exploredTiles.Clear();
+
+            CurrentSpeed -= Path[Path.Count - 2].currentPathCost;
+            yield return MoveToPointCourutine(Path[Path.Count - 2]);
         }
 
-        List<BasicTile> Path = FindPath(currentTile, PatrouleTrail[0]);
-        foreach (BasicTile t in Path)
-        {
-            t.ChangeColor(Color.yellow);
-        }
     }
 
     private List<BasicTile> FindPath(BasicTile startTile, BasicTile endTile)
     {
-        List<BasicTile> reachableTiles = new List<BasicTile> { startTile };
-        List<BasicTile> exploredTiles = new List<BasicTile>();
+
+        reachableTiles.Add(startTile);
 
         while (reachableTiles.Count > 0)
         {
+            Debug.Log("CHECK");
             // Choose some node we know how to reach.
             BasicTile tile = chooseNextTile(reachableTiles, endTile);
 
             //# If we just got to the goal node, build and return the path.
             if (tile == endTile)
+            {
                 return BuildPath(endTile);
+            }
 
             //# Don't repeat ourselves.
             reachableTiles.Remove(tile);
             exploredTiles.Add(tile);
 
             //# Where can we get from here that we haven't explored before?
-            List<BasicTile> newReachebleTiles = Grid.getAdjacentTiles(tile);
-            foreach (BasicTile newTile in newReachebleTiles)
-                if (exploredTiles.Contains(newTile))
-                    newReachebleTiles.Remove(newTile);
+            List<BasicTile> newReachebleTiles = GridContainer.getAdjacentTiles(tile);
+            //foreach (BasicTile newTile in newReachebleTiles)
+            //    if (exploredTiles.Contains(newTile))
+            //        newReachebleTiles.Remove(newTile);
 
             foreach (BasicTile newTile in newReachebleTiles)
             {
-                // First time we see this node?
-                if (newTile.isPasseble && !reachableTiles.Contains(newTile))
-                    reachableTiles.Add(newTile);
-
-                // If this is a new path, or a shorter path than what we have, keep it.
-                if (tile.SpentMoveSpeed + newTile.currentPathCost < newTile.SpentMoveSpeed)
+                if (!exploredTiles.Contains(newTile))
                 {
-                    newTile.previosTile = tile;
-                    newTile.SpentMoveSpeed = tile.SpentMoveSpeed + newTile.currentPathCost;
+                    // First time we see this node?
+                    if (newTile.isPasseble && !reachableTiles.Contains(newTile))
+                    {
+                        reachableTiles.Add(newTile);
+                        newTile.AISpentMoveSpeed = tile.AISpentMoveSpeed + newTile.currentPathCost;
+                        newTile.previosTile = tile;
+                    }
                 }
             }
         }
@@ -114,14 +98,24 @@ public class AIMove : MonoBehaviour
         return null;
     }
 
+    private void ResetCost(List<BasicTile> Tiles)
+    {
+        foreach (BasicTile tile in Tiles)
+            tile.RefreshAISPentMoveSpeed();
+    }
+
     private List<BasicTile> BuildPath(BasicTile endTile)
     {
         List<BasicTile> path = new List<BasicTile>();
         while (endTile != null)
         {
+            endTile.ChangeColor(Color.red);
             path.Add(endTile);
+            Debug.Log("previosTile = " + endTile.previosTile);
             endTile = endTile.previosTile;
+            path.Last().RefreshAISPentMoveSpeed();
         }
+
         return path;
     }
 
@@ -132,7 +126,7 @@ public class AIMove : MonoBehaviour
 
         foreach (BasicTile tile in reachebleTiles)
         {
-            int startCost = tile.SpentMoveSpeed;
+            int startCost = tile.AISpentMoveSpeed;
             int costToFinalNode = (int)Vector2.Distance(tile.transform.position, finalNode.transform.position);
             int totalCost = startCost + costToFinalNode;
 

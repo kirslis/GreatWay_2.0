@@ -56,10 +56,10 @@ public class DataTypeHolderScript : ScriptableObject
 
     public struct TargetAntity
     {
-        public Antity Target;
+        public Entity Target;
         public int TypeOfTarget;
 
-        public TargetAntity(Antity target, int typeOfTile)
+        public TargetAntity(Entity target, int typeOfTile)
         {
             Target = target;
             TypeOfTarget = typeOfTile;

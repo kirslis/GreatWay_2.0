@@ -23,7 +23,7 @@ public class BasicHealAbility : BasicAbilityScript
         base.Use();
     }
 
-    public void Heal(Antity target)
+    public void Heal(Entity target)
     {
         int Heal = 0;
         for (int i = 0; i < _countOfHealDices; i++)

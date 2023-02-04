@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Antity : MonoBehaviour
+public class Entity : MonoBehaviour
 {
     [SerializeField] GameInterface Interface;
     [SerializeField] GameObject Collider3d;
+    
     protected bool IsActivePlayer;
 
     public bool isActive { get { return IsActivePlayer; } set { SetActive(value); } }

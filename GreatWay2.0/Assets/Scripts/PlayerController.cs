@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class PlayerController : Antity
+public class PlayerController : Entity
 {
 
     protected override void SetActive(bool value)

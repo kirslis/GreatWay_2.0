@@ -13,7 +13,7 @@ public class UiController : MonoBehaviour
 
     private void Awake()
     {
-        PlayerInterface = Instantiate(_interfacePrefab, FindObjectOfType<GameInterface>(true).antitiesEnterfaceFolder.transform);
+        PlayerInterface = Instantiate(_interfacePrefab, FindObjectOfType<GameInterface>(true).entitiesEnterfaceFolder.transform);
         PlayerInterface.name = transform.name + "_interface";
     }
 

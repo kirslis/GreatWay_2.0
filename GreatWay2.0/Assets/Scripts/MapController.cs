@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MapController : MonoBehaviour
 {
-    [SerializeField] AntityContainer _antityContainer;
+    [SerializeField] EntityContainer _entityContainer;
     [SerializeField] GridContainer _gridContainer;
     [SerializeField] Button _endOfTurnButton;
     [SerializeField] GameInterface _gameInterface;
@@ -31,11 +31,11 @@ public class MapController : MonoBehaviour
         return _gridContainer.TryChangeTile(tile);
     }
 
-    public bool TryAddCreature(Antity creature, Vector2 Pos)
+    public bool TryAddCreature(Entity creature, Vector2 Pos)
     {
         if (_gridContainer.IsChosenTileFree())
         {
-            _antityContainer.AddCreature(creature, _gridContainer.redactorCursorPos);
+            _entityContainer.AddCreature(creature, _gridContainer.redactorCursorPos);
             return true;
         }
 
@@ -49,7 +49,7 @@ public class MapController : MonoBehaviour
         Debug.Log(_gridContainer.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null);
         if (_gridContainer.IsChosenTileFree() || _gridContainer.GetTile(Pos).GetComponent<TileContainer>().objectOnTile != null)
         {
-            _antityContainer.AddEnviroment(obj, _gridContainer.redactorCursorPos, zAngle);
+            _entityContainer.AddEnviroment(obj, _gridContainer.redactorCursorPos, zAngle);
             return true;
         }
 
@@ -70,14 +70,14 @@ public class MapController : MonoBehaviour
         _gridContainer.GenerateMap(sizeX, sizeY);
         yield return null;
 
-        _antityContainer.GenerateCreatures();
+        _entityContainer.GenerateCreatures();
         IsGenerated = true;
     }
 
     public void ClearMap()
     {
         _gridContainer.DeleteMap();
-        _antityContainer.DeleteCreatures();
+        _entityContainer.DeleteCreatures();
         IsGenerated = false;
         Debug.Log("DELETEMAP");
     }
@@ -85,7 +85,7 @@ public class MapController : MonoBehaviour
     public void NextTurn()
     {
         _abilityManger.curentAbility = null;
-        _antityContainer.NextTurn();
+        _entityContainer.NextTurn();
         StartCoroutine(RotateButtonCoroutine());
     }
 

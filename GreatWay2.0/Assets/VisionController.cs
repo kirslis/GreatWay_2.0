@@ -6,8 +6,8 @@ public class VisionController : MonoBehaviour
 {
     [SerializeField] int VisionDistance;
 
-    private List<BasicTile> VisibleTiles = new List<BasicTile>();
-    private GlobalVisionController GlobalVision;
+    protected List<BasicTile> VisibleTiles = new List<BasicTile>();
+    protected GlobalVisionController GlobalVision;
     private GridContainer Grid;
     private float YDeviation = 0;
 
@@ -19,7 +19,7 @@ public class VisionController : MonoBehaviour
         Grid = FindObjectOfType<GridContainer>();
     }
 
-    public void LookOut()
+    public virtual void LookOut()
     {
         Vector2 Pos = transform.position;
 
@@ -41,20 +41,15 @@ public class VisionController : MonoBehaviour
             }
         }
 
-        GlobalVision.AddVisibleTiles(VisibleTiles);
     }
 
     private bool CheckTile(BasicTile tile)
     {
         float Distance = Vector2.Distance(tile.transform.position, transform.position);
         Vector2 startPos = new Vector2(transform.position.x, transform.position.y + YDeviation);
-        float halfOfTile = 0.5f;
 
         List<Vector2> directions = new List<Vector2>();
-        //directions.Add(new Vector2(tile.transform.position.x - halfOfTile, tile.transform.position.y));
-        //directions.Add(new Vector2(tile.transform.position.x + halfOfTile, tile.transform.position.y));
-        //directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y - halfOfTile));
-        //directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y + halfOfTile));
+    
         directions.Add(new Vector2(tile.transform.position.x, tile.transform.position.y));
 
 

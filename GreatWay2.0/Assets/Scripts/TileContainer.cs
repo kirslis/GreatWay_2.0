@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class TileContainer : MonoBehaviour
 {
-    private Antity EntityOnTile;
-    public Enviroment ObjectOnTile;
+    private Entity EntityOnTile;
+    private Enviroment ObjectOnTile;
+    private bool isVisible = false;
 
-    public Antity entityOnTile { get { return EntityOnTile; } }
+    public Entity entityOnTile { get { return EntityOnTile; } }
     public Enviroment objectOnTile { get { return ObjectOnTile; } }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -15,18 +16,17 @@ public class TileContainer : MonoBehaviour
 
         if (collision.transform.parent.TryGetComponent(out CharacterStats ant))
         {
-            EntityOnTile = ant.GetComponent<Antity>();
+            EntityOnTile = ant.GetComponent<Entity>();
         }
 
 
         else if (collision.transform.TryGetComponent(out Enviroment obj))
         {
             ObjectOnTile = obj.GetComponent<Enviroment>();
-            Debug.Log(ObjectOnTile);
         }
 
-        Debug.Log("??");
-
+        if(!isVisible)
+            MakeInvisible();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -76,8 +76,10 @@ public class TileContainer : MonoBehaviour
         return EntityOnTile != null;
     }
 
-    public void makeInvisible()
+    public void MakeInvisible()
     {
+        isVisible = false;
+
         if (EntityOnTile != null)
             EntityOnTile.GetComponent<SpriteRenderer>().enabled = false;
 
@@ -90,7 +92,7 @@ public class TileContainer : MonoBehaviour
 
     public void MakeUnSeen()
     {
-        makeInvisible();
+        MakeInvisible();
 
         if (ObjectOnTile != null && ObjectOnTile.isStatic)
             ObjectOnTile.GetComponent<SpriteRenderer>().enabled = false;
@@ -98,8 +100,11 @@ public class TileContainer : MonoBehaviour
 
     public void makeSeen()
     {
+        isVisible = true;
+
         if (EntityOnTile != null)
             EntityOnTile.GetComponent<SpriteRenderer>().enabled = true;
+
         if (ObjectOnTile != null)
         {
             ObjectOnTile.GetComponent<SpriteRenderer>().enabled = true;

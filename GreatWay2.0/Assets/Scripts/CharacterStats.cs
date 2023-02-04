@@ -66,7 +66,7 @@ public class CharacterStats : MonoBehaviour
         }
 
         Icon = Instantiate(_icon, transform);
-        Icon.parrent = GetComponent<Antity>();
+        Icon.parrent = GetComponent<Entity>();
         Icon.gameObject.SetActive(false);
         GenerateStats();
 
@@ -162,7 +162,7 @@ public class CharacterStats : MonoBehaviour
 
         if(CurrentHP <= 0)
         {
-            FindObjectOfType<AntityContainer>().DeleteCreature(this.GetComponent<Antity>()); 
+            FindObjectOfType<EntityContainer>().DeleteCreature(this.GetComponent<Entity>()); 
             Anim.SetTrigger("Die");
         }
     }

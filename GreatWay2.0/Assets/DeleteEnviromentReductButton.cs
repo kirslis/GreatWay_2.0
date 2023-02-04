@@ -29,7 +29,7 @@ public class DeleteEnviromentReductButton : DeleteAntityReductButton
 
                 else if (!LastTilePos.Equals(mousePos))
                 {
-                    FindObjectOfType<AntityContainer>().DeleteEnviroment();
+                    FindObjectOfType<EntityContainer>().DeleteEnviroment();
                     LastTilePos = mousePos;
                 }
             }

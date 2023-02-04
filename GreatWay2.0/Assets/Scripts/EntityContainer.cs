@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class AntityContainer : MonoBehaviour
+public class EntityContainer : MonoBehaviour
 {
     [SerializeField] GlobalVisionController _globalController;
     [SerializeField] TurnQeue _qeue;
     [SerializeField] GameObject _alliesContainer;
     [SerializeField] GameObject _enviromentsContainer;
-    [SerializeField] List<Antity> _players;
+    [SerializeField] List<Entity> _players;
     [SerializeField] CurentHeroArrowScript _arrow;
     [SerializeField] ActionsPanel _panel;
     [SerializeField] GridContainer _grid;
 
-    private List<Antity> Players = new List<Antity>();
-    private List<Antity> TurnOrders = new List<Antity>();
+    private List<Entity> Players = new List<Entity>();
+    private List<Entity> TurnOrders = new List<Entity>();
     private List<Enviroment> Enviroments = new List<Enviroment>();
     private CurentHeroArrowScript Arrow;
     private int CurentActivePlayerIndex = -1;
     private EnviromentChecking Input;
     private Camera Cam;
 
-    private List<Antity> AllyesList = new List<Antity>();
-    private List<Antity> EnemyesList = new List<Antity>();
+    private List<Entity> AllyesList = new List<Entity>();
+    private List<Entity> EnemyesList = new List<Entity>();
 
-    public List<Antity> antityes { get { return Players; } }
-    public Antity currentPlayer { get { return Players[CurentActivePlayerIndex]; } }
+    public List<Entity> antityes { get { return Players; } }
+    public Entity currentPlayer { get { return Players[CurentActivePlayerIndex]; } }
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class AntityContainer : MonoBehaviour
 
     bool IsPosFree(Vector2 pos)
     {
-        foreach (Antity player in Players)
+        foreach (Entity player in Players)
             if (pos.Equals((Vector2)player.transform.position))
                 return false;
 
@@ -72,9 +72,9 @@ public class AntityContainer : MonoBehaviour
     public void GenerateCreatures()
     {
         int i = 0;
-        foreach (Antity player in _players)
+        foreach (Entity player in _players)
         {
-            Antity newPlayer = Instantiate(player, _alliesContainer.transform);
+            Entity newPlayer = Instantiate(player, _alliesContainer.transform);
             newPlayer.transform.position = GetFreePos();
 
             newPlayer.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
@@ -113,7 +113,7 @@ public class AntityContainer : MonoBehaviour
 
     IEnumerator MakeGamePlayble()
     {
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(2f);
         Debug.Log("START");
         _qeue.SetQeue(Players, CurentActivePlayerIndex);
         yield return new WaitForSeconds(1f);
@@ -128,7 +128,7 @@ public class AntityContainer : MonoBehaviour
         for (int i = 0; i < Players.Count; i++)
         {
             int j = i;
-            Antity t = Players[i];
+            Entity t = Players[i];
             while (j > 0 && Players[j - 1].GetComponent<CharacterStats>().init < t.GetComponent<CharacterStats>().init)
             {
                 Players[j] = Players[j - 1];
@@ -140,13 +140,13 @@ public class AntityContainer : MonoBehaviour
             Players[j] = t;
         }
 
-        foreach (Antity player in Players)
+        foreach (Entity player in Players)
             Debug.Log(player.GetComponent<CharacterStats>().init);
     }
 
     public void DeleteCreatures()
     {
-        foreach (Antity player in Players)
+        foreach (Entity player in Players)
         {
             Destroy(player.gameObject);
             Destroy(player.GetComponent<UiController>().playerInteface.gameObject);
@@ -158,9 +158,9 @@ public class AntityContainer : MonoBehaviour
         _qeue.DeleteCreatures();
     }
 
-    public void DeleteCreature()
+    public void DeleteChosenCreature()
     {
-        Antity creature = _grid.GetChosenTile().GetComponent<TileContainer>().entityOnTile;
+        Entity creature = _grid.GetChosenTile().GetComponent<TileContainer>().entityOnTile;
         if (creature != null)
             DeleteCreature(creature);
 
@@ -175,7 +175,7 @@ public class AntityContainer : MonoBehaviour
             Destroy(obj.gameObject);
     }
 
-    public void DeleteCreature(Antity creature)
+    public void DeleteCreature(Entity creature)
     {
         if (currentPlayer == creature)
             NextTurn();
@@ -189,16 +189,19 @@ public class AntityContainer : MonoBehaviour
         _qeue.SetQeue(Players, CurentActivePlayerIndex);
 
         _grid.GetTile(creature.transform.position).GetComponent<TileContainer>().DeleteCreatureFromTile();
+        Destroy(creature.gameObject);
     }
 
-    public void AddCreature(Antity Creature, Vector2 Pos)
+    public void AddCreature(Entity Creature, Vector2 Pos)
     {
-        Antity creature = Instantiate(Creature, _alliesContainer.transform);
+        Debug.Log(Creature + " " + _alliesContainer.transform);
+        Entity creature = Instantiate(Creature, _alliesContainer.transform);
+        Debug.Log(creature);
         creature.transform.position = Pos;
         creature.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, 1);
         creature.isActive = false;
         creature.name = creature.name + "_" + (Players.Count - 1).ToString();
-        creature.GetComponent<PlayerMove>().yStep = FindObjectOfType<GridContainer>().yStep;
+        creature.GetComponent<Move>().yStep = FindObjectOfType<GridContainer>().yStep;
         creature.GetComponent<CharacterStats>().RollInit();
         Players.Add(creature);
 

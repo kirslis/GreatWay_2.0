@@ -19,6 +19,7 @@ public class BasicTile : MonoBehaviour
     private bool IsAttackThrought;
 
     public int SpentMoveSpeed = -1;
+    public int AISpentMoveSpeed; //infinity
     private int CurrentPathCost;
 
     public BasicTile previosTile = null;
@@ -37,7 +38,7 @@ public class BasicTile : MonoBehaviour
             else
             {
                 if (isSeen)
-                    GetComponent<TileContainer>().makeInvisible();
+                    GetComponent<TileContainer>().MakeInvisible();
                 else
                     GetComponent<TileContainer>().MakeUnSeen();
             }
@@ -54,6 +55,7 @@ public class BasicTile : MonoBehaviour
 
     private void Awake()
     {
+        AISpentMoveSpeed = 0; //inf
         Sprite = GetComponent<SpriteRenderer>();
 
         BasePathCost = _pathCost;
@@ -63,6 +65,7 @@ public class BasicTile : MonoBehaviour
         BaseColor = Sprite.color;
         visibleColor = BaseColor;
         IsAttackThrought = _isAttackThrought;
+
     }
 
     public void SetBaseColor(Color newColor)
@@ -89,6 +92,8 @@ public class BasicTile : MonoBehaviour
         StartCoroutine(ChangeColorCoroutine(newColor));
     }
 
+
+
     IEnumerator ChangeColorCoroutine(Color newColor)
     {
         float speed = 2f;
@@ -97,5 +102,11 @@ public class BasicTile : MonoBehaviour
             Sprite.color = Vector4.MoveTowards(Sprite.color, newColor, speed * Time.deltaTime);
             yield return null;
         }
+    }
+
+public void RefreshAISPentMoveSpeed()
+    {
+        AISpentMoveSpeed = 0; //infinity
+        previosTile = null;
     }
 }

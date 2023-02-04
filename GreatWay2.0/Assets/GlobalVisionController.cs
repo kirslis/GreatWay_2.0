@@ -5,7 +5,7 @@ using UnityEngine;
 public class GlobalVisionController : MonoBehaviour
 {
     [SerializeField] GridContainer _gridContainer;
-    [SerializeField] AntityContainer _antityContainer;
+    [SerializeField] EntityContainer _entityContainer;
 
     private List<BasicTile> InvisibleInGameTiles = new List<BasicTile>();
     private List<BasicTile> VisibleTiles = new List<BasicTile>();
@@ -19,9 +19,9 @@ public class GlobalVisionController : MonoBehaviour
         _gridContainer.MakeTilesInVisible(VisibleTiles);
         VisibleTiles.Clear();
 
-        List<Antity> antities = _antityContainer.antityes;
+        List<Entity> antities = _entityContainer.antityes;
 
-        foreach (Antity antity in antities)
+        foreach (Entity antity in antities)
             antity.GetComponent<VisionController>().LookOut();
 
         _gridContainer.MakeTilesVisible(VisibleTiles);
@@ -50,6 +50,7 @@ public class GlobalVisionController : MonoBehaviour
     {
         List<List<BasicTile>> Tiles = _gridContainer.container;
         IsInReductMode = true;
+        _gridContainer.StartReduct();
 
         foreach (List<BasicTile> coll in Tiles)
             foreach (BasicTile tile in coll)
@@ -65,6 +66,7 @@ public class GlobalVisionController : MonoBehaviour
     {
         IsInReductMode = false;
         List<List<BasicTile>> Tiles = _gridContainer.container;
+        _gridContainer.AbortReduct();
 
         foreach (BasicTile tile in InvisibleInGameTiles)
             if (tile != null)

@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class TurnIcon : MonoBehaviour
 {
     bool IsVisible = false;
-    private Antity Parrent;
+    private Entity Parrent;
 
     public bool isVisible { get { return IsVisible; } set { IsVisible = value; } }
-    public Antity parrent { get { return Parrent; } set { Parrent = value; GetComponent<Image>().sprite = Parrent.GetComponent<CharacterStats>().image; } }
+    public Entity parrent { get { return Parrent; } set { Parrent = value; GetComponent<Image>().sprite = Parrent.GetComponent<CharacterStats>().image; } }
 
 }

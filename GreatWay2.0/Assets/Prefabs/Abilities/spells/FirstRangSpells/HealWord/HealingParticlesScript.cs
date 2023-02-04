@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class HealingParticlesScript : BasicBuffParticle
 {
-    private Antity Target;
+    private Entity Target;
     private BasicHealAbility Ability;
     private ParticleSystem Particles;
 
-    public Antity target { set { Target = value; } }
+    public Entity target { set { Target = value; } }
     public BasicHealAbility ability { set { Ability = value; } }
 
     private void Awake()

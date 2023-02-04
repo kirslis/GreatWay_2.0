@@ -42,7 +42,7 @@ public class TurnQeue : MonoBehaviour
         Debug.Log(IStart + " " + IEnd);
     }
 
-    public void SetQeue(List<Antity> Antities, int firstIndex)
+    public void SetQeue(List<Entity> Antities, int firstIndex)
     {
         while (Icons.Count > 0)
         {
@@ -106,7 +106,7 @@ public class TurnQeue : MonoBehaviour
         Resize();
     }
 
-    private bool ContainCheck(Antity ant)
+    private bool ContainCheck(Entity ant)
     {
         foreach (TurnIcon icon in Icons)
             if (icon.parrent == ant)

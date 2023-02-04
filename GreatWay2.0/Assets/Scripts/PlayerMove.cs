@@ -3,63 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : MonoBehaviour
+public class PlayerMove : Move
 {
-    [SerializeField] int _speed = 6;
-
-    private Animator Anim;
-    private int MaxSpeed;
-    private int CurrentSpeed;
-    private int LeftSpeed;
-
-    private GlobalVisionController GlobalVision;
     private bool IsLooking;
     private bool IsHold;
     private bool IsMouseDown;
     private GameObject Spirit;
     private PlayerInputAction Input;
-    private GridContainer GridContainer;
-    private float YStep;
 
-    public float yStep { set { YStep = value; } }
-    public int currentSpeed { get { return CurrentSpeed; } set { CurrentSpeed = value; } }
-    public bool isActivePlayer
+    protected override void Awake()
     {
-        set
-        {
-            if (value && FindObjectOfType<AntityContainer>().currentPlayer == GetComponent<Antity>())
-            {
-                GridContainer.GetTile(transform.position).isPasseble = true;
-
-                Input.MoveActions.Enable();
-            }
-            else
-            {
-                Debug.Log("GENERATED2");
-                GridContainer.GetTile(transform.position).isPasseble = false;
-                Input.MoveActions.Disable();
-                                AbortMoving();
-            }
-        }
-    }
-
-    public void NewTurn()
-    {
-        CurrentSpeed = MaxSpeed;
-        LeftSpeed = CurrentSpeed;
-        Debug.Log("NExtTurn speed = " + CurrentSpeed);
-    }
-
-
-    private void Awake()
-    {
-        Anim = GetComponent<Animator>();
-
-        MaxSpeed = _speed;
-        CurrentSpeed = _speed;
-        LeftSpeed = _speed;
-
-        GlobalVision = FindObjectOfType<GlobalVisionController>();
+        base.Awake();
 
         Spirit = new GameObject();
         Spirit.transform.parent = transform;
@@ -76,18 +30,28 @@ public class PlayerMove : MonoBehaviour
 
         Input.MoveActions.HoldToMove.performed += context =>
         {
-            IsMouseDown = !IsMouseDown;
-            if (IsClickOnObject() || IsHold)
-            {
-                IsHold = IsMouseDown;
-                if (IsHold)
-                    StartDrawPath();
-                else if (GridContainer.countOfPassedTiles != 0)
-                    EndDrawPath();
-            }
+            //IsMouseDown = !IsMouseDown;
+            //if (IsClickOnObject() || IsHold)
+            //{
+            //    IsHold = IsMouseDown;
+            //    if (IsHold)
+            //        StartDrawPath();
+            //    else if (GridContainer.countOfPassedTiles != 0)
+            //        EndDrawPath();
+            //}
         };
+    }
 
-        GridContainer = FindObjectOfType<GridContainer>();
+    public override bool isActivePlayer
+    {
+        set
+        {
+            base.isActivePlayer = value;
+            if (value)
+                Input.MoveActions.Enable();
+            else
+                Input.MoveActions.Disable();
+        }
     }
 
     private void OnDestroy()
@@ -99,7 +63,7 @@ public class PlayerMove : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        return Physics.Raycast(ray, out RaycastHit hit) && hit.collider == gameObject.GetComponent<Antity>().collider3d;
+        return Physics.Raycast(ray, out RaycastHit hit) && hit.collider == gameObject.GetComponent<Entity>().collider3d;
     }
 
     private void LookOut()
@@ -109,14 +73,12 @@ public class PlayerMove : MonoBehaviour
         IsLooking = true;
     }
 
-    private void AbortMoving()
+    protected override void AbortMoving()
     {
-        Debug.Log("ABORT MOVING");
-        GridContainer.ResetLightedTiles();
+        base.AbortMoving();
 
         Spirit.gameObject.SetActive(false);
         GridContainer.ResetPath();
-        Debug.Log("GENERATED3");
 
         CurrentSpeed = LeftSpeed;
         IsLooking = false;
@@ -168,40 +130,11 @@ public class PlayerMove : MonoBehaviour
 
     private void MoveToEndPoint()
     {
-        Anim.SetBool("IsRunning", true);
         List<BasicTile> WalkPoints = GridContainer.passedTiles;
         StartCoroutine(MoveCourutine(WalkPoints, GridContainer.countOfPassedTiles));
     }
 
-    private IEnumerator MoveCourutine(List<BasicTile> WalkPoints, int Count)
-    {
-        GetComponent<PlayerController>().InputMode(false);
 
-        GridContainer.ResetLightedTiles();
-
-        for (int i = 1; i < Count; i++)
-        {
-            if (WalkPoints[i].transform.position.x < transform.position.x)
-                GetComponent<SpriteRenderer>().flipX = true;
-            else if (WalkPoints[i].transform.position.x > transform.position.x)
-                GetComponent<SpriteRenderer>().flipX = false;
-
-            while (!((Vector2)transform.position).Equals(WalkPoints[i].transform.position))
-            {
-                transform.position = Vector2.MoveTowards(transform.position, WalkPoints[i].transform.position, 3 * Time.deltaTime);
-                transform.position = new Vector3(transform.position.x, transform.position.y, -2 + YStep * transform.position.y);
-
-                yield return null;
-            }
-            LeftSpeed -= WalkPoints[i].currentPathCost;
-            GlobalVision.AllLookOut();
-        }
-        AbortMoving();
-        Anim.SetBool("IsRunning", false);
-
-        GetComponent<PlayerController>().InputMode(true);
-
-    }
 
     public void Dash()
     {

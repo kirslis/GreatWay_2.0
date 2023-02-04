@@ -32,9 +32,13 @@ public class RedactorCreaturesButton : BasicReductorButton, IPointerEnterHandler
 
             else if (!LastTilePos.Equals(mousePos))
             {
-                Debug.Log(_resourse.GetComponent<Antity>() + " " + Map);
-                if (!Map.TryAddCreature(_resourse.GetComponent<Antity>(), mousePos))
+                Debug.Log(_resourse.GetComponent<Entity>() + " " + Map + " " + mousePos);
+
+                if (!Map.TryAddCreature(_resourse.GetComponent<Entity>(), mousePos))
+                {
                     ErrorMassage("something interferes");
+                    StartReduct();
+                }
                 LastTilePos = mousePos;
             }
         }

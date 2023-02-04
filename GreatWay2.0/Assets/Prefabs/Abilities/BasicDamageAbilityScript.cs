@@ -53,7 +53,7 @@ public class BasicDamageAbilityScript : BasicAbilityScript
         base.Use();
     }
 
-    public virtual void DealDamage(Antity target)
+    public virtual void DealDamage(Entity target)
     {
         int Damage = 0;
         for (int i = 0; i < _countOfDamageDices; i++)

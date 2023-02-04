@@ -5,13 +5,13 @@ public class BasicShotenParticleScript : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] GameObject _hit;
 
-    private Antity Target;
+    private Entity Target;
     private BasicDamageAbilityScript Ability;
     private float YDelta;
     private Vector3 EndPos;
     private bool IsHitting;
 
-    public Antity target { set { Target = value; YDelta = Target.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2; EndPos = new Vector3(Target.transform.position.x, Target.transform.position.y + YDelta, Target.transform.position.z - 1); } }
+    public Entity target { set { Target = value; YDelta = Target.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2; EndPos = new Vector3(Target.transform.position.x, Target.transform.position.y + YDelta, Target.transform.position.z - 1); } }
     public BasicDamageAbilityScript ability { set { Ability = value; } }
     public bool isHitting { set { IsHitting = value; if (!IsHitting) EndPos = new Vector3(EndPos.x + Random.Range(-30, 30)/20f, EndPos.y + Random.Range(-30, 30)/20f, EndPos.z); } }
 

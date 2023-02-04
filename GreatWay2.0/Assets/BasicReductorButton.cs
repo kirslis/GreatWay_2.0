@@ -96,14 +96,12 @@ public class BasicReductorButton : MonoBehaviour
     public virtual void StartReduct()
     {
         IsReducting = true;
-        Map.StartReduct();
     }
 
     virtual protected void AbortReduct()
     {
         IsReducting = false;
         IsMouseDown = false;
-        Map.AbortReduct();
     }
 
 }

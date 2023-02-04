@@ -9,9 +9,11 @@ public class BasicMenu : MonoBehaviour
 
     private BasicMenu ParentMenu;
     private MenuActions Actions;
+    private List<GameObject> HidenObjects = new List<GameObject>();
+
     protected Camera Cam;
 
-    public BasicMenu parentMenu { set { ParentMenu = value;  } }
+    public BasicMenu parentMenu { set { ParentMenu = value; } }
 
     protected virtual void Awake()
     {
@@ -48,5 +50,29 @@ public class BasicMenu : MonoBehaviour
     {
         ErrorText error = Instantiate(_errorText, transform);
         error.StartFly(text, _errorTextPlace.transform.position);
+    }
+
+    public void Hide()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+
+            if (child.activeSelf)
+            {
+                child.SetActive(false);
+                HidenObjects.Add(child);
+            }
+        }
+        Actions.Disable();
+    }
+
+    public void Show()
+    {
+        foreach (GameObject child in HidenObjects)
+            child.SetActive(true);
+
+        HidenObjects.Clear();
+        Actions.Enable();
     }
 }

@@ -35,6 +35,6 @@ public class WindowEnviroment : Enviroment, IPointerClickHandler
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        return Physics.Raycast(ray, out RaycastHit hit) && hit.collider == gameObject.GetComponent<Antity>().collider3d;
+        return Physics.Raycast(ray, out RaycastHit hit) && hit.collider == gameObject.GetComponent<Entity>().collider3d;
     }
 }

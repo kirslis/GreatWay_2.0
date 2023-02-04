@@ -44,6 +44,15 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""b636f2b4-7176-4787-af24-709420daa495"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,17 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
                     ""action"": ""RMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc50c40a-9001-4d18-ba20-c711414faab8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +98,7 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
         m_actions = asset.FindActionMap("actions", throwIfNotFound: true);
         m_actions_LMB = m_actions.FindAction("LMB", throwIfNotFound: true);
         m_actions_RMB = m_actions.FindAction("RMB", throwIfNotFound: true);
+        m_actions_Esc = m_actions.FindAction("Esc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -139,12 +160,14 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
     private IActionsActions m_ActionsActionsCallbackInterface;
     private readonly InputAction m_actions_LMB;
     private readonly InputAction m_actions_RMB;
+    private readonly InputAction m_actions_Esc;
     public struct ActionsActions
     {
         private @AIMoveActions m_Wrapper;
         public ActionsActions(@AIMoveActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @LMB => m_Wrapper.m_actions_LMB;
         public InputAction @RMB => m_Wrapper.m_actions_RMB;
+        public InputAction @Esc => m_Wrapper.m_actions_Esc;
         public InputActionMap Get() { return m_Wrapper.m_actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -160,6 +183,9 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
                 @RMB.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnRMB;
                 @RMB.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnRMB;
                 @RMB.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnRMB;
+                @Esc.started -= m_Wrapper.m_ActionsActionsCallbackInterface.OnEsc;
+                @Esc.performed -= m_Wrapper.m_ActionsActionsCallbackInterface.OnEsc;
+                @Esc.canceled -= m_Wrapper.m_ActionsActionsCallbackInterface.OnEsc;
             }
             m_Wrapper.m_ActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -170,6 +196,9 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
                 @RMB.started += instance.OnRMB;
                 @RMB.performed += instance.OnRMB;
                 @RMB.canceled += instance.OnRMB;
+                @Esc.started += instance.OnEsc;
+                @Esc.performed += instance.OnEsc;
+                @Esc.canceled += instance.OnEsc;
             }
         }
     }
@@ -178,5 +207,6 @@ public partial class @AIMoveActions : IInputActionCollection2, IDisposable
     {
         void OnLMB(InputAction.CallbackContext context);
         void OnRMB(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
 }

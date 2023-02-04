@@ -8,12 +8,15 @@ public class GridContainer : MonoBehaviour
     [SerializeField] BasicTile _tile;
     [SerializeField] GameObject ContainerObject;
     [SerializeField] GameObject _redactorCursor;
+    [SerializeField] GameObject _trailMark;
     [SerializeField] GlobalVisionController _globalVisionController;
 
     private int SizeX;
     private int SizeY;
     private bool IsReducting;
+    private bool IsTrailing;
     private GameObject RedactorCursor;
+    private GameObject TrailMark;
 
     private List<List<BasicTile>> Container = new List<List<BasicTile>>();
     private List<GameObject> Colls = new List<GameObject>();
@@ -64,7 +67,18 @@ public class GridContainer : MonoBehaviour
     {
         IsReducting = false;
         RedactorCursor.SetActive(false);
-        Debug.Log("ABORT REDUCT");
+    }
+
+    public void StartTrailing()
+    {
+        IsTrailing = true;
+        TrailMark.SetActive(true);
+    }
+
+    public void AbortTrailing()
+    {
+        IsTrailing = false;
+        TrailMark.SetActive(false);
     }
 
     public bool IsChosenTileFree()
@@ -114,17 +128,29 @@ public class GridContainer : MonoBehaviour
     {
         RedactorCursor = Instantiate(_redactorCursor, transform);
         RedactorCursor.SetActive(false);
+        TrailMark = Instantiate(_trailMark, transform);
+        TrailMark.SetActive(false);
     }
 
     private void Update()
     {
         if (IsReducting)
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            MakePosValid(ref pos);
-
-            RedactorCursor.transform.position = new Vector3((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), -3);
+            SetMark(RedactorCursor);
         }
+
+        if(IsTrailing)
+        {
+            SetMark(TrailMark);
+        }
+    }
+
+    private void SetMark(GameObject Mark)
+    {
+        Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        MakePosValid(ref pos);
+
+        Mark.transform.position = new Vector3((int)(pos.x + 0.5f), (int)(pos.y + 0.5f), -3);
     }
 
     public void GenerateMap(int xSize, int ySize)
@@ -306,5 +332,17 @@ public class GridContainer : MonoBehaviour
     {
         foreach (BasicTile tile in tiles)
             tile.isVisible = true;
+    }
+
+    public GameObject TryAddTrailPoint()
+    {
+        if (GetTile(TrailMark.transform.position).isPasseble)
+        {
+            GameObject newTrailPoint = Instantiate(_trailMark, transform);
+            newTrailPoint.transform.position = TrailMark.transform.position;
+            return newTrailPoint;
+        }
+
+        return null;
     }
 }

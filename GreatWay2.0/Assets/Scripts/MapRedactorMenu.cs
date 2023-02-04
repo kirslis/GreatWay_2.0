@@ -11,7 +11,7 @@ public class MapRedactorMenu : BasicMenu
     [SerializeField] GameObject _standartOpenedVarianPanel;
     [SerializeField] DescriptionViewer _descriptionViewer;
 
-    private GameObject OpenedVatiantPanel;
+    private GameObject OpenedVariantPanel;
 
     override protected void OnEnable()
     {
@@ -29,18 +29,18 @@ public class MapRedactorMenu : BasicMenu
     override protected void Awake()
     {
         base.Awake();
-        OpenedVatiantPanel = _standartOpenedVarianPanel;
-        OpenedVatiantPanel.SetActive(true);
+        OpenedVariantPanel = _standartOpenedVarianPanel;
+        OpenedVariantPanel.SetActive(true);
     }
 
 
 
     public void ChangeVariantTipe(GameObject VariantPanel)
     {
-        if (OpenedVatiantPanel != null)
-            OpenedVatiantPanel.SetActive(false);
-        OpenedVatiantPanel = VariantPanel;
-        OpenedVatiantPanel.SetActive(true);
+        if (OpenedVariantPanel != null)
+            OpenedVariantPanel.SetActive(false);
+        OpenedVariantPanel = VariantPanel;
+        OpenedVariantPanel.SetActive(true);
     }
 
     public override void ThrowErrorText(string text)
@@ -50,4 +50,6 @@ public class MapRedactorMenu : BasicMenu
         error.transform.position = new Vector3(error.transform.position.x, error.transform.position.y, 0);
         error.StartFly(text, Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
     }
+
+
 }

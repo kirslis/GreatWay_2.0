@@ -31,7 +31,7 @@ public class DeleteAntityReductButton : RedactorCreaturesButton
             {
                 Debug.Log(mousePos);
               
-                    FindObjectOfType<AntityContainer>().DeleteCreature(); ;
+                    FindObjectOfType<EntityContainer>().DeleteChosenCreature(); ;
                 LastTilePos = mousePos;
             }
         }

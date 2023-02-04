@@ -20,6 +20,11 @@ public class CurentHeroArrowScript : MonoBehaviour
             else
                 Direction = -Direction;
         }
+
+        if (Target.GetComponent<SpriteRenderer>().enabled)
+            GetComponent<SpriteRenderer>().enabled = true;
+        else
+            GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void SetTerget(GameObject target)
