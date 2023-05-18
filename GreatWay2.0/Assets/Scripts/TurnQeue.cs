@@ -38,8 +38,6 @@ public class TurnQeue : MonoBehaviour
         IEnd++;
         if (IEnd >= Icons.Count)
             IEnd = 0;
-
-        Debug.Log(IStart + " " + IEnd);
     }
 
     public void SetQeue(List<Entity> Antities, int firstIndex)
@@ -128,28 +126,29 @@ public class TurnQeue : MonoBehaviour
 
     private void UpdateVisual()
     {
-        Debug.Log(Icons.Count + " " + VisibleCount + " " + IStart + " " + IEnd);
-
-        for (int i = 0; i < Icons.Count; i++)
+        if (isActiveAndEnabled)
         {
-            int index = GetIVisible(i);
-
-            if (index != -1)
+            for (int i = 0; i < Icons.Count; i++)
             {
-                if (Icons[i].isVisible == true)
-                    MoveToPosAnim(Icons[i], Poses[index]);
-                else
-                    AddAnim(Icons[i], Poses[index]);
+                int index = GetIVisible(i);
+
+                if (index != -1)
+                {
+                    if (Icons[i].isVisible == true)
+                        MoveToPosAnim(Icons[i], Poses[index]);
+                    else
+                        AddAnim(Icons[i], Poses[index]);
+                }
+                else if (Icons[i].isVisible == true)
+                    HideAnim(Icons[i]);
             }
-            else if (Icons[i].isVisible == true)
-                HideAnim(Icons[i]);
         }
     }
 
     public void NextTurn()
     {
         MoveIStartleft();
-
+        StopAllCoroutines();
         UpdateVisual();
     }
 
@@ -191,6 +190,7 @@ public class TurnQeue : MonoBehaviour
 
     private void MoveToPosAnim(TurnIcon icon, Vector2 Pos)
     {
+        StopAllCoroutines();
         StartCoroutine(MoveToPoseCourutine(icon, Pos));
     }
 
@@ -210,7 +210,8 @@ public class TurnQeue : MonoBehaviour
         if (IEnd >= Icons.Count)
             IEnd -= Icons.Count;
         IsNeedToResize = true;
-        ResizeAnim();
+        if (isActiveAndEnabled)
+            ResizeAnim();
     }
 
     private void OnEnable()

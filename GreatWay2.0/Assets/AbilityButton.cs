@@ -10,7 +10,6 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     [SerializeField] Image _blankImage;
     [SerializeField] Text _textViwer;
 
-    private ActionButtonActions Actions;
     protected Camera Cam;
     protected Image SmallButton;
     private BasicAbilityScript Ability;
@@ -18,15 +17,14 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     protected bool IsAiming;
     private BasicTile LastTargetTile = null;
 
+    private PlayerStateMachine PlayerStateMachine;
+
     public BasicAbilityScript ability { set { Ability = value; GetComponent<Image>().sprite = value.skillSprite; SmallButton.sprite = value.skillSprite; _textViwer.text = value._abilityName; } get { return Ability; } }
-    public AbilityController player { set { Player = value; } }
+    public AbilityController player { set { Player = value; PlayerStateMachine = Player.GetComponent<PlayerStateMachine>(); } }
+    public bool isAiming { set { IsAiming = value; } get { return IsAiming; } }
 
     private void Awake()
     {
-        Actions = new ActionButtonActions();
-        Actions.Chosen.mouseRight.performed += context => StopAiming();
-        Actions.Disable();
-
         Cam = GameObject.Find("UICanvas").GetComponent<Canvas>().worldCamera;
         SmallButton = Instantiate(_blankImage, transform);
         SmallButton.sprite = GetComponent<Image>().sprite;
@@ -79,26 +77,37 @@ public class AbilityButton : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     virtual public void OnClick()
     {
-        if (Ability._activeType == DataTypeHolderScript.ActiveType.mainActive && Player.GetComponent<CharacterStats>().mainActive ||
-   Ability._activeType == DataTypeHolderScript.ActiveType.subActive && Player.GetComponent<CharacterStats>().subActive)
-        {
-            Debug.Log("CLICK");
-            IsAiming = true;
-            Debug.Log("PLAYER = " + Player);
-            Ability.OnAbilityClick(Player);
-            Actions.Enable();
-        }
-        else
-        {
-            Debug.Log("NO ACTIVE POINT");
+        if (!(Player.GetComponent<PlayerStateMachine>().playerState is PlayerMutedState))
+            if (Ability._activeType == DataTypeHolderScript.ActiveType.mainActive && Player.GetComponent<CharacterStats>().mainActive ||
+       Ability._activeType == DataTypeHolderScript.ActiveType.subActive && Player.GetComponent<CharacterStats>().subActive)
+            {
+                PlayerStateMachine.SetNewState(new PlayerSkillingState(PlayerStateMachine));
+                if (PlayerStateMachine.playerState is PlayerSkillingState)
+                    (PlayerStateMachine.playerState as PlayerSkillingState).abilityButton = this;
 
-        }
+                Ability.OnAbilityClick(Player);
+                //Actions.Enable();
+            }
+            else
+            {
+                Debug.Log("NO ACTIVE POINT");
+
+            }
     }
 
-    virtual protected void StopAiming()
+    virtual public void StopAiming()
     {
         IsAiming = false;
+    }
+
+    public IEnumerator TryToUseAbility()
+    {
+        yield return Ability.TryToUse(this);
+    }
+
+    public void AbortAbility()
+    {
         Ability.Abort();
-        Actions.Disable();
+        IsAiming = false;
     }
 }

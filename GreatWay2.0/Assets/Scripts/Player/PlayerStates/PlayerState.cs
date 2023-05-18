@@ -4,12 +4,24 @@ using UnityEngine;
 
 public abstract class PlayerState 
 {
+    protected PlayerStateMachine PlayerStateMachine;
+
+    public PlayerState (PlayerStateMachine playerStateMachine)
+    {
+        PlayerStateMachine = playerStateMachine;
+    }
+
     public virtual IEnumerator Start()
     {
         yield break;
     }
 
     public virtual IEnumerator OnLeftMouseDown()
+    {
+        yield break;
+    }
+
+    public virtual IEnumerator OnLeftMouseUp()
     {
         yield break;
     }

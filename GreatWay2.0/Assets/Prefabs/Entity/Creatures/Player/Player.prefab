@@ -251,10 +251,11 @@ GameObject:
   - component: {fileID: 6509120294292085783}
   - component: {fileID: 265719145472918201}
   - component: {fileID: 8629435987194540231}
-  - component: {fileID: -8196206536154498893}
   - component: {fileID: 7319858322811895834}
   - component: {fileID: 1754842036026074542}
   - component: {fileID: 5514039873561946596}
+  - component: {fileID: 414220447329809702}
+  - component: {fileID: 100373497717701852}
   m_Layer: 0
   m_Name: Player
   m_TagString: Ally
@@ -391,7 +392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91a70a072a48be34abb93fa38b92ef2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VisionDistance: 5
+  VisionDistance: 12
 --- !u!114 &-1127361550129667941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9366ea57b0cbf7e4dae73cdc6af2d769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 6
+  _speed: 15
 --- !u!114 &1680859570584994038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +482,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 437e1722-495d-4649-b36d-3ade97701bcd
     m_ActionName: MoveActions/HoldToMove[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 993f1cfd-c9d3-456e-940b-62384d0cac62
+    m_ActionName: MoveActions/LMBUp[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: MoveActions
@@ -500,10 +505,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 6372244224899754407, guid: 14e148e85ec61684f831907311e4cd2a, type: 3}
   _pseudoThrowViewer: {fileID: 4478358216274673161}
-  _addictionalStats: 000000000000000000000000000000000000000000000000
   _image: {fileID: 21300048, guid: 300ea1a5869382b43bf6149aba92c4db, type: 3}
-  _countOfHPDices: 3
-  _typeOfHPDice: 8
+  _countOfHPDices: 1000
+  _typeOfHPDice: 3
 --- !u!114 &8629435987194540231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,25 +522,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: player
   _grayDescription: it is test person. dont expect anything spetial
---- !u!114 &-8196206536154498893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8034465503680846090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9753904166bfcc459c628aa83d6688d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spells:
-  - {fileID: 11400000, guid: 4ce4993feab8a9242b58d8a30f806997, type: 2}
-  - {fileID: 11400000, guid: 68e8885c8e8f4ca4f98985b0b43bb58d, type: 2}
-  - {fileID: 11400000, guid: 1e8ca900faaecf74d967221b2bad08ea, type: 2}
-  _actions:
-  - {fileID: 11400000, guid: d4f96d7d23f0f28458569e1c7ebc978e, type: 2}
-  _playerUIController: {fileID: 1680859570584994038}
 --- !u!114 &7319858322811895834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -575,6 +560,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9b0d5f31eac2242861271b2a12088d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &414220447329809702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034465503680846090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025dd41fe75bde5489d17c84029742fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &100373497717701852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8034465503680846090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6a3e8b92da17c43b26215067cee556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spells:
+  - {fileID: 11400000, guid: 4ce4993feab8a9242b58d8a30f806997, type: 2}
+  - {fileID: 11400000, guid: 68e8885c8e8f4ca4f98985b0b43bb58d, type: 2}
+  - {fileID: 11400000, guid: 1e8ca900faaecf74d967221b2bad08ea, type: 2}
+  _actions:
+  - {fileID: 11400000, guid: d4f96d7d23f0f28458569e1c7ebc978e, type: 2}
+  _playerUIController: {fileID: 1680859570584994038}
 --- !u!1 &8059801398591551612
 GameObject:
   m_ObjectHideFlags: 0

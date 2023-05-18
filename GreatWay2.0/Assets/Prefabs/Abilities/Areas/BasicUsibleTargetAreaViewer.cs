@@ -12,6 +12,7 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
     protected float YDeviation = 0.2f;
     protected bool IsAiming;
     protected List<DataTypeHolderScript.TargetAntity> Targets = new List<DataTypeHolderScript.TargetAntity>();
+    protected bool NeedToLightUp = false;
 
     public List<DataTypeHolderScript.TargetAntity> targets { get { return Targets; } }
 
@@ -37,10 +38,14 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
     virtual public void Reaim(BasicTile TagetTile, string TargetTag)
     {
+
     }
 
-    virtual public void LightUpTargetArea(Vector3 StartPos, int Range, string tag)
+    virtual public void LightUpTargetArea(Vector3 StartPos, int Range, string tag, bool needToLightUp)
     {
+        NeedToLightUp = needToLightUp;
+        ClearData();
+
         if (TargetCursor != null)
             TargetCursor.gameObject.SetActive(true);
 
@@ -48,7 +53,6 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
         Grid = FindObjectOfType<GridContainer>();
 
         Debug.Log(StartPos + " " + Range + " " + tag + " " + Grid);
-        TargetTiles.Clear();
 
         int leftBorder = StartPos.x - Range > 0 ? (int)StartPos.x - Range : 0;
         int rightBorder = StartPos.x + Range < Grid.sizeX ? (int)StartPos.x + Range : Grid.sizeX - 1;
@@ -60,6 +64,13 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
             for (int j = leftBorder; j <= rightBorder; j++)
                 if (Mathf.Sqrt(Mathf.Pow(j - StartPos.x, 2) + Mathf.Pow(i - StartPos.y, 2)) <= Range)
                     CheckTile(StartPos, Grid.GetTile(new Vector2(j, i)), tag);
+    }
+
+    protected void ClearData()
+    {
+        Debug.Log("CLEARED");
+        TargetTiles.Clear();
+        Targets.Clear();
     }
 
     private void ChangeTargetTileColor(BasicTile tile, Color NewColor, string tag)
@@ -97,7 +108,8 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
         if (isAttackeble && isVisible && tile.isSeen)
         {
-            ChangeTargetTileColor(tile, Color.green, tag);
+            if (NeedToLightUp)
+                ChangeTargetTileColor(tile, Color.green, tag);
 
             TargetTiles.Add(new TargetTile(tile, 0));
 
@@ -107,14 +119,16 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
         if (isAttackeble && (!isVisible || !tile.isSeen))
         {
-            ChangeTargetTileColor(tile, Color.yellow, tag);
+            if (NeedToLightUp)
+                ChangeTargetTileColor(tile, Color.yellow, tag);
 
             TargetTiles.Add(new TargetTile(tile, 1));
 
             Debug.DrawRay(startPos, (Vector2)tile.transform.position - startPos, Color.yellow, 3);
             return;
         }
-        ChangeTargetTileColor(tile, Color.red, tag);
+        if (NeedToLightUp)
+            ChangeTargetTileColor(tile, Color.red, tag);
 
         TargetTiles.Add(new TargetTile(tile, 2));
 
@@ -131,13 +145,13 @@ public class BasicUsibleTargetAreaViewer : ScriptableObject
 
         foreach (TargetTile tile in TargetTiles)
             RefreshTargetTileColor(tile.Tile);
-        TargetTiles.Clear();
-        Targets.Clear();
+
         IsAiming = false;
     }
 
     public bool IsTileInTaget(BasicTile tile)
     {
+        Debug.Log("CLEARED " + TargetTiles.Count);
         foreach (TargetTile targetTile in TargetTiles)
             if (targetTile.Tile == tile && targetTile.TypeOfTarget != 2)
                 return true;

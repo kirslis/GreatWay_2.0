@@ -26,20 +26,24 @@ public class AttackAbility : BasicAbilityScript
         base.Awake();
     }
 
-    public override void Use()
+    public override IEnumerator TryToUse(AbilityButton button)
     {
-        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
-        Debug.Log("DAMAGE!");
-        foreach (DataTypeHolderScript.TargetAntity target in targets)
+        if (ActivateCheck())
         {
-            Debug.Log(target);
+            List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+            Debug.Log("DAMAGE!");
+            foreach (DataTypeHolderScript.TargetAntity target in targets)
+            {
+                Debug.Log(target);
 
 
-            Vector3 StartPos = new Vector3(Caster.transform.position.x, Caster.transform.position.y + Caster.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2, Caster.transform.position.z);
+                Vector3 StartPos = new Vector3(Caster.transform.position.x, Caster.transform.position.y + Caster.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2, Caster.transform.position.z);
 
-            //Weapon.DealDamageFast(caster, )
+                //Weapon.DealDamageFast(caster, )
+            }
+
+            yield return base.TryToUse(button);
         }
-        base.Use();
     }
 
     public override AbilityButton AddNewCoreButton(AbilityController Player)

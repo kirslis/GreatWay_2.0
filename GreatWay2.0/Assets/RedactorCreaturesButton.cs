@@ -23,11 +23,10 @@ public class RedactorCreaturesButton : BasicReductorButton, IPointerEnterHandler
         {
             IsSingleReducted = false;
             Vector2 mousePos = Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            mousePos = new Vector2((int)(mousePos.x + 0.5f), (int)(mousePos.y + 0.5f));
 
             Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
 
-            if (hit.collider != null)
+            if (hit.collider != null && hit.collider.gameObject.layer == gameObject.layer)
                 AbortReduct();
 
             else if (!LastTilePos.Equals(mousePos))

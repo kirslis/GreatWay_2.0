@@ -20,11 +20,11 @@ public class RedactorTileButton : BasicReductorButton, IPointerEnterHandler, IPo
     {
         if (IsMouseDown)
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            mousePos = new Vector2((int)(mousePos.x + 0.5f), (int)(mousePos.y + 0.5f));
+            Vector2 mousePos = Cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
             Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
-            if (hit.collider != null)
+
+            if (hit.collider != null && hit.collider.gameObject.layer == gameObject.layer)
             {
                 AbortReduct();
                 Debug.Log(hit.collider.gameObject);

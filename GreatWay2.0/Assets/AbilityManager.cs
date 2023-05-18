@@ -14,7 +14,7 @@ public class AbilityManager : MonoBehaviour
     private List<AttackAbility> Attacks = new List<AttackAbility>();
 
     private BasicAbilityScript CurentAbility = null;
-    public BasicAbilityScript curentAbility { set { if (CurentAbility != null) CurentAbility.Abort(); CurentAbility = value; } }
+    public BasicAbilityScript curentAbility { set { if (CurentAbility != null && value != null) CurentAbility.Abort(); CurentAbility = value; } }
 
     private void Awake()
     {
@@ -42,6 +42,27 @@ public class AbilityManager : MonoBehaviour
             ability.area = _areaViewers[i];
             ability.Awake();
         }
+    }
+
+    public BasicAbilityScript GetAbilityLink(BasicAbilityScript Ability)
+    {
+        Debug.Log("Create AI spell");
+        if (Ability.type == DataTypeHolderScript.AbiltyType.basicAbility)
+        {
+            foreach (BasicAbilityScript script in _actions)
+                if (Ability.Equals(script))
+                    return script;
+        }
+
+        else if (Ability.type == DataTypeHolderScript.AbiltyType.spell)
+        {
+            foreach (BasicAbilityScript script in _spells)
+                if (Ability.Equals(script))
+                    return script;
+        }
+
+        Debug.Log("AI spell not found");
+        return null;
     }
 
     public AbilityButton CreateNewCoreSpellButton(BasicAbilityScript Ability, AbilityController Player)

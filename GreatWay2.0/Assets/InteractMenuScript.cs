@@ -101,6 +101,7 @@ public class InteractMenuScript : MonoBehaviour
     {
         foreach (InteractButtonScript child in GetComponentsInChildren<InteractButtonScript>())
             Destroy(child.gameObject);
+        transform.position = new Vector2(-1000, -1000);
 
         GetComponent<Image>().enabled = false;
     }

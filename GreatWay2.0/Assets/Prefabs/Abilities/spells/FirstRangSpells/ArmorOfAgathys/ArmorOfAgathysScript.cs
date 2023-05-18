@@ -8,15 +8,18 @@ public class ArmorOfAgathysScript : DamageIncomingBuff
     [SerializeField] DestroyTimer DamageParticles;
     private float DamageCourutineTime = 0.3f;
 
-    public override void Use()
+    public override IEnumerator TryToUse(AbilityButton button)
     {
-        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
-        foreach (DataTypeHolderScript.TargetAntity target in targets)
+        if (ActivateCheck())
         {
-            target.Target.GetComponent<CharacterStats>().temporaryHP = 5;
-        }
+            List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+            foreach (DataTypeHolderScript.TargetAntity target in targets)
+            {
+                target.Target.GetComponent<CharacterStats>().temporaryHP = 5;
+            }
 
-        base.Use();
+            yield return base.TryToUse(button);
+        }
     }
 
     protected override void DamageIncoming(ref int Damage, DataTypeHolderScript.DamageType DamageType, DataTypeHolderScript.AttackType AttackType, CharacterStats Person, CharacterStats DamageDealer)

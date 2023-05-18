@@ -13,15 +13,23 @@ public class BasicDamageAbilityScript : BasicAbilityScript
     [SerializeField] BasicShotenParticleScript _shotenParticle;
     [SerializeField] DataTypeHolderScript.AttackType _attackType = DataTypeHolderScript.AttackType.magic;
 
-    public override void Use()
+    public override IEnumerator TryToUse(AbilityButton button)
     {
+        if (ActivateCheck())
+        {
+            yield return AbilityUse();
+            yield return base.TryToUse(button);
+        }
+    }
 
+    protected override IEnumerator AbilityUse()
+    {
         List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
         Debug.Log("DAMAGE!");
         foreach (DataTypeHolderScript.TargetAntity target in targets)
         {
             int attackRoll;
-            bool isHitting = false;
+            bool isHitting;
 
             if (!_isGaranteedHit)
             {
@@ -49,8 +57,11 @@ public class BasicDamageAbilityScript : BasicAbilityScript
 
             particle.ability = this;
             particle.isHitting = isHitting;
+
+            yield return particle.Play();
         }
-        base.Use();
+
+        yield return base.AbilityUse();
     }
 
     public virtual void DealDamage(Entity target)

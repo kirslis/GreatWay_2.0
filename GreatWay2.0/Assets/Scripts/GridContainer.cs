@@ -43,9 +43,9 @@ public class GridContainer : MonoBehaviour
     //возвращает массив соседних к tile тайлов 
     public List<BasicTile> getAdjacentTiles(BasicTile tile)
     {
-        Vector2 tilePos = tile.transform.position; 
+        Vector2 tilePos = tile.transform.position;
         List<BasicTile> adjacteds = new List<BasicTile>();
-        if(tilePos.x > 0)
+        if (tilePos.x > 0)
             adjacteds.Add(GetTile(new Vector2(tilePos.x - 1, tilePos.y)));
         if (tilePos.x < SizeX - 1)
             adjacteds.Add(GetTile(new Vector2(tilePos.x + 1, tilePos.y)));
@@ -54,6 +54,31 @@ public class GridContainer : MonoBehaviour
         if (tilePos.y < SizeY - 1)
             adjacteds.Add(GetTile(new Vector2(tilePos.x, tilePos.y + 1)));
 
+        return adjacteds;
+    }
+
+    //возвращает массив соседних к tile тайлов 
+    public List<BasicTile> getAllAdjacentTiles(BasicTile tile)
+    {
+        Vector2 tilePos = tile.transform.position;
+        List<BasicTile> adjacteds = new List<BasicTile>();
+        if (tilePos.x > 0)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x - 1, tilePos.y)));
+        if (tilePos.x < SizeX - 1)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x + 1, tilePos.y)));
+        if (tilePos.y > 0)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x, tilePos.y - 1)));
+        if (tilePos.y < SizeY - 1)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x, tilePos.y + 1)));
+
+        if (tilePos.x > 0 && tilePos.y > 0)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x - 1, tilePos.y - 1)));
+        if (tilePos.x > 0 && tilePos.y < SizeY - 1)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x - 1, tilePos.y + 1)));
+        if (tilePos.x < SizeX - 1 && tilePos.y > 0)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x + 1, tilePos.y - 1)));
+        if (tilePos.x < SizeX - 1 && tilePos.y < sizeY - 1)
+            adjacteds.Add(GetTile(new Vector2(tilePos.x + 1, tilePos.y + 1)));
         return adjacteds;
     }
 
@@ -139,7 +164,7 @@ public class GridContainer : MonoBehaviour
             SetMark(RedactorCursor);
         }
 
-        if(IsTrailing)
+        if (IsTrailing)
         {
             SetMark(TrailMark);
         }

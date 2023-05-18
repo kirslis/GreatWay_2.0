@@ -8,19 +8,24 @@ public class BasicHealAbility : BasicAbilityScript
     [SerializeField] HealingParticlesScript _healingParticle;
     [SerializeField] int _countOfHealDices;
     [SerializeField] int _healDiceType;
-    
-    public override void Use()
+
+    public override IEnumerator TryToUse(AbilityButton button)
     {
-        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
-        Debug.Log("Heal!");
-        foreach (DataTypeHolderScript.TargetAntity target in targets)
+        if (ActivateCheck())
         {
-            HealingParticlesScript healing = Instantiate(_healingParticle, target.Target.transform.position, Quaternion.identity);
-            healing.target = target.Target;
-            healing.ability = this;
+            List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+            Debug.Log("Heal! " + targets);
+            foreach (DataTypeHolderScript.TargetAntity target in targets)
+            {
+                HealingParticlesScript healing = Instantiate(_healingParticle, target.Target.transform.position, Quaternion.identity);
+                healing.target = target.Target;
+                healing.ability = this;
+
+                yield return healing.Play();
+            }
+
+            yield return base.TryToUse(button);
         }
-      
-        base.Use();
     }
 
     public void Heal(Entity target)

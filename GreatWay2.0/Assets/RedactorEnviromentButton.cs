@@ -39,7 +39,7 @@ public class RedactorEnviromentButton : BasicReductorButton, IPointerEnterHandle
             if (IsMouseDown)
             {
                 Physics.Raycast(Cam.ScreenPointToRay(Mouse.current.position.ReadValue()), out RaycastHit hit);
-                if (hit.collider != null)
+                if (hit.collider != null && hit.collider.gameObject.layer == gameObject.layer)
                 {
                     Debug.Log(hit.collider.gameObject);
                     AbortReduct();

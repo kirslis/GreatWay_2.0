@@ -28,7 +28,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
             ""id"": ""b546a766-de19-47a6-858e-510bab2586d5"",
             ""actions"": [
                 {
-                    ""name"": ""LookOut"",
+                    ""name"": ""LMBDown"",
                     ""type"": ""Button"",
                     ""id"": ""1c53df1b-61ad-4b11-9f16-4e056a7b97e1"",
                     ""expectedControlType"": ""Button"",
@@ -37,7 +37,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RefreshPath"",
+                    ""name"": ""RMB"",
                     ""type"": ""Button"",
                     ""id"": ""6e6fdf5c-0ff8-4047-ac82-b4b4566a55d3"",
                     ""expectedControlType"": ""Button"",
@@ -46,9 +46,18 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""HoldToMove"",
+                    ""name"": ""Space"",
                     ""type"": ""Button"",
                     ""id"": ""437e1722-495d-4649-b36d-3ade97701bcd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LMBUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""993f1cfd-c9d3-456e-940b-62384d0cac62"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -63,7 +72,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LookOut"",
+                    ""action"": ""LMBDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -74,7 +83,7 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RefreshPath"",
+                    ""action"": ""RMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -85,18 +94,29 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RefreshPath"",
+                    ""action"": ""RMB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""501e9018-6955-4229-b8eb-5690e90e12c5"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""HoldToMove"",
+                    ""action"": ""Space"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4ca4e98-0efd-4ee2-b918-90a2211dc61d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Press(behavior=1)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LMBUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -124,9 +144,10 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
 }");
         // MoveActions
         m_MoveActions = asset.FindActionMap("MoveActions", throwIfNotFound: true);
-        m_MoveActions_LookOut = m_MoveActions.FindAction("LookOut", throwIfNotFound: true);
-        m_MoveActions_RefreshPath = m_MoveActions.FindAction("RefreshPath", throwIfNotFound: true);
-        m_MoveActions_HoldToMove = m_MoveActions.FindAction("HoldToMove", throwIfNotFound: true);
+        m_MoveActions_LMBDown = m_MoveActions.FindAction("LMBDown", throwIfNotFound: true);
+        m_MoveActions_RMB = m_MoveActions.FindAction("RMB", throwIfNotFound: true);
+        m_MoveActions_Space = m_MoveActions.FindAction("Space", throwIfNotFound: true);
+        m_MoveActions_LMBUp = m_MoveActions.FindAction("LMBUp", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -186,16 +207,18 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     // MoveActions
     private readonly InputActionMap m_MoveActions;
     private IMoveActionsActions m_MoveActionsActionsCallbackInterface;
-    private readonly InputAction m_MoveActions_LookOut;
-    private readonly InputAction m_MoveActions_RefreshPath;
-    private readonly InputAction m_MoveActions_HoldToMove;
+    private readonly InputAction m_MoveActions_LMBDown;
+    private readonly InputAction m_MoveActions_RMB;
+    private readonly InputAction m_MoveActions_Space;
+    private readonly InputAction m_MoveActions_LMBUp;
     public struct MoveActionsActions
     {
         private @PlayerInputAction m_Wrapper;
         public MoveActionsActions(@PlayerInputAction wrapper) { m_Wrapper = wrapper; }
-        public InputAction @LookOut => m_Wrapper.m_MoveActions_LookOut;
-        public InputAction @RefreshPath => m_Wrapper.m_MoveActions_RefreshPath;
-        public InputAction @HoldToMove => m_Wrapper.m_MoveActions_HoldToMove;
+        public InputAction @LMBDown => m_Wrapper.m_MoveActions_LMBDown;
+        public InputAction @RMB => m_Wrapper.m_MoveActions_RMB;
+        public InputAction @Space => m_Wrapper.m_MoveActions_Space;
+        public InputAction @LMBUp => m_Wrapper.m_MoveActions_LMBUp;
         public InputActionMap Get() { return m_Wrapper.m_MoveActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -205,28 +228,34 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_MoveActionsActionsCallbackInterface != null)
             {
-                @LookOut.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLookOut;
-                @LookOut.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLookOut;
-                @LookOut.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLookOut;
-                @RefreshPath.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnRefreshPath;
-                @RefreshPath.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnRefreshPath;
-                @RefreshPath.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnRefreshPath;
-                @HoldToMove.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnHoldToMove;
-                @HoldToMove.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnHoldToMove;
-                @HoldToMove.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnHoldToMove;
+                @LMBDown.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLMBDown;
+                @LMBDown.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLMBDown;
+                @LMBDown.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLMBDown;
+                @RMB.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnRMB;
+                @RMB.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnRMB;
+                @RMB.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnRMB;
+                @Space.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnSpace;
+                @Space.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnSpace;
+                @Space.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnSpace;
+                @LMBUp.started -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLMBUp;
+                @LMBUp.performed -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLMBUp;
+                @LMBUp.canceled -= m_Wrapper.m_MoveActionsActionsCallbackInterface.OnLMBUp;
             }
             m_Wrapper.m_MoveActionsActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @LookOut.started += instance.OnLookOut;
-                @LookOut.performed += instance.OnLookOut;
-                @LookOut.canceled += instance.OnLookOut;
-                @RefreshPath.started += instance.OnRefreshPath;
-                @RefreshPath.performed += instance.OnRefreshPath;
-                @RefreshPath.canceled += instance.OnRefreshPath;
-                @HoldToMove.started += instance.OnHoldToMove;
-                @HoldToMove.performed += instance.OnHoldToMove;
-                @HoldToMove.canceled += instance.OnHoldToMove;
+                @LMBDown.started += instance.OnLMBDown;
+                @LMBDown.performed += instance.OnLMBDown;
+                @LMBDown.canceled += instance.OnLMBDown;
+                @RMB.started += instance.OnRMB;
+                @RMB.performed += instance.OnRMB;
+                @RMB.canceled += instance.OnRMB;
+                @Space.started += instance.OnSpace;
+                @Space.performed += instance.OnSpace;
+                @Space.canceled += instance.OnSpace;
+                @LMBUp.started += instance.OnLMBUp;
+                @LMBUp.performed += instance.OnLMBUp;
+                @LMBUp.canceled += instance.OnLMBUp;
             }
         }
     }
@@ -242,8 +271,9 @@ public partial class @PlayerInputAction : IInputActionCollection2, IDisposable
     }
     public interface IMoveActionsActions
     {
-        void OnLookOut(InputAction.CallbackContext context);
-        void OnRefreshPath(InputAction.CallbackContext context);
-        void OnHoldToMove(InputAction.CallbackContext context);
+        void OnLMBDown(InputAction.CallbackContext context);
+        void OnRMB(InputAction.CallbackContext context);
+        void OnSpace(InputAction.CallbackContext context);
+        void OnLMBUp(InputAction.CallbackContext context);
     }
 }

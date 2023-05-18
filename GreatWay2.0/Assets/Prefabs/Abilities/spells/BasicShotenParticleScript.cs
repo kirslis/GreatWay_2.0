@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BasicShotenParticleScript : MonoBehaviour
@@ -13,21 +15,32 @@ public class BasicShotenParticleScript : MonoBehaviour
 
     public Entity target { set { Target = value; YDelta = Target.GetComponent<SpriteRenderer>().sprite.bounds.size.y / 2; EndPos = new Vector3(Target.transform.position.x, Target.transform.position.y + YDelta, Target.transform.position.z - 1); } }
     public BasicDamageAbilityScript ability { set { Ability = value; } }
-    public bool isHitting { set { IsHitting = value; if (!IsHitting) EndPos = new Vector3(EndPos.x + Random.Range(-30, 30)/20f, EndPos.y + Random.Range(-30, 30)/20f, EndPos.z); } }
+    public bool isHitting { set { IsHitting = value; if (!IsHitting) EndPos = new Vector3(EndPos.x + Random.Range(-30, 30) / 20f, EndPos.y + Random.Range(-30, 30) / 20f, EndPos.z); } }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator Play()
     {
-        if (Target != null && !transform.position.Equals(EndPos))
+        Debug.Log(Target + " " + EndPos);
+
+        if (Target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, EndPos, _speed * Time.deltaTime);
-            if (Target.transform.position.x >= transform.position.x)
-                GetComponent<SpriteRenderer>().flipX = true;
-            else
-                GetComponent<SpriteRenderer>().flipX = false;
+            while (!transform.position.Equals(EndPos))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, EndPos, _speed * Time.deltaTime);
+                if (Target.transform.position.x >= transform.position.x)
+                    GetComponent<SpriteRenderer>().flipX = true;
+                else
+                    GetComponent<SpriteRenderer>().flipX = false;
+
+                yield return null;
+            }
+            hit();
         }
-        else hit();
+
+        else
+            Destroy(gameObject);
+
     }
+
 
     private void hit()
     {

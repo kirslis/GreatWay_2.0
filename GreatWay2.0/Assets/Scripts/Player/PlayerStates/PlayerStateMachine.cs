@@ -2,13 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerStateMachine : MonoBehaviour
+public class PlayerStateMachine : MonoBehaviour
 {
-    protected PlayerState PlayerState;
+    private PlayerState PlayerState = null;
 
-    public void SetState(PlayerState State)
+    public PlayerState playerState { get { return PlayerState; } }
+
+    private void Awake()
     {
-        PlayerState = State;
-        StartCoroutine(PlayerState.Start());
+        PlayerState = new PlayerIdlingState(this);
+        PlayerState.Start();
+    }
+
+    public void SetNewState(PlayerState state)
+    {
+        Debug.Log(name + " Set new State - " + state);
+        PlayerState.End();
+        PlayerState = state;
+        PlayerState.Start();
     }
 }

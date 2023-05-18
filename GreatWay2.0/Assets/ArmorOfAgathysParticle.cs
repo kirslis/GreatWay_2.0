@@ -9,8 +9,13 @@ public class ArmorOfAgathysParticle : BasicBuffParticle
 
     private void Awake()
     {
+
+    }
+
+    public override IEnumerator Play()
+    {
         transform.localScale = Vector3.zero;
-        StartCoroutine(ChangeSizeCoroutine());
+        yield return ChangeSizeCoroutine();
     }
 
     private void Update()

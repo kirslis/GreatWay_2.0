@@ -6,10 +6,9 @@ using UnityEngine.InputSystem;
 public class PlayerMove : Move
 {
     private bool IsLooking;
-    private bool IsHold;
-    private bool IsMouseDown;
     private GameObject Spirit;
-    private PlayerInputAction Input;
+
+    public bool isLooking { get { return IsLooking; } }
 
     protected override void Awake()
     {
@@ -23,52 +22,27 @@ public class PlayerMove : Move
         Spirit.GetComponent<SpriteRenderer>().color = Color.red;
         Spirit.SetActive(false);
 
-        Input = new PlayerInputAction();
-        Input.Enable();
-        Input.MoveActions.LookOut.performed += context => { if (IsClickOnObject()) LookOut(); };
-        Input.MoveActions.RefreshPath.performed += context => { if (IsLooking) AbortMoving(); };
-
-        Input.MoveActions.HoldToMove.performed += context =>
-        {
-            //IsMouseDown = !IsMouseDown;
-            //if (IsClickOnObject() || IsHold)
-            //{
-            //    IsHold = IsMouseDown;
-            //    if (IsHold)
-            //        StartDrawPath();
-            //    else if (GridContainer.countOfPassedTiles != 0)
-            //        EndDrawPath();
-            //}
-        };
     }
 
-    public override bool isActivePlayer
-    {
-        set
-        {
-            base.isActivePlayer = value;
-            if (value)
-                Input.MoveActions.Enable();
-            else
-                Input.MoveActions.Disable();
-        }
-    }
+    //public override bool isActivePlayer
+    //{
+    //    set
+    //    {
+    //        base.isActivePlayer = value;
+    //        if (value)
+    //            Input.MoveActions.Enable();
+    //        else
+    //            Input.MoveActions.Disable();
+    //    }
+    //}
 
-    private void OnDestroy()
-    {
-        Input.Disable();
-    }
-
-    private bool IsClickOnObject()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-
-        return Physics.Raycast(ray, out RaycastHit hit) && hit.collider == gameObject.GetComponent<Entity>().collider3d;
-    }
+    //private void OnDestroy()
+    //{
+    //    Input.Disable();
+    //}
 
     private void LookOut()
     {
-        Debug.Log(CurrentSpeed);
         GridContainer.LightUpWaisWrapped(transform.position, currentSpeed);
         IsLooking = true;
     }
@@ -82,7 +56,6 @@ public class PlayerMove : Move
 
         CurrentSpeed = LeftSpeed;
         IsLooking = false;
-        IsHold = false;
     }
 
     private int GetMaxDelta(Vector2 Pos)
@@ -95,7 +68,7 @@ public class PlayerMove : Move
 
     private void Update()
     {
-        if (IsHold && (currentSpeed > 0 || GridContainer.countOfPassedTiles > 0))
+        if (IsLooking && (currentSpeed > 0 || GridContainer.countOfPassedTiles > 0))
         {
             Vector2 MousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             MousePos = new Vector2((int)(MousePos.x + 0.5), (int)(MousePos.y + 0.5));
@@ -115,26 +88,27 @@ public class PlayerMove : Move
         transform.position = new Vector3(transform.position.x, transform.position.y, -2 + YStep * transform.position.y);
     }
 
-    private void StartDrawPath()
+    public void StartDrawPath()
     {
+        LookOut();
         Spirit.SetActive(true);
         LeftSpeed = CurrentSpeed;
         Spirit.transform.position = transform.position;
     }
 
-    private void EndDrawPath()
+    public IEnumerator EndDrawPath()
     {
         Spirit.SetActive(false);
-        MoveToEndPoint();
+        yield return StartCoroutine(MoveToEndPoint());
     }
 
-    private void MoveToEndPoint()
+    private IEnumerator MoveToEndPoint()
     {
         List<BasicTile> WalkPoints = GridContainer.passedTiles;
-        StartCoroutine(MoveCourutine(WalkPoints, GridContainer.countOfPassedTiles));
+        yield return StartCoroutine(MoveCourutine(WalkPoints, GridContainer.countOfPassedTiles));
+
+        AbortMoving();
     }
-
-
 
     public void Dash()
     {

@@ -13,12 +13,17 @@ public class HealingParticlesScript : BasicBuffParticle
 
     private void Awake()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y, -3);
-        Particles = GetComponent<ParticleSystem>();
-        StartCoroutine(BuffCourutine());
+
     }
 
-    IEnumerator BuffCourutine()
+    public IEnumerator Play()
+    {
+        transform.position = new Vector3(transform.position.x, transform.position.y, -3);
+        Particles = GetComponent<ParticleSystem>();
+        yield return BuffCourutine();
+    }
+
+    private IEnumerator BuffCourutine()
     {
         for (int i = 0; i < 40; i++)
         {

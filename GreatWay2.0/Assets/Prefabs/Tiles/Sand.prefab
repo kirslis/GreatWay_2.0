@@ -5059,7 +5059,7 @@ GameObject:
   - component: {fileID: 4343281653915273846}
   - component: {fileID: 7578063655845608613}
   m_Layer: 3
-  m_Name: 3dCollider
+  m_Name: 3dTileCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

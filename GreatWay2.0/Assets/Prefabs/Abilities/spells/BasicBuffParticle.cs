@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class BasicBuffParticle : MonoBehaviour
 {
-    
+    public virtual IEnumerator Play()
+    {
+        yield break;
+    }
 }

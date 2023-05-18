@@ -12,8 +12,11 @@ public class SelfTargetAreaViewer : BasicUsibleTargetAreaViewer
 
         base.Awake();
     }
-    override public void LightUpTargetArea(Vector3 StartPos, int Range, string tag)
+    override public void LightUpTargetArea(Vector3 StartPos, int Range, string tag, bool needToLightUp)
     {
+        NeedToLightUp = needToLightUp;
+        ClearData();
+
         TargetCursor.gameObject.SetActive(true);
 
         IsAiming = true;

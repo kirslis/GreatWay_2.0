@@ -8,10 +8,9 @@ public class CharacterStats : MonoBehaviour
 {
     [SerializeField] TurnIcon _icon;
     [SerializeField] PseudoThrowViewer _pseudoThrowViewer;
-    [SerializeField] int[] _addictionalStats = new int[6];
     [SerializeField] Sprite _image;
     [SerializeField] int _countOfHPDices;
-    [SerializeField] int _typeOfHPDice;
+    [SerializeField] DataTypeHolderScript.DiceType _typeOfHPDice;
 
     public delegate void DamageIncomingModificator(ref int Damage, DataTypeHolderScript.DamageType damageType, DataTypeHolderScript.AttackType attackType, CharacterStats Person, CharacterStats DamageDealer);
     public delegate void HurtListener(CharacterStats Person);
@@ -34,6 +33,7 @@ public class CharacterStats : MonoBehaviour
     private AbilityManager AbilityManager;
     private bool MainActive;
     private bool SubActive;
+    private DicePlace DiceRoller;
 
     public int temporaryHP { set { if (value > TemporaryHP) { TemporaryHP = value; UI.playerInteface.temporaryHP = value; UI.playerInteface.UpdateStatsView(); } } get { return TemporaryHP; } }
     public Sprite image { get { return _image; } }
@@ -48,6 +48,7 @@ public class CharacterStats : MonoBehaviour
         AbilityManager = FindObjectOfType<AbilityManager>();
         Anim = GetComponent<Animator>();
         UI = GetComponent<UiController>();
+        DiceRoller = FindObjectOfType<DicePlace>();
 
         StatsDictionry = new Dictionary<string, int>()
         {
@@ -73,11 +74,7 @@ public class CharacterStats : MonoBehaviour
         int CurentStatIndex;
         StatsDictionry.TryGetValue("fort", out CurentStatIndex);
 
-        for (int i = 0; i < _countOfHPDices; i++)
-        {
-            int Add = (Random.Range(1, _typeOfHPDice + 1) + StatMods[CurentStatIndex]);
-            MaxHP += Add > 0 ? Add : 1;
-        }
+        MaxHP = DiceRoller.FastDiceRoll(_countOfHPDices, _typeOfHPDice, StatMods[CurentStatIndex], 0);
 
         StatsDictionry.TryGetValue("dex", out CurentStatIndex);
 
@@ -124,7 +121,7 @@ public class CharacterStats : MonoBehaviour
         HurtListeners.Remove(Listener);
     }
 
-    public void DealDamage(int damage, DataTypeHolderScript.DamageType DamageType, DataTypeHolderScript.AttackType attackType, CharacterStats DamageDealer)
+    public virtual void DealDamage(int damage, DataTypeHolderScript.DamageType DamageType, DataTypeHolderScript.AttackType attackType, CharacterStats DamageDealer)
     {
         foreach (DamageIncomingModificator damageMod in DamageIncomingModificators)
             damageMod(ref damage, DamageType, attackType, this, DamageDealer);

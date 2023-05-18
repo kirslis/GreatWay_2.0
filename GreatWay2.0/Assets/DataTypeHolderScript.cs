@@ -65,4 +65,24 @@ public class DataTypeHolderScript : ScriptableObject
             TypeOfTarget = typeOfTile;
         }
     }
+
+    public struct enemyInList
+    {
+        public Entity enemy;
+        public int pathLength;
+        public int summaryDamage;
+        public int summaryHeal;
+        public int priorityRate;
+
+        public enemyInList(Entity Enemy, int damage, int heal)
+        {
+            enemy = Enemy;
+            summaryDamage = damage;
+            summaryHeal = heal;
+            pathLength = 0;
+            priorityRate = 0;
+            Debug.Log("WTF");
+        }
+    }
+
 }

@@ -11,12 +11,17 @@ public class DashAbilityScript : BasicAbilityScript
         base.Awake();
     }
 
-    public override void Use()
+    public override IEnumerator TryToUse(AbilityButton button)
     {
-        Caster.GetComponent<PlayerMove>().Dash();
-        DestroyTimer Part =  Instantiate(paticles, Caster.transform.position, Quaternion.identity);
-        Part.destroyTime = 1;
+        if (ActivateCheck())
+        {
+            Caster.GetComponent<PlayerMove>().Dash();
+            DestroyTimer Part = Instantiate(paticles, Caster.transform.position, Quaternion.identity);
+            Part.destroyTime = 1;
 
-        base.Use();
+            yield return new WaitForSeconds(1f);
+
+            yield return base.TryToUse(button);
+        }
     }
 }

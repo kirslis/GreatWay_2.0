@@ -32,14 +32,17 @@ public class GameInterface : BasicMenu
     protected override void OnEnable()
     {
         if (_entityContainer.antityes.Count > 0)
-            _entityContainer.currentPlayer.GetComponent<PlayerController>().InputMode(true);
+            if (_entityContainer.currentPlayer.TryGetComponent(out PlayerStateMachine playerStateMachine))
+                playerStateMachine.SetNewState(new PlayerIdlingState(playerStateMachine));
+
         base.OnEnable();
     }
 
     protected override void OnDisable()
     {
         if (_entityContainer.antityes.Count > 0)
-            _entityContainer.currentPlayer.GetComponent<PlayerController>().InputMode(false);
+            if (_entityContainer.currentPlayer.TryGetComponent(out PlayerStateMachine playerStateMachine))
+                playerStateMachine.SetNewState(new PlayerMutedState(playerStateMachine));
         base.OnDisable();
     }
 }

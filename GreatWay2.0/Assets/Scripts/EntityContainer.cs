@@ -77,7 +77,6 @@ public class EntityContainer : MonoBehaviour
             Entity newPlayer = Instantiate(player, _alliesContainer.transform);
             newPlayer.transform.position = GetFreePos();
 
-            newPlayer.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
             Debug.Log("GENERATED" + (i - 1));
             newPlayer.isActive = false;
 
@@ -198,7 +197,6 @@ public class EntityContainer : MonoBehaviour
         Entity creature = Instantiate(Creature, _alliesContainer.transform);
         Debug.Log(creature);
         creature.transform.position = Pos;
-        creature.GetComponent<AntityVisualController>().baseColor = new Color(Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, Random.Range(0, 100) / 100f, 1);
         creature.isActive = false;
         creature.name = creature.name + "_" + (Players.Count - 1).ToString();
         creature.GetComponent<Move>().yStep = FindObjectOfType<GridContainer>().yStep;

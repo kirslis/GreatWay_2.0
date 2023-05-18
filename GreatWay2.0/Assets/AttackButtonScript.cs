@@ -41,7 +41,7 @@ public class AttackButtonScript : AbilityButton
             IsAiming = true;
     }
 
-    protected override void StopAiming()
+    public override void StopAiming()
     {
         base.StopAiming();
         IsAiming = false;

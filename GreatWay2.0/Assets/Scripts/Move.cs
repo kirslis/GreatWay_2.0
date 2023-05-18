@@ -17,6 +17,7 @@ public class Move : MonoBehaviour
 
     public float yStep { set { YStep = value; } }
     public int currentSpeed { get { return CurrentSpeed; } set { CurrentSpeed = value; } }
+    public int maxSpeed { get { return MaxSpeed; } }
 
     public virtual bool isActivePlayer
     {

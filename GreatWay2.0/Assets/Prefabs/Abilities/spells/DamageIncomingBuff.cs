@@ -8,16 +8,20 @@ public class DamageIncomingBuff : BasicAbilityScript
 {
     [SerializeField] BasicBuffParticle _particles;
 
-    public override void Use()
+    public override IEnumerator TryToUse(AbilityButton button)
     {
-        List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
-        foreach (DataTypeHolderScript.TargetAntity target in targets)
+        if (ActivateCheck())
         {
-            target.Target.GetComponent<CharacterStats>().AddDamageIncomingModificator(DamageIncoming);
-            target.Target.GetComponent<CharacterStats>().AddHurtListener(HurtCheck);
-            Instantiate(_particles, target.Target.transform);
+            List<DataTypeHolderScript.TargetAntity> targets = Area.targets;
+            foreach (DataTypeHolderScript.TargetAntity target in targets)
+            {
+                target.Target.GetComponent<CharacterStats>().AddDamageIncomingModificator(DamageIncoming);
+                target.Target.GetComponent<CharacterStats>().AddHurtListener(HurtCheck);
+                BasicBuffParticle particles = Instantiate(_particles, target.Target.transform);
+                yield return particles.Play();
+            }
+            yield return base.TryToUse(button);
         }
-        base.Use();
     }
 
     virtual protected void DamageIncoming(ref int Damage, DataTypeHolderScript.DamageType DamageType, DataTypeHolderScript.AttackType _attackType, CharacterStats Person, CharacterStats DamageDealer)
